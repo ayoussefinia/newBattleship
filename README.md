@@ -1,29 +1,15 @@
-# README #
+# YouVersUs #
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+Play a quick game with someone you probably don't know. Alleviates moderate to extreme boredom when taken as prescribed. Side effects may include, but are not limited to: hunger, euphoria, distracted dr s thumb, and aging slightly less rapidly.iving, angry teacher syndrome,
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+Do not operate heavy machinery while using.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+
+
+
