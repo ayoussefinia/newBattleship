@@ -12,7 +12,7 @@
  
  ** Install dependencies **
  
- 5. Navigate to the newly cloned project folder: `cd youversus'
+ 5. Navigate to the newly cloned project folder: `cd youversus`
  6. run: `npm install`
  
  ** Start Application in dev mode **
