@@ -1,0 +1,23 @@
+{
+  "name": "youversus",
+  "version": "0.0.1",
+  "description": "YouVersUs code repository parent",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "api": "cd api && node index.js",
+    "web": "cd web && npm start",
+    "dev": "concurrently --kill-others \"npm run api\" \"npm run web\"",
+    "start": "npm run dev",
+    "postinstall": "cd web && npm install; cd ../api && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://david_hinote@bitbucket.org/david_hinote/youversus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/david_hinote/youversus#readme",
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
