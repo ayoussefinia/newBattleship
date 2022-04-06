@@ -8,7 +8,7 @@
 
  2. Ensure git is installed by running:  `git --version`    [Git for windows](https://gitforwindows.org/)  [Git for Linux/Mac](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
  3. Locate and navigate to a folder suitable to place the base directory of the project   `cd Desktop`
- 4. run: `git clone https://david_hinote@bitbucket.org/david_hinote/youversus.git`
+ 4. run: `git clone https://bitbucket.org/david_hinote/youversus.git`
  
  ** Install dependencies **
  
