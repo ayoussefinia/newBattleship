@@ -1,0 +1,13 @@
+  type Query {
+    getStatus: [Game]
+  }
+
+  type Mutation {
+    queuePlayer(game: String!): String
+  }
+
+  type Game {
+    game: String
+    activeGameCount: Int
+    queueLength: Int
+  }

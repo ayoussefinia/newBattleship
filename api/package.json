@@ -1,0 +1,22 @@
+{
+  "name": "youverseusapi",
+  "version": "0.0.1",
+  "description": "Edge for youversus backend service application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://bitbucket.org/david_hinote/youversus.git"
+  },
+  "author": "Those guys",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.7",
+    "express": "^4.17.3",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "uuid": "^8.3.2"
+  }
+}
