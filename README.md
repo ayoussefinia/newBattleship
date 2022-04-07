@@ -1,5 +1,7 @@
 # YouVersUs #
 
+YouVersus is an application that contains 7 quick, easy to understand, and fun multiplayer games.  Players are connected to each other for gameplay randomly and play from their own device over the internet.
+
 ## Dev environment setup: ##
 
  1. Open your console/terminal/bash/command line
