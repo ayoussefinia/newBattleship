@@ -6,6 +6,7 @@ import TicTacToe from "./TicTacToe/TicTacToe";
 export default function Home(props : any) {
 
     function show(page : any) {
+  
         props.setPage(page);
     }
     

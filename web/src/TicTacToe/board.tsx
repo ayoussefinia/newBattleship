@@ -3,7 +3,10 @@ import Canvas from "../common/canvas";
 
 export default function Board( props: any) {
 
-    function drawBoard(ctx : CanvasRenderingContext2D) {      
+    // https://simon.html5.org/dump/html5-canvas-cheat-sheet.html
+
+    function drawBoard(ctx : CanvasRenderingContext2D) {  
+            
          ctx.beginPath();
          ctx.moveTo(props.width/3, 0);
          ctx.strokeStyle= 'rgb(0,0,0)';
@@ -11,7 +14,6 @@ export default function Board( props: any) {
          ctx.lineWidth = 5;
          ctx.lineTo(props.width/3, props.height);
          ctx.stroke();
-         console.log("Board!");
         
     }
 

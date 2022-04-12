@@ -23,10 +23,9 @@ const GET_STATUS = gql`
 function App() {
 
 const [page, setPage] = useState(null);
-
-
+const exit = () => setPage(null);
 const pages = [ 
-  TicTacToe,
+  new (TicTacToe as any)(exit),
 
 ];
 
