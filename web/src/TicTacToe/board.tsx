@@ -12,6 +12,7 @@ export default function Board( props: any) {
          ctx.lineTo(props.width/3, props.height);
          ctx.stroke();
          console.log("Board!");
+        
     }
 
     return (<Canvas draw={drawBoard} height={props.height} width={props.width}/>);

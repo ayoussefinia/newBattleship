@@ -1,12 +1,8 @@
 import Board from "./board";
 import React, { useRef} from "react";
 
-
-
 function game( props: any) {
-    
-
-    return (<Board />);
+    return (<Board width={128} height={128}/>);
 } 
 
 const TicTacToe = {
