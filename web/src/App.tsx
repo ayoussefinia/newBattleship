@@ -1,7 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component, ReactElement, useState } from 'react';
 import './App.css';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { Box, Grid, Paper } from '@mui/material';
+import Board from './TicTacToe/board'
+import TicTacToe from './TicTacToe/TicTacToe';
+import Home from './Home';
 
 const QUEUE_PLAYER = gql`
   mutation Mutation($game: String!) {
@@ -19,17 +22,23 @@ const GET_STATUS = gql`
 
 function App() {
 
+const [page, setPage] = useState(null);
+
+
+const pages = [ 
+  TicTacToe,
+
+];
+
+const home = <Home pages={pages} setPage={setPage} />;
+
   //const [startGame, { data, loading, error }] = useMutation(QUEUE_PLAYER);
-   const { data, loading, error } = useQuery(GET_STATUS);
+   //const { data, loading, error } = useQuery(GET_STATUS);
 
-   if (loading) return <p>'Submitting...'</p>;
-   if (error) return <p>`Submission error! ${error.message}`</p>;
+   //if (loading) return <p>'Submitting...'</p>;
+   //if (error) return <p>`Submission error! ${error.message}`</p>;
 
-  return (
-    <div>
-     {data.getStatus.map((obj: {game: String}) => <p>{obj.game} </p>)}
-    </div>
-  );
+  return page||home;
 }
 
 export default App;
