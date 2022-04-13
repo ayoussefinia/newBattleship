@@ -3,7 +3,9 @@ import './App.css';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Box, Grid, Paper } from '@mui/material';
 import Board from './TicTacToe/board'
+import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
+import Battleship from './Battleship/Battleship'
 import Home from './Home';
 
 const QUEUE_PLAYER = gql`
@@ -27,7 +29,7 @@ const [page, setPage] = useState(null);
 
 const pages = [ 
   TicTacToe,
-
+  Battleship
 ];
 
 const home = <Home pages={pages} setPage={setPage} />;
