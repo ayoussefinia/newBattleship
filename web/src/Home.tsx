@@ -1,12 +1,9 @@
 import { Box, Paper } from "@mui/material";
 import { Key, ReactChild, ReactFragment, ReactPortal } from "react";
-import Board from "./TicTacToe/board";
-import TicTacToe from "./TicTacToe/TicTacToe";
 
 export default function Home(props : any) {
 
     function show(page : any) {
-  
         props.setPage(page);
     }
     

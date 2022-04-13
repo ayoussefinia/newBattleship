@@ -23,22 +23,22 @@ const GET_STATUS = gql`
 
 function App() {
 
-const [page, setPage] = useState(null);
-const exit = () => setPage(null);
-const pages = [ 
-  new (TicTacToe as any)(exit),
-  new (Dots as any)(exit),
-];
+  const [page, setPage] = useState(null);
+  const exit = () => setPage(null);
+  const pages = [ 
+    new (TicTacToe as any)(exit),
+    new (Dots as any)(exit),
+  ];
 
-const home = <Home pages={pages} setPage={setPage} />;
+  const home = <Home pages={pages} setPage={setPage} />;
 
   //const [startGame, { data, loading, error }] = useMutation(QUEUE_PLAYER);
-   //const { data, loading, error } = useQuery(GET_STATUS);
+  //const { data, loading, error } = useQuery(GET_STATUS);
 
-   //if (loading) return <p>'Submitting...'</p>;
-   //if (error) return <p>`Submission error! ${error.message}`</p>;
+  //if (loading) return <p>'Submitting...'</p>;
+  //if (error) return <p>`Submission error! ${error.message}`</p>;
 
-  return page||home;
+  return page || home;
 }
 
 export default App;
