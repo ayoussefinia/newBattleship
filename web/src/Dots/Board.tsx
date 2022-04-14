@@ -1,58 +1,74 @@
-import React, { Component, ReactElement, useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Square from './components/Square';
 import Line from './components/Line';
 import Dot from './components/Dot';
 
-
-const gridStyle = {
-    background: 'red',
-    height: '30px'
-};
-
 // create board layout
 const grid: JSX.Element[] = [];
 let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
 for (let i = 1; i < 82; i++){
-    if (rowToggle) { // dot/line row
+    if (rowToggle) { 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={0.8}>
+                <Grid item xs={.5} >
                     <Dot></Dot>
                 </Grid>
             );
-        } else if (i % 2 == 0) {
+        } else { // minimum HTML button height 7px
             grid.push(
-                <Grid item xs={2}>
-                    <Line horizontal="true"></Line>
+                <Grid item xs={.5} >
+                    <Line value={i} width="50px" height="16px"></Line>
                 </Grid>
             );
         }
-    }else{ // square/line row
+    }else{ 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={2}>
-                    <Line horizontal="false"></Line>
-                </Grid>
-            );
-        } else if (i % 2 == 0) {
-            grid.push(
-                <Grid item xs={0.8}>
+                <Grid item xs={.5} >
                     <Square></Square>
                 </Grid>
             );
+        } else { // minimum HTML button width 16px
+            grid.push(
+            <Grid item xs={.5} >
+                <Line value={i}  width="16px" height="50px"></Line>  
+            </Grid>
+            );
         }
     }
-
-    // detect when building next gameboard row
-    if (i % 9 == 0) {
+    if (i % 9 == 0) {     // detect when building next gameboard row
         rowToggle = !rowToggle;
     }
 }
-    /*if (i % 9 == 0) {
-        or (let x = 0; x < 9; x++){ //?    
+const Board =( props: any )=> {
+    return (
+        <Box>
+            <Grid container  width={325} height={325} columns={4.5} justifyContent="center"  >
+                {grid}
+            </Grid>
+        </Box>
+    )
+}
+export default Board;
+
+//import { styled } from '@mui/material/styles';
+//import React, { Component, ReactElement, useState } from 'react';
+//import {useState } from 'react';
+
+ //const [gameGrid, setGameGrid] = useState(grid);
+
+//sx={{flexGrow: 1, height: props.height, width: props.width, justifyContent: 'center' }}
+// rowSpacing={.25} columnSpacing={.25}
+
+/*const gridStyle = {
+    background: 'red',
+    height: '30px'
+};*/
+
+
+  /*if (i % 9 == 0) {
+        for (let x = 0; x < 9; x++){ //?    
             if (x % 2 == 0) {
                 grid.push(
                     <Line></Line>
@@ -75,23 +91,4 @@ for (let i = 1; i < 82; i++){
             );      
         }
     }
-}*/
-
-
-function Board( props: any ) {
-    const [gameGrid, setGameGrid] = useState(grid);
-
-    return (
-        <Box sx={{flexGrow: 1, height: props.height, width: props.width, justifyContent: 'center' }}>
-            <Grid container rowSpacing={1} columnSpacing={1}>
-                {gameGrid}
-            </Grid>
-        </Box>
-    )
-
-    /*return (
-        <div>Hello Dots</div>
-    )*/
-}
-
-export default Board;
+*/
