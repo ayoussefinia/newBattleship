@@ -15,7 +15,7 @@ const gridStyle = {
 // create board layout
 const grid: JSX.Element[] = [];
 let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
-for (let i = 0; i < 81; i++){
+for (let i = 1; i < 82; i++){
     if (rowToggle) { // dot/line row
         if (i % 2 == 1) {
             grid.push(
