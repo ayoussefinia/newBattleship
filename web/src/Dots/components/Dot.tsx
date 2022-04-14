@@ -1,10 +1,8 @@
-import React, { Component, ReactElement, useState } from 'react';
-
 const dotStyle = {
     background: 'purple',
     borderRadius: '50%',
-    height: '20px',
-    width: '20px'
+    height: '25px',
+    width: '25px'
 };
 
 const Dot = () => {
@@ -17,3 +15,5 @@ const Dot = () => {
 }
 
 export default Dot;
+
+//import React, { Component, ReactElement, useState } from 'react';
