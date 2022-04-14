@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Square from './components/Square';
 import Line from './components/Line';
 import Dot from './components/Dot';
+import { CenterFocusStrong } from '@mui/icons-material';
 
 // create board layout
 const grid: JSX.Element[] = [];
@@ -11,28 +12,28 @@ for (let i = 1; i < 82; i++){
     if (rowToggle) { 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={.5} >
+                <Grid item xs={25} >
                     <Dot></Dot>
                 </Grid>
             );
         } else { // minimum HTML button height 7px
             grid.push(
-                <Grid item xs={.5} >
-                    <Line value={i} width="50px" height="16px"></Line>
+                <Grid item xs={45} >
+                    <Line value={i} width="40px" height="20px"></Line>
                 </Grid>
             );
         }
     }else{ 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={.5} >
+                <Grid item xs={45} >
                     <Square></Square>
                 </Grid>
             );
         } else { // minimum HTML button width 16px
             grid.push(
-            <Grid item xs={.5} >
-                <Line value={i}  width="16px" height="50px"></Line>  
+            <Grid item xs={25} >
+                <Line value={i} width="20px" height="40px"></Line>
             </Grid>
             );
         }
@@ -44,7 +45,7 @@ for (let i = 1; i < 82; i++){
 const Board =( props: any )=> {
     return (
         <Box>
-            <Grid container  width={325} height={325} columns={4.5} justifyContent="center"  >
+            <Grid container  width={305} height={305} columns={305} justifyContent={"center"}>
                 {grid}
             </Grid>
         </Box>
