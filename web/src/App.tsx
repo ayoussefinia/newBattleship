@@ -7,11 +7,12 @@ import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
 import Battleship from './Battleship/Battleship'
 import Home from './Home';
+import MatchingGame from './MatchingGame/MatchingGame';
 
 const QUEUE_PLAYER = gql`
   mutation Mutation($game: String!) {
     queuePlayer(game: $game)
-  }    
+  }
   `;
 
 const GET_STATUS = gql`
@@ -26,9 +27,10 @@ function App() {
 
 const [page, setPage] = useState(null);
 const exit = () => setPage(null);
-const pages = [ 
+const pages = [
   TicTacToe,
-  Battleship
+  Battleship,
+  MatchingGame
 ];
 
 const home = <Home pages={pages} setPage={setPage} />;

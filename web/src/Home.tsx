@@ -6,10 +6,10 @@ import TicTacToe from "./TicTacToe/TicTacToe";
 export default function Home(props : any) {
 
     function show(page : any) {
-  
+
         props.setPage(page);
     }
-    
+
     return (<div>
         <h1>Welcome!</h1>
         <Box
@@ -23,7 +23,7 @@ export default function Home(props : any) {
                 },
             }}
         >
-            {props.pages.map((page: { name: Key | null | undefined; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
+            {props.pages.map((page: { name: Key | null | undefined; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
                 <Paper key={page.name} elevation={3} onClick={() => show(page.game)}>
                     {page.thumbnail}
                 </Paper>
