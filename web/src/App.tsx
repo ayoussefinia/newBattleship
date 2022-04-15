@@ -4,6 +4,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Box, Grid, Paper } from '@mui/material';
 import Board from './TicTacToe/board'
 import TicTacToe from './TicTacToe/TicTacToe';
+import ConnectFour from './ConnectFour/ConnectFour';
 import Home from './Home';
 
 const QUEUE_PLAYER = gql`
@@ -26,6 +27,7 @@ const [page, setPage] = useState(null);
 const exit = () => setPage(null);
 const pages = [ 
   new (TicTacToe as any)(exit),
+  new (ConnectFour as any)(exit),
 
 ];
 
