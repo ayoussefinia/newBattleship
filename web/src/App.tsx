@@ -3,7 +3,9 @@ import './App.css';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Box, Grid, Paper } from '@mui/material';
 import Board from './TicTacToe/board'
+import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
+import Battleship from './Battleship/Battleship'
 import Home from './Home';
 
 
@@ -14,8 +16,8 @@ const exit = () => setPage(null);
 
 /// ===========================================  Add Games Here
 const pages = [ 
-  new (TicTacToe as any)(exit),
-
+  TicTacToe,
+  Battleship
 ];
 // =========================================================
 
