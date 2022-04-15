@@ -12,28 +12,28 @@ for (let i = 1; i < 82; i++){
     if (rowToggle) { 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={25} >
+                <Grid item xs={0.8} >
                     <Dot></Dot>
                 </Grid>
             );
         } else { // minimum HTML button height 7px
             grid.push(
-                <Grid item xs={45} >
-                    <Line value={i} width="40px" height="20px"></Line>
+                <Grid item xs={2} >
+                    <Line value={i} width="100%" height="2px"></Line>
                 </Grid>
             );
         }
     }else{ 
         if (i % 2 == 1) {
             grid.push(
-                <Grid item xs={45} >
+                <Grid item xs={2} >
                     <Square></Square>
                 </Grid>
             );
         } else { // minimum HTML button width 16px
             grid.push(
-            <Grid item xs={25} >
-                <Line value={i} width="20px" height="40px"></Line>
+            <Grid item xs={0.8} >
+                <Line value={i} width="2px" height="100%"></Line>
             </Grid>
             );
         }
@@ -45,7 +45,7 @@ for (let i = 1; i < 82; i++){
 const Board =( props: any )=> {
     return (
         <Box>
-            <Grid container  width={305} height={305} columns={305} justifyContent={"center"}>
+            <Grid container>
                 {grid}
             </Grid>
         </Box>

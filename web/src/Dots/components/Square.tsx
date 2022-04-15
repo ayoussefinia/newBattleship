@@ -1,11 +1,20 @@
 const squareStyle = {
     background: 'blue',
-    height: '40px',
-    width: '40px',
+    height: '100%',
+    width: '100%',
 };
 
+const containerStyle = {
+    height: '15vh',
+    width: '100%'
+}
+
 const Square = () => {
-    return(<div style={squareStyle}></div>);
+    return(
+        <div style={containerStyle}>
+            <div style={squareStyle}></div>
+        </div>
+    );
 }
 
 export default Square;

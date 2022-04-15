@@ -5,10 +5,17 @@ const dotStyle = {
     width: '20px'
 };
 
+const containerStyle = {
+    height: '20px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center'
+}
+
 const Dot = () => {
 
     return(
-        <div>
+        <div style={containerStyle}>
             <div style={dotStyle}></div>
         </div>
     );
