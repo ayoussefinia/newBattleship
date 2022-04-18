@@ -8,6 +8,7 @@ import TicTacToe from './TicTacToe/TicTacToe';
 import Battleship from './Battleship/Battleship'
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
+import Simon from './Simon/Simon'
 
 
 function App() {
@@ -20,6 +21,7 @@ const pages = [
   TicTacToe,
   Battleship,
   RockPaperScissor,
+  Simon
   
 ];
 // =========================================================
