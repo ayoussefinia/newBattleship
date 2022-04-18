@@ -2,9 +2,6 @@ import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState} from "react";
 import Canvas from "../common/canvas";
 
-const TAKE_TURN = gql`mutation TakeTurn {
-    takeTurn(playerId: 'asdfafdasf', opponentId: 'asdfsaf', data: )
-  }`;
 
 export default function Board( props: any) {
     // useMutation(TAKE_TURN, { playerId: 'asdf', opponentId: 'asdf', data: JSON.stringify({

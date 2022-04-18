@@ -7,6 +7,7 @@ import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
 import Battleship from './Battleship/Battleship'
 import Home from './Home';
+import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 
 
 function App() {
@@ -17,7 +18,9 @@ const exit = () => setPage(null);
 /// ===========================================  Add Games Here
 const pages = [ 
   TicTacToe,
-  Battleship
+  Battleship,
+  RockPaperScissor,
+  
 ];
 // =========================================================
 

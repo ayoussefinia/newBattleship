@@ -22,3 +22,14 @@
     color: white;
     margin:10px 0px 100px 0px;
 }
+
+.playerSelection { 
+    margin-left: 365px; 
+}
+
+.opponentSelection {
+    color:black;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
