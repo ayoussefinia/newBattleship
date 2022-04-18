@@ -3,10 +3,14 @@ import Grid from '@mui/material/Grid';
 import Square from './components/Square';
 import Line from './components/Line';
 import Dot from './components/Dot';
-import { CenterFocusStrong } from '@mui/icons-material';
+import Graph from './Graph';
 
 // create board layout
 const grid: JSX.Element[] = [];
+// initialize game data structures - incapsulate in the graph file?
+const gameGraph = new Graph();
+const boxes = new Map();
+
 let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
 for (let i = 1; i < 82; i++){
     if (rowToggle) { 
@@ -16,7 +20,7 @@ for (let i = 1; i < 82; i++){
                     <Dot></Dot>
                 </Grid>
             );
-        } else { // minimum HTML button height 7px
+        } else { 
             grid.push(
                 <Grid item xs={2} >
                     <Line value={i} width="100%" height="2px"></Line>
@@ -30,7 +34,7 @@ for (let i = 1; i < 82; i++){
                     <Square></Square>
                 </Grid>
             );
-        } else { // minimum HTML button width 16px
+        } else { 
             grid.push(
             <Grid item xs={0.8} >
                 <Line value={i} width="2px" height="100%"></Line>

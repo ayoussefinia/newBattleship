@@ -1,4 +1,6 @@
-class Graph {
+import Vertex from './Vertex';
+
+export default class Graph {
     constructor(numVertices){
         this.numVertices = numVertices;
         this.AdjList = new Map();
@@ -16,7 +18,9 @@ class Graph {
     }
 
     // isComplete()
-    
+    isComplete(){
+
+    }
 
     // printGraph()
     printGraph(){

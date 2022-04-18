@@ -1,12 +1,12 @@
 const dotStyle = {
     background: 'purple',
     borderRadius: '50%',
-    height: '20px',
-    width: '20px'
+    height: '100%',
+    width: '100%',
 };
 
 const containerStyle = {
-    height: '20px',
+    height: '4rem',
     width: '100%',
     display: 'flex',
     justifyContent: 'center'

@@ -2,16 +2,44 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import Board from '../Dots/Board';
+
+const pageWidth = '100%';
+
+const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column' as 'column'
+}
+
+const topSectionStyle = {
+    width: pageWidth,
+    height: '30vh'
+}
+
+const gameBoardStyle = {
+    width: pageWidth,
+    maxHeight: 'auto',
+    display: 'flex',
+    justifyContent: 'center'
+}
+
+const buttonFooterStyle = {
+    width: pageWidth,
+    height: '20vh'
+}
 
 function DotsGame( props: any) {
     return (
-        <div>
-            <Box sx={{width: '80vw', height: 500}}>
-                <Container maxWidth="lg">
-                    <Board width='75vw' height='75vh'/>
+        <div style={containerStyle}>
+            <Box sx={topSectionStyle}></Box>
+            <Box sx={gameBoardStyle}>
+                <Container maxWidth="sm">
+                    <Board width='90%' height='100%'/>
+                </Container>
+            </Box>
+            <Box sx={buttonFooterStyle}>
+                <Container maxWidth="sm">
                     <button onClick={props.exit}>Leave</button>
                 </Container>
             </Box>
