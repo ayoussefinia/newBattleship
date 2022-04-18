@@ -5,8 +5,19 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { ButtonStatus, Color } from "./utils/enum";
 
+
+const enum Color {
+  RED = "RED",
+  BLUE = "BLUE",
+  GREEN = "GREEN",
+  YELLOW = "YELLOW",
+}
+
+const enum ButtonStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
 
 const sound = {
   red: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"),
@@ -78,9 +89,9 @@ const ALL_COLORS = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW];
 
 export default function Simon() {
   const classes = useStyles();
-  const players = ["Jili", "Brian"];
+  const players = ["Player1", "Player2"];
 
-  const [player, setPlayer] = useState("Brian");
+  const [player, setPlayer] = useState("");
   const [score, setScore] = useState(0);
 
   const [value, setValue] = React.useState<string>(players[0]);
@@ -217,7 +228,7 @@ export default function Simon() {
       
       <Grid container justifyContent="center" className={classes.root}>
         <Grid container justifyContent="center">
-          <h2>Welcome to Simon Game, please enter your name below. </h2>
+          <h2>Welcome to Simon Game. </h2>
         </Grid>
         <Grid container justifyContent="center">
           <Autocomplete
