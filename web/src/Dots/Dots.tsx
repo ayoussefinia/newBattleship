@@ -14,7 +14,7 @@ const containerStyle = {
 
 const topSectionStyle = {
     width: pageWidth,
-    height: '30vh'
+    height: 'auto'
 }
 
 const gameBoardStyle = {

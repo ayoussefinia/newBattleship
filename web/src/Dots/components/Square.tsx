@@ -1,5 +1,5 @@
 const squareStyle = {
-    background: 'blue',
+    background: 'rgba(0,0,0,0)',
     height: '100%',
     width: '100%',
 };

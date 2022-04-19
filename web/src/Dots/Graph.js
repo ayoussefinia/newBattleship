@@ -8,7 +8,7 @@ export default class Graph {
 
     // addVertex(v)
     addVertex(v){
-        this.AdjList.set(v, []);
+        this.AdjList.set(new Vertex(v), []);
     }
 
     // addEdge(v, w)

@@ -1,15 +1,16 @@
 const dotStyle = {
     background: 'purple',
     borderRadius: '50%',
-    height: '100%',
-    width: '100%',
+    height: '25px',
+    width: '25px'
 };
 
 const containerStyle = {
-    height: '4rem',
+    height: '100%',
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
 }
 
 const Dot = () => {
