@@ -6,9 +6,7 @@ export default function Game() {
 
     return (
         <>
-        <div className="centerWrapper">
-            <h3>BattleShip</h3>
-        </div>
+        
 
         <br/>
         <br/>

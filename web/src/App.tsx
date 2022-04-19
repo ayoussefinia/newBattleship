@@ -5,8 +5,11 @@ import { Box, Grid, Paper } from '@mui/material';
 import Board from './TicTacToe/board'
 import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
+import ConnectFour from './ConnectFour/ConnectFour';
 import Battleship from './Battleship/Battleship'
+
 import Home from './Home';
+import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 import MatchingGame from './MatchingGame/MatchingGame';
 
 const QUEUE_PLAYER = gql`
@@ -15,13 +18,7 @@ const QUEUE_PLAYER = gql`
   }
   `;
 
-const GET_STATUS = gql`
-  query ExampleQuery {
-    getStatus {
-      game
-    }
-  }
-  `;
+
 
 function App() {
 
@@ -30,18 +27,22 @@ const exit = () => setPage(null);
 const pages = [
   TicTacToe,
   Battleship,
-  MatchingGame
+  MatchingGame,
+  Battleship,
+  RockPaperScissor,
+  ConnectFour
 ];
+// =========================================================
 
 const home = <Home pages={pages} setPage={setPage} />;
 
-  //const [startGame, { data, loading, error }] = useMutation(QUEUE_PLAYER);
+  //
    //const { data, loading, error } = useQuery(GET_STATUS);
 
    //if (loading) return <p>'Submitting...'</p>;
    //if (error) return <p>`Submission error! ${error.message}`</p>;
 
-  return page||home;
+  return page || home;
 }
 
 export default App;

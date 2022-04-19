@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { WaitingRoom }  = require('./WaitingRoom.js');
+const { Connections } = require("./Connections.js");
 const fs = require('fs');
 
 fs.readFile('./schema.graphql', 'utf8', (err, data) => {
@@ -9,17 +10,31 @@ fs.readFile('./schema.graphql', 'utf8', (err, data) => {
   const typeDefs = gql(data);
   const resolvers = {
     Query: {
-      getStatus: (parent, args, context, info) => {
-        return WaitingRoom.getStatus();
-      }
+      ping: () => "pong"
     },
     Mutation: {
-      queuePlayer: (parent, args, context, info) => {
-        return WaitingRoom.queuePlayer(args.game);
+      takeTurn: (parent, args, context, info) => { 
+          Connections.incomingMessage(args);
+                  /* {
+                    playerId: 'asdfasdf',
+                    opponentId: 'fasfsfa',
+                    data: ? { }
+                  }*/
+          return "Ok!";
+      }
+    },
+    Subscription: {
+      playerConnected: (parent, args, context, info) => {
+        subscribe: Connections.playerConnected(args);
+        /* {
+          playerId: 'asdfasdf'
+        }*/
       }
     }
   };
   const server = new ApolloServer({ typeDefs, resolvers });
+
+
 
   // The `listen` method launches a web server.
   server.listen().then(({ url }) => {

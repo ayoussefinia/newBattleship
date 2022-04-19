@@ -1,13 +1,17 @@
   type Query {
-    getStatus: [Game]
+    ping: String
   }
 
   type Mutation {
-    queuePlayer(game: String!): String
+    takeTurn(playerId: String!, opponentId: String!, data: String): String
+  }
+
+  type Subscription {
+    playerConnected(game: String!): Game
   }
 
   type Game {
-    game: String
-    activeGameCount: Int
-    queueLength: Int
+    playerId: String
+    opponentId: String
+    data: String
   }
