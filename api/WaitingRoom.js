@@ -1,20 +1,26 @@
-const Relay = require('./GameRelay.js');
 const { v4: uuidv4 } = require('uuid');
 
 const games = { };
+const playerQueue = { };
+
+function addPlayerId(game, playerId) {
+    games[game] = playerId;
+    playerQueue[playerId] = game;
+}
 
 exports.WaitingRoom = {
     queuePlayer: (game) => {
         console.log(game);
-        if(!games[game]) {
-            games[game] = { game, queue: [], queueLength: 0, activeGameCount: 0 };
-        }
-        const sessionId = uuidv4();
-        games[game].queue.push({ sessionId, game });
-        games[game].queueLength = games[game].queue.length;
-        return sessionId;
+        const playerId = uuidv4();
+        addPlayerId(playerId, game);
+        return { playerId, opponentId: "none" };
     },
     getStatus: () => {
         return Object.keys(games).map(k => games[k]);
+    },
+    removePlayerId: (playerId) => {
+        const game = playerQueue[playerId];
+        delete playerQueue[playerId];
+        return game;
     }
 };

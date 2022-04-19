@@ -5,6 +5,7 @@ type CanvasProps = React.DetailedHTMLProps<React.CanvasHTMLAttributes<HTMLCanvas
 const Canvas: React.FC<CanvasProps> = ({draw, ...props}) => {
   
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d');
