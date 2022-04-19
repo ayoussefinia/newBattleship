@@ -10,6 +10,7 @@ import Battleship from './Battleship/Battleship'
 
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
+import SimonThumbNail from './Simon/SimonThumbNail'
 
 
 function App() {
@@ -22,6 +23,7 @@ const pages = [
   TicTacToe,
   Battleship,
   RockPaperScissor,
+  SimonThumbNail,
   ConnectFour
 ];
 // =========================================================
