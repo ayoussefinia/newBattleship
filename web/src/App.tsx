@@ -7,7 +7,6 @@ import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
 import ConnectFour from './ConnectFour/ConnectFour';
 import Battleship from './Battleship/Battleship'
-
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 import MatchingGame from './MatchingGame/MatchingGame';
