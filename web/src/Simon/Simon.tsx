@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-
 const enum Color {
   RED = "RED",
   BLUE = "BLUE",
@@ -27,7 +26,6 @@ const sound = {
 };
 
 const useStyles = makeStyles({
-
   root: {
     marginTop: 10,
     marginBottom: 10,
@@ -86,7 +84,6 @@ const useStyles = makeStyles({
 
 const ALL_COLORS = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW];
 
-
 export default function Simon() {
   const classes = useStyles();
   const players = ["Player1", "Player2"];
@@ -99,7 +96,6 @@ export default function Simon() {
 
   const [pattern, setPattern] = React.useState<Color[]>([]);
   const [playerPattern, setPlayerPattern] = React.useState<Color[]>([]);
-  
 
   const [redStatus, setRedStatus] = React.useState<ButtonStatus>(
     ButtonStatus.INACTIVE
@@ -114,7 +110,6 @@ export default function Simon() {
     ButtonStatus.INACTIVE
   );
   const [patternIndex, setPatternIndex] = React.useState<number>(0);
-
 
   const handleAnimation = async (color: Color) => {
     switch (color) {
@@ -161,71 +156,75 @@ export default function Simon() {
     }
   }; */
 
-  const runColors = ()=>{
-    let i=0;
-    let runColorSequence = setInterval (()=>{
+  const runColors = () => {
+    let i = 0;
+    let runColorSequence = setInterval(() => {
       handleAnimation(pattern[i]);
       i++;
-    if (i >= pattern.length){
-      clearInterval(runColorSequence)
-    }
-    }, 800)
-  }
+      if (i >= pattern.length) {
+        clearInterval(runColorSequence);
+      }
+    }, 800);
+  };
 
-
-  //reset game 
-  const reSetGame = () =>{  
+  //reset game
+  const reSetGame = () => {
     const randomColor = getRandomColor();
     setPattern([...pattern, randomColor]);
-    setPatternIndex(0)
-    setPlayerPattern([])   
-  }
+    setPatternIndex(0);
+    setPlayerPattern([]);
+  };
 
   useEffect(
-    () =>{
+    () => {
       //if (pattern.length === 0) {
-        console.log("loading pattern ...", pattern);
-        runColors() }, 
-      //},
-    [pattern]);
-
-
+      console.log("loading pattern ...", pattern);
+      runColors();
+    },
+    //},
+    [pattern]
+  );
 
   //generate player pattern
-  const generatePlayerPattern = (color: Color) =>{
-      setTimeout(()=>handleAnimation(color), 30);
-      //console.log(color)
-      setPlayerPattern([...playerPattern, color])
-      setPatternIndex(patternIndex+1)
-      
+  const generatePlayerPattern = (color: Color) => {
+    setTimeout(() => handleAnimation(color), 30);
+    //console.log(color)
+    setPlayerPattern([...playerPattern, color]);
+    setPatternIndex(patternIndex + 1);
   };
 
   //check move
 
-  const checkMove = () =>{
-      console.log("pattern", pattern);
-      console.log("playerPattern", playerPattern);
-      console.log("patternIndex", patternIndex);
-      ifCorrectMove();
-      if (patternIndex === pattern.length && patternIndex >0){
-        setTimeout(()=>{reSetGame()}, 800)
-  }}
+  const checkMove = () => {
+    console.log("pattern", pattern);
+    console.log("playerPattern", playerPattern);
+    console.log("patternIndex", patternIndex);
+    ifCorrectMove();
+    if (patternIndex === pattern.length && patternIndex > 0) {
+      setTimeout(() => {
+        setScore(patternIndex);
+        reSetGame();
+      }, 800);
+    }
+  };
 
-  const ifCorrectMove =()=>{
-    if (playerPattern[patternIndex-1] === pattern[patternIndex-1]){
-      console.log("correct move!")
-    } else {console.log("wrong move!")}
-  }
+  const ifCorrectMove = () => {
+    if (playerPattern[patternIndex - 1] === pattern[patternIndex - 1]) {
+      console.log("correct move!");
+    } else {
+      console.log("wrong move!");
+      alert("WRONG MOVE! END OF GAME!");
+      window.location.reload()
+    }
+  };
 
-  useEffect(
-    () =>{
+  useEffect(() => {
     console.log("loading player pattern ...", playerPattern);
-    checkMove()
-  }, [playerPattern])
-      
+    checkMove();
+  }, [playerPattern]);
+
   return (
     <>
-      
       <Grid container justifyContent="center" className={classes.root}>
         <Grid container justifyContent="center">
           <h2>Welcome to Simon Game. </h2>
@@ -253,7 +252,7 @@ export default function Simon() {
             className={`${classes.red} ${
               redStatus === ButtonStatus.ACTIVE ? classes.active : ""
             }`}
-            onClick={()=>generatePlayerPattern(Color.RED)}
+            onClick={() => generatePlayerPattern(Color.RED)}
           ></Button>
           <Button
             variant="contained"
