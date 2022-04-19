@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
-const { WaitingRoom }  = require('./WaitingRoom.js');
 const { Connections } = require("./Connections.js");
+
 const fs = require('fs');
 
 fs.readFile('./schema.graphql', 'utf8', (err, data) => {
@@ -32,13 +32,20 @@ fs.readFile('./schema.graphql', 'utf8', (err, data) => {
       }
     }
   };
-  const server = new ApolloServer({ typeDefs, resolvers });
 
 
 
+  const server = new ApolloServer({ typeDefs, resolvers, 
+  subscriptions: {
+    onConnect: (connectionParams, webSocket) => { 
+      return true;
+    }
+  }
+});
+  
   // The `listen` method launches a web server.
-  server.listen().then(({ url }) => {
-    console.log(` Server ready at ${url}`);
+  server.listen().then(({ url, subscriptionsUrl }) => {
+    console.log(` Server ready at ${url} and ${subscriptionsUrl}`);
   });
 });
 

@@ -28,12 +28,6 @@ const pages = [
 
 const home = <Home pages={pages} setPage={setPage} />;
 
-  //
-   //const { data, loading, error } = useQuery(GET_STATUS);
-
-   //if (loading) return <p>'Submitting...'</p>;
-   //if (error) return <p>`Submission error! ${error.message}`</p>;
-
   return page || home;
 }
 

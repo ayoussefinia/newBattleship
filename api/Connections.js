@@ -1,4 +1,3 @@
-const { WaitingRoom } = require("./WaitingRoom");
 const { PubSub } = require('graphql-subscriptions');
 
 const pubSub = new PubSub();
@@ -19,7 +18,7 @@ function expireId(playerId) {
 }
 
 function signalDisconnect(playerId) {
-    if(expired[playerId] && expired[playerId] != "none") pubsub.publish(expired[playerId], { error: "Other player disconnected" });
+    if(expired[playerId] && expired[playerId] != "none") pubSub.publish(expired[playerId], { error: "Other player disconnected" });
 }
 
 function isPlayerIdExpired(playerId) {
@@ -69,7 +68,7 @@ const startMatch = (player1, player2) => {
     player1.opponentId = player2.playerId;
     player2.opponentId = player1.playerId;
 
-    pubsub.publish(player1.playerId, { playerId: player1.playerId, opponentId: player2.playerId, data: { start: true }});
+    pubSub.publish(player1.playerId, { playerId: player1.playerId, opponentId: player2.playerId, data: { start: true }});
 };
 
 const takeTurn = (msg, playerId) => {
@@ -79,7 +78,7 @@ const takeTurn = (msg, playerId) => {
         expireId(playerId);
         signalDisconnect(playerId);
     } else {
-        pubsub.publish(msg.playerId, msg);
+        pubSub.publish(msg.playerId, msg);
     }
 };
 
@@ -96,7 +95,7 @@ exports.Connections = {
         const playerId = uuidv4();
         msg.playerId = playerId;
         openSocket(msg.game, msg.playerId);
-        return pubsub.asyncIterator(msg.playerId);        
+        return pubSub.asyncIterator(msg.playerId);        
     },
     incomingMessage: (msg) => {
         if(!msg.playerId) return;
