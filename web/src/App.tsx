@@ -5,7 +5,9 @@ import { Box, Grid, Paper } from '@mui/material';
 import Board from './TicTacToe/board'
 import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
+import ConnectFour from './ConnectFour/ConnectFour';
 import Battleship from './Battleship/Battleship'
+
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 import SimonThumbNail from './Simon/SimonThumbNail'
@@ -21,8 +23,8 @@ const pages = [
   TicTacToe,
   Battleship,
   RockPaperScissor,
-  SimonThumbNail
-  
+  SimonThumbNail,
+  ConnectFour
 ];
 // =========================================================
 
