@@ -11,7 +11,7 @@ const Line = ( props: any) => {
     const lineClickHandler=(event:any)=>{
         setDisableButton(true);
         setLineColor("red");
-        console.log(event.target.value, props.width, props.height);
+        console.log(props.value, props.width, props.height);
     }
     
     const lineStyle = {

@@ -25,9 +25,6 @@ while(tmp >= 12){
    gridLong--;
    tmp = t * gridLong;
 }
-//console.log("t:", t);
-//console.log("grid long:",gridLong);
-//console.log(tmp);
 let gridShort = (12 - tmp) / grid_size;
 
 // helper function - increment char to next ascii value
@@ -42,6 +39,7 @@ const grid: JSX.Element[] = [];
 const controller = new GameControl();
 
 let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
+let lc = 1;
 for (let i = 1; i < (size+1); i++){
     if (rowToggle) { 
         if (i % 2 === 1) {
@@ -54,9 +52,10 @@ for (let i = 1; i < (size+1); i++){
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridLong} >
-                    <Line value={i} width="100%" height="2px"></Line>
+                    <Line value={lc.toString()} width="100%" height="2px"></Line>
                 </Grid>
             );
+            lc++;
         }
     }else{ 
         if (i % 2 === 1) {
@@ -68,9 +67,10 @@ for (let i = 1; i < (size+1); i++){
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridShort} >
-                    <Line value={i} width="2px" height="90%"></Line>
+                    <Line value={lc.toString()} width="2px" height="90%"></Line>
                 </Grid>
             );
+            lc++;
         }
     }
     if (i % rowOffset === 0) { // detect when building next gameboard row
@@ -80,15 +80,16 @@ for (let i = 1; i < (size+1); i++){
 
 // console log grid
 //grid.map( elem => ( console.log(elem.props.children.type["name"])));
+console.log(grid);
 
 // Iterating over gameboard twice on initialization. The first time to build the game board grid, and the second time to set up the logic data structures
 
 // assuming rectanglur game board
+rowToggle = true;
 let queue: number[] = [];
 let dotCounter = 1;
 let lineCounter = 1;
 let boxLabel = 'A';
-rowToggle = true;
 let columnCounter = 0;
 let rowCounter = 1;
 console.log("grid size:", size);
@@ -98,13 +99,12 @@ for(let i = 1; i < (size+1); i++){
 
     if(rowToggle){ // (dot - line) rows
         if(elem === 'Dot'){
-            //console.log(i);
             //console.log("column counter:", columnCounter);
-            if(columnCounter === 0 || columnCounter === 8){
+            if((rowCounter === 1 || rowCounter === rowOffset) && (columnCounter === 0 || columnCounter === (rowOffset-1))){
                 controller.addDot(dotCounter,{ type: 'corner', boxes: []});
             }else{
                 //console.log("row counter:", rowCounter);
-                if(rowCounter === 1 || rowCounter === rowOffset){
+                if((rowCounter === 1 || rowCounter === rowOffset) || (columnCounter === 0 || columnCounter === (rowOffset-1))){
                     controller.addDot(dotCounter, {type: 'border', boxes: []});
                 }else{
                     controller.addDot(dotCounter, {type: 'inner', boxes: []});
@@ -128,7 +128,6 @@ for(let i = 1; i < (size+1); i++){
             boxLabel = nextChar(boxLabel);
         }
     }
-    //console.log("column counter:", columnCounter);
     columnCounter++;
     if (i % rowOffset === 0) { // detect when building next gameboard row
         rowToggle = !rowToggle;
