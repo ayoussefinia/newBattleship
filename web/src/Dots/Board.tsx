@@ -44,7 +44,7 @@ for (let i = 1; i < 82; i++){
 }
 const Board =( props: any )=> {
     return (
-        <Box>
+        <Box style={boxStyle}>
             <Grid container  width={305} height={305} columns={305} justifyContent={"center"}>
                 {grid}
             </Grid>
@@ -52,6 +52,13 @@ const Board =( props: any )=> {
     )
 }
 export default Board;
+
+
+const boxStyle = {
+    background: "grey",
+    width: "305px",
+    borderRadius: '1%',
+};
 
 //import { styled } from '@mui/material/styles';
 //import React, { Component, ReactElement, useState } from 'react';

@@ -5,12 +5,14 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Board from '../Dots/Board';
+import TopLayout from './components/TopLayout';
 
 function DotsGame( props: any) {
     return (
         <div>
             <Box sx={{width: '80vw', height: 500}}>
                 <Container maxWidth="lg">
+                    <TopLayout/>
                     <Board width='75vw' height='75vh'/>
                     <button onClick={props.exit}>Leave</button>
                 </Container>

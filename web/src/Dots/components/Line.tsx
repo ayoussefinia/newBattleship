@@ -17,7 +17,7 @@ const Line = ( props: any) => {
         background: lineColor,
         width: props.width,
         height: props.height,
-        // border-radius ??lmk 
+        borderRadius: '25%',
     };
     return(
         <button value={props.value} onClick={lineClickHandler} disabled={disableButton} 

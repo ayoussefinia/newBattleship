@@ -2,6 +2,7 @@ const squareStyle = {
     background: 'blue',
     height: '40px',
     width: '40px',
+    borderRadius: '25%',
 };
 
 const Square = () => {
