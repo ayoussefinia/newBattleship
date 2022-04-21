@@ -1,5 +1,5 @@
 const dotStyle = {
-    background: 'purple',
+    background: 'white',
     borderRadius: '50%',
     height: '25px',
     width: '25px'

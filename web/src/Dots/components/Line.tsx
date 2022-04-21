@@ -10,7 +10,7 @@ const Line = ( props: any) => {
 
     const lineClickHandler=(event:any)=>{
         setDisableButton(true);
-        setLineColor("red");
+        setLineColor("#1de2ae");
         console.log(props.value, props.width, props.height);
     }
     
@@ -39,15 +39,3 @@ const Line = ( props: any) => {
 }
 
 export default Line;
-
-// 'h' - horizontal, 'v' - vertical
-//import { red } from '@mui/material/colors';
-// import React, {Component, ReactElement, useState } from 'react';  
-
- //const [orientationHorizontal, setOrientation] = useState();
-
-        /*sx={{
-                width:   "12px", //props.width,    //? '75px' : '12px',
-                height:    "75px"//props.height   //? '12px' : '75px',//on 12.5px the height of row 2-9 lines change but not for row 1 lines 
-                                                                //12px is the minimum height anything under 12 stays the same                
-            }}*/
