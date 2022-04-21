@@ -5,7 +5,14 @@ import Square from './components/Square';
 import Line from './components/Line';
 import Dot from './components/Dot';
 import GameControl from './GameControl';
+import { ControlPointDuplicateRounded } from '@mui/icons-material';
 
+// helper function - increment char to next ascii value
+function nextChar(c: string) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+
+// game board layout/data object initialization
 const grid_size = 5; // EDIT TO CHANGE GRID SIZE. In terms of dots, grid_size x grid_size
 
 // define game board layout grid setting from grid size
@@ -26,11 +33,6 @@ while(tmp >= 12){
    tmp = t * gridLong;
 }
 let gridShort = (12 - tmp) / grid_size;
-
-// helper function - increment char to next ascii value
-function nextChar(c: string) {
-    return String.fromCharCode(c.charCodeAt(0) + 1);
-}
 
 // create board layout
 const grid: JSX.Element[] = [];
@@ -78,13 +80,7 @@ for (let i = 1; i < (size+1); i++){
     }
 }
 
-// console log grid
-//grid.map( elem => ( console.log(elem.props.children.type["name"])));
-console.log(grid);
-
 // Iterating over gameboard twice on initialization. The first time to build the game board grid, and the second time to set up the logic data structures
-
-// assuming rectanglur game board
 rowToggle = true;
 let queue: number[] = [];
 let dotCounter = 1;
@@ -92,40 +88,40 @@ let lineCounter = 1;
 let boxLabel = 'A';
 let columnCounter = 0;
 let rowCounter = 1;
-console.log("grid size:", size);
+let dotTemp = 0;
 for(let i = 1; i < (size+1); i++){
     // go row by row, alternating row types like above
     let elem = grid[i-1].props.children.type["name"];
 
     if(rowToggle){ // (dot - line) rows
         if(elem === 'Dot'){
-            //console.log("column counter:", columnCounter);
             if((rowCounter === 1 || rowCounter === rowOffset) && (columnCounter === 0 || columnCounter === (rowOffset-1))){
-                controller.addDot(dotCounter,{ type: 'corner', boxes: []});
+                controller.setDot(dotCounter,{ type: 'corner', boxes: []});
             }else{
-                //console.log("row counter:", rowCounter);
                 if((rowCounter === 1 || rowCounter === rowOffset) || (columnCounter === 0 || columnCounter === (rowOffset-1))){
-                    controller.addDot(dotCounter, {type: 'border', boxes: []});
+                    controller.setDot(dotCounter, {type: 'border', boxes: []});
                 }else{
-                    controller.addDot(dotCounter, {type: 'inner', boxes: []});
+                    controller.setDot(dotCounter, {type: 'inner', boxes: []});
                 }
             }
-            //console.log("dot counter:", dotCounter);
             queue.push(dotCounter);
             dotCounter++;
         }else if(elem === 'Line'){
-            controller.addLine(lineCounter.toString(), { endpoints: [dotCounter-1, dotCounter]});
+            controller.setLine(lineCounter.toString(), { endpoints: [dotCounter-1, dotCounter]});
             lineCounter++;
         }
     }else{ // (line - box) rows
         if(elem === 'Line'){
             let top = queue[0];
             queue.shift();
-            controller.addLine(lineCounter.toString(), { endpoints: [top, top+grid_size]});
+            controller.setLine(lineCounter.toString(), { endpoints: [top, top+grid_size]});
             lineCounter++;
         }else if(elem === 'Square'){
-            controller.addBox(boxLabel, { coords: [], owner: null, status: 0});
+            //controller.addBox(boxLabel, { sides: [lineCounter-grid_size, lineCounter, lineCounter+grid_size,lineCounter-1], owner: null, status: 0}); // sides: [top, right, bottom, left]
+            let dts = [dotTemp-grid_size, dotTemp-grid_size+1, dotTemp+1, dotTemp];
+            controller.setBox(boxLabel, { vertices: [dts[0],dts[1],dts[2],dts[3]], owner: null, status: 0}); // clockwise dot direction
             boxLabel = nextChar(boxLabel);
+            dotTemp++;
         }
     }
     columnCounter++;
@@ -133,11 +129,13 @@ for(let i = 1; i < (size+1); i++){
         rowToggle = !rowToggle;
         columnCounter = 0;
         rowCounter++;
+        dotTemp = dotCounter;
     }
 }
-
+controller.updateDots();
 controller.printController();
 
+// Board component
 const Board =( props: any )=> {
     const [gameGrid, setGameGrid] = useState(grid);
 

@@ -9,7 +9,9 @@ const pageWidth = '100%';
 const containerStyle = {
     display: 'flex',
     justifyContent: 'center',
-    flexDirection: 'column' as 'column'
+    flexDirection: 'column' as 'column',
+    background: '#DF2E0C',
+    height: '100vh'
 }
 
 const topSectionStyle = {
@@ -26,7 +28,7 @@ const gameBoardStyle = {
 
 const buttonFooterStyle = {
     width: pageWidth,
-    height: '20vh'
+    height: '100%'
 }
 
 function DotsGame( props: any) {
@@ -49,7 +51,13 @@ function DotsGame( props: any) {
 
 function Dots(this: any, exit: any) {
     this.game = <DotsGame exit={exit} />;
-    this.thumbnail = <div><h3>Dots</h3><Board width={256} height={200}/></div>;
+    this.thumbnail = 
+        <div>
+            <h3 style={{marginBottom: '0.2rem'}}>Dots</h3>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <img src={process.env.PUBLIC_URL + '/dots-thumbnail.png'} alt="dots-thumbnail" style={{width: '80%', height: '80%', borderRadius: '20px'}}/>
+            </div>
+        </div>;
     this.name = 'Dots';
 }
 

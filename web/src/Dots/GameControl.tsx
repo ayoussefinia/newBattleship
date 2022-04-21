@@ -9,20 +9,45 @@ export default class GameControl {
         this.boxes = new Map();
         this.lines = new Map();
         this.dots = new Map();
-        
+
     }
 
-    addDot(key: number, value: object) {
+    setDot(key: number, value: object) {
         this.dots.set(key, value);
     }
 
-    addLine(key: string, value: object ) {
+    getDot(key: number){
+        return this.dots.get(key);
+    }
+
+    setLine(key: string, value: object) {
         this.lines.set(key, value);
     }
 
-    addBox(key: string, value: object) {
+    getLine(key: string){
+        return this.lines.get(key);
+    }
+
+    setBox(key: string, value: object) {
         this.boxes.set(key, value);
     }
+
+    getBox(key: string){
+        return this.boxes.get(key);
+    }
+
+    updateDots(){ // write back box vertices to dots map, for cross-referencing in game logic 
+        this.boxes.forEach((value: any, key: string) => {
+            value.vertices.forEach((d: number) => {
+                let tmp = this.getDot(d);
+                tmp.boxes.push(key);
+                this.setDot(d, {type: tmp.type, boxes: tmp.boxes});
+                console.log(d, this.getDot(d));
+            })
+        });
+    }
+
+
 
     gameComplete() {
         // determine if every box is filled
