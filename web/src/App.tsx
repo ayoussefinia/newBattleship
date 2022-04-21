@@ -7,20 +7,30 @@ import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
 import ConnectFour from './ConnectFour/ConnectFour';
 import Battleship from './Battleship/Battleship'
-
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
+
+import MatchingGame from './MatchingGame/MatchingGame';
+
+const QUEUE_PLAYER = gql`
+  mutation Mutation($game: String!) {
+    queuePlayer(game: $game)
+  }
+  `;
+
+
 import SimonThumbNail from './Simon/SimonThumbNail'
+
 
 
 function App() {
 
 const [page, setPage] = useState(null);
 const exit = () => setPage(null);
-
-/// ===========================================  Add Games Here
-const pages = [ 
+const pages = [
   TicTacToe,
+  Battleship,
+  MatchingGame,
   Battleship,
   RockPaperScissor,
   SimonThumbNail,
@@ -29,12 +39,6 @@ const pages = [
 // =========================================================
 
 const home = <Home pages={pages} setPage={setPage} />;
-
-  //
-   //const { data, loading, error } = useQuery(GET_STATUS);
-
-   //if (loading) return <p>'Submitting...'</p>;
-   //if (error) return <p>`Submission error! ${error.message}`</p>;
 
   return page || home;
 }
