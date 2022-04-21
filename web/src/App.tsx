@@ -9,6 +9,7 @@ import ConnectFour from './ConnectFour/ConnectFour';
 import Battleship from './Battleship/Battleship'
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
+
 import MatchingGame from './MatchingGame/MatchingGame';
 
 const QUEUE_PLAYER = gql`
@@ -16,6 +17,9 @@ const QUEUE_PLAYER = gql`
     queuePlayer(game: $game)
   }
   `;
+
+
+import SimonThumbNail from './Simon/SimonThumbNail'
 
 
 
@@ -29,17 +33,12 @@ const pages = [
   MatchingGame,
   Battleship,
   RockPaperScissor,
+  SimonThumbNail,
   ConnectFour
 ];
 // =========================================================
 
 const home = <Home pages={pages} setPage={setPage} />;
-
-  //
-   //const { data, loading, error } = useQuery(GET_STATUS);
-
-   //if (loading) return <p>'Submitting...'</p>;
-   //if (error) return <p>`Submission error! ${error.message}`</p>;
 
   return page || home;
 }
