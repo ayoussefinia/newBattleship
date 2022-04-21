@@ -1,42 +1,48 @@
-import {useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Button';
 import Container from '@mui/material/Button';
+import { SportsRugbySharp } from '@mui/icons-material';
+
 const Line = ( props: any) => {
     
     const [disableButton, setDisableButton] = useState(false);
-    const [lineColor, setLineColor] = useState("white");
+    const [lineColor, setLineColor] = useState('#DF2E0C');
 
     const lineClickHandler=(event:any)=>{
-        setDisableButton(true);
-        setLineColor("red");
-        console.log(event.target.value, props.width, props.height);
+        if(!disableButton){
+            setDisableButton(true);
+            //setLineColor("#54DF0C");
+            //setLineColor("#12CDD4");
+            setLineColor("#FFFF6D");
+            console.log(props.value, props.width, props.height);
+        }
     }
     
     const lineStyle = {
         background: lineColor,
         width: props.width,
         height: props.height,
-        borderRadius: '25%',
+        padding: '0',
+        border: 'none'
+        // border-radius ??lmk 
     };
+
+    const containerStyle = {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgba(0,0,0,0)'
+    }
+
     return(
-        <button value={props.value} onClick={lineClickHandler} disabled={disableButton} 
-        style={lineStyle}
-        
-        />
+        <div style={containerStyle} onClick={lineClickHandler}>
+            <button value={props.value} disabled={disableButton} 
+            style={lineStyle}/>
+        </div>
     );
 }
 
 export default Line;
-
-// 'h' - horizontal, 'v' - vertical
-//import { red } from '@mui/material/colors';
-// import React, {Component, ReactElement, useState } from 'react';  
-
- //const [orientationHorizontal, setOrientation] = useState();
-
-        /*sx={{
-                width:   "12px", //props.width,    //? '75px' : '12px',
-                height:    "75px"//props.height   //? '12px' : '75px',//on 12.5px the height of row 2-9 lines change but not for row 1 lines 
-                                                                //12px is the minimum height anything under 12 stays the same                
-            }}*/
