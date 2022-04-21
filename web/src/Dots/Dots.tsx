@@ -45,27 +45,34 @@ const footerGroup = {
     justifyContent: 'center'
 }
 
+
+
 function DotsGame( props: any) {
 
     function mutePlayer(){
 
     }
 
+    function testCallback(e: any){
+        console.log(e);
+    }
+
     return (
         <div style={containerStyle}>
+            <Box></Box>
             <Box sx={gameBoardStyle}>
                 <Container maxWidth="sm">
-                    <Board width='90%' height='100%'/>
+                    <Board width='90%' height='50%'/>
                 </Container>
             </Box>
             <Box sx={buttonFooterStyle}>
                 <Container maxWidth="sm" sx={footerLayoutStyle}>
                     <div style={footerGroup}>
                         <Stack direction="row">
-                            <p>&#129324</p>
-                            <p>&#128514</p>
-                            <p>&#128077</p>
-                            <p>&#128520</p>
+                            <p onClick={testCallback}>&#129324;</p>
+                            <p>&#128514;</p>
+                            <p>&#128077;</p>
+                            <p>&#128520;</p>
                         </Stack>
                     </div>
                     <div style={footerGroup}>

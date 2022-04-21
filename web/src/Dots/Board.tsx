@@ -54,7 +54,7 @@ for (let i = 1; i < (size+1); i++){
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridLong} >
-                    <Line value={lc.toString()} width="100%" height="2px"></Line>
+                    <Line value={lc.toString()} width="100%" height="6px"></Line>
                 </Grid>
             );
             lc++;
@@ -69,7 +69,7 @@ for (let i = 1; i < (size+1); i++){
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridShort} >
-                    <Line value={lc.toString()} width="2px" height="90%"></Line>
+                    <Line value={lc.toString()} width="6px" height="90%"></Line>
                 </Grid>
             );
             lc++;

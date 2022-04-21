@@ -1,8 +1,8 @@
 const dotStyle = {
     background: 'white',
     borderRadius: '50%',
-    height: '25px',
-    width: '25px'
+    height: '15px',
+    width: '15px'
 };
 
 const containerStyle = {
@@ -23,5 +23,3 @@ const Dot = () => {
 }
 
 export default Dot;
-
-//import React, { Component, ReactElement, useState } from 'react';
