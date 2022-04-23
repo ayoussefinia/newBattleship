@@ -69,7 +69,7 @@ for (let i = 1; i < (size+1); i++){
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridShort} >
-                    <Line value={lc.toString()} width="6px" height="90%"></Line>
+                    <Line value={lc.toString()} width="6px" height="100%"></Line>
                 </Grid>
             );
             lc++;
@@ -144,11 +144,24 @@ const Board =( props: any )=> {
     });
     
     return (
-        <Box>
-            <Grid container>
+            <div  style={Style}>
+            <Grid container style={BoardStyle}>
                 {gameGrid}
             </Grid>
-        </Box>
+            </div>
     )
 }
 export default Board;
+
+const BoardStyle = {
+    width: "300px", 
+    height: "300px",
+    background: "black"  /*  #DF2E0C   <--Original color     */
+}
+
+const Style = {
+    width: "100%", 
+    background: "pink",   /*  #DF2E0C   <--Original color     */
+}
+
+

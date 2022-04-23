@@ -1,0 +1,30 @@
+.player-div{
+    display: grid;
+    background: blue;   /*  #DF2E0C   <--Original color     */
+    width: 105px;
+    justify-content: center;
+}
+
+.score{
+    display: flex;
+    border-radius: 18%;
+    background: white;
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+}
+
+.score-label{
+    font-size: small;
+    color: white;
+}
+
+.player-name{
+    font-size: large;
+    color: white;
+    font-weight: bold;
+}
+
+.emoji{
+    font-size: 50px;
+}

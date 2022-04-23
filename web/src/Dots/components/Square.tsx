@@ -1,19 +1,15 @@
 const squareStyle = {
-    background: 'rgba(0,0,0,0)',
-    height: '100%',
-    width: '100%',
+    background: 'white',
+    height: '50px',
+    width: '50px',
 };
 
-const containerStyle = {
-    height: '15vh',
-    width: '100%'
-}
+
 
 const Square = () => {
     return(
-        <div style={containerStyle}>
             <div style={squareStyle}></div>
-        </div>
+
     );
 }
 

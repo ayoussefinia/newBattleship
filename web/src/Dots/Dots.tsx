@@ -4,36 +4,10 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import Board from '../Dots/Board';
-import TopLayout from './components/TopLayout';
+import Board from './Board';
+import TopLayout from './components/TopLayout/TopLayout';
+import './Dots.css';
 
-const pageWidth = '100%';
-
-const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column' as 'column',
-    background: '#DF2E0C',
-    height: '100vh',
-    maxHeight: '100vh'
-}
-
-const topSectionStyle = {
-    width: pageWidth,
-    height: 'auto'
-}
-
-const gameBoardStyle = {
-    width: pageWidth,
-    maxHeight: 'auto',
-    display: 'flex',
-    justifyContent: 'center'
-}
-
-const buttonFooterStyle = {
-    width: pageWidth,
-    height: '100%'
-}
 
 const footerLayoutStyle = {
     display: 'grid',
@@ -59,14 +33,13 @@ function DotsGame( props: any) {
     }
 
     return (
-        <div style={containerStyle}>
+        <div className='game-style'>
             <TopLayout/>
-            <Box sx={gameBoardStyle}>
-                <Container maxWidth="sm">
-                    <Board width='90%' height='50%'/>
-                </Container>
-            </Box>
-            <Box sx={buttonFooterStyle}>
+            <Board />
+
+                
+            
+            <Box>
                 <Container maxWidth="sm" sx={footerLayoutStyle}>
                     <div style={footerGroup}>
                         <Stack direction="row">

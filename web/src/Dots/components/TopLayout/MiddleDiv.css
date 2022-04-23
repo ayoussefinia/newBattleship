@@ -1,0 +1,27 @@
+.middle-div{
+    display: grid;
+    background: brown;    /*  #DF2E0C   <--Original color     */
+    width: 90px;
+    justify-content: center;
+}
+
+.time{
+    display: flex;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.time-label{
+    font-size: small;
+    color: white;
+}
+.vs-label{
+    font-size: large;
+    font-weight: bold;
+    color: white;
+}
