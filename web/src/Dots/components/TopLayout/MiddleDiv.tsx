@@ -4,8 +4,10 @@ const MiddleDiv = () => {
   return (
     <div className="middle-div">
       <label className="vs-label">VS</label>
-      <div className="time">8.7s</div>
-      <label className="time-label">Time Left</label>
+      <div className="center time">
+        <div>8.7s</div>
+      </div>
+      <label className="center time-label">Time Left</label>
     </div>
   );
 };

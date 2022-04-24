@@ -2,7 +2,7 @@
     display: grid;
     background: brown;    /*  #DF2E0C   <--Original color     */
     width: 90px;
-    justify-content: center;
+    height: 100%;
 }
 
 .time{
@@ -12,6 +12,7 @@
     height: 42px;
     width: 42px;
     justify-content: center;
+    align-items: center;
     color: white;
     font-weight: bold;
 }
@@ -24,4 +25,9 @@
     font-size: large;
     font-weight: bold;
     color: white;
+    margin: 0.5em auto 0 auto;
+}
+
+.center {
+    margin: 0 auto;
 }

@@ -9,9 +9,11 @@ const PlayerStyle= {
   return (
     <div className="player-div">
       <label className="player-name" style={PlayerStyle}>{props.PlayerName}</label>
-      <div className="score">{props.TheScore}</div>
-      <label className="score-label">Score</label>
-      <label className="emoji">{props.Emoji}</label>
+      <div className="center score">
+        <div>{props.TheScore}</div>
+      </div>
+      <label className="center score-label">Score</label>
+      <label className="center emoji">{props.Emoji}</label>
     </div>
   );
 };

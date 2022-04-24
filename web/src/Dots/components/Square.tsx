@@ -1,15 +1,27 @@
-const squareStyle = {
-    background: 'white',
-    height: '50px',
-    width: '50px',
-};
+import { flexbox } from "@mui/system";
 
+const Square = (props: any) => {
+    const squareContainerStyle = {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+    
+    const squareStyle = {
+        background: 'rgba(0,0,0,0)',
+        height: props.width,
+        width: props.height,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    };
 
-
-const Square = () => {
     return(
-            <div style={squareStyle}></div>
-
+        <div style={squareContainerStyle}>
+            <div style={squareStyle}>{props.label}</div>
+        </div>
     );
 }
 

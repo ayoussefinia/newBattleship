@@ -20,8 +20,6 @@ const footerGroup = {
     justifyContent: 'center'
 }
 
-
-
 function DotsGame( props: any) {
 
     function mutePlayer(){
@@ -34,11 +32,9 @@ function DotsGame( props: any) {
 
     return (
         <div className='game-style'>
-            <TopLayout/>
-            <Board />
 
-                
-            
+            <TopLayout/>
+            <Board/>
             <Box>
                 <Container maxWidth="sm" sx={footerLayoutStyle}>
                     <div style={footerGroup}>
@@ -57,6 +53,7 @@ function DotsGame( props: any) {
                     </div>
                 </Container>
             </Box>
+            
         </div>
     );
 }

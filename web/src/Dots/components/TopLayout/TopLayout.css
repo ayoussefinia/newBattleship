@@ -3,8 +3,16 @@
   justify-content: space-between;
   align-items: center;
   background-color: purple;    /*  #DF2E0C   <--Original color     */
+  width: 100%;
+  padding-top: .5em;
 }
 
+.top-layout-grid{
+  display: grid;
+  grid-template-areas: 'left middle left';
+  grid-template-columns: fit-content(35%) auto fit-content(35%);
+  width: 100%;
+}
 
 
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Square from './components/Square';
 import Line from './components/Line';
@@ -42,6 +41,7 @@ const controller = new GameControl();
 
 let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
 let lc = 1;
+let boxLabel = 'A';
 for (let i = 1; i < (size+1); i++){
     if (rowToggle) { 
         if (i % 2 === 1) {
@@ -63,9 +63,10 @@ for (let i = 1; i < (size+1); i++){
         if (i % 2 === 1) {
             grid.push(
                 <Grid key={i} item xs={gridLong} >
-                    <Square></Square>
+                    <Square label={boxLabel} width="60px" height="60px"></Square>
                 </Grid>
             );
+            boxLabel = nextChar(boxLabel);
         } else { 
             grid.push(
                 <Grid key={i} item xs={gridShort} >
@@ -85,7 +86,7 @@ rowToggle = true;
 let queue: number[] = [];
 let dotCounter = 1;
 let lineCounter = 1;
-let boxLabel = 'A';
+boxLabel = 'A';
 let columnCounter = 0;
 let rowCounter = 1;
 let dotTemp = 0;
@@ -144,24 +145,27 @@ const Board =( props: any )=> {
     });
     
     return (
-            <div  style={Style}>
+        <div style={Style}>
             <Grid container style={BoardStyle}>
                 {gameGrid}
             </Grid>
-            </div>
+        </div>
     )
 }
 export default Board;
 
 const BoardStyle = {
-    width: "300px", 
-    height: "300px",
-    background: "black"  /*  #DF2E0C   <--Original color     */
+    width: "350px", 
+    height: "350px",
+    background: "rgba(0,0,0,0)"  /*  #DF2E0C   <--Original color     */
 }
 
 const Style = {
     width: "100%", 
-    background: "pink",   /*  #DF2E0C   <--Original color     */
+    background: "rgba(0,0,0,0)",   /*  #DF2E0C   <--Original color     */
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
 }
 
 

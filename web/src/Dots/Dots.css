@@ -1,8 +1,12 @@
 .game-style{
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: "auto";
     background: #DF2E0C;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+}
+
+@media screen and (max-width: 400px){
+    
 }
