@@ -1,5 +1,3 @@
-import { ConstructionOutlined } from "@mui/icons-material";
-
 export default class GameControl {
     boxes: any;
     lines: any;

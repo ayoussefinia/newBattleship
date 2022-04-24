@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import Square from './components/Square';
-import Line from './components/Line';
-import Dot from './components/Dot';
+import Square from './Square';
+import Line from './Line';
+import Dot from './Dot';
 import GameControl from './GameControl';
-import { ControlPointDuplicateRounded } from '@mui/icons-material';
 
 // helper function - increment char to next ascii value
 function nextChar(c: string) {
