@@ -8,13 +8,26 @@
     max-height: 100vh;
 }
 
+button, .opensans {
+    font-family: 'OpenSans';
+}
+
 .emoji {
-    font-size: 2rem;
+    font-size: 3.25rem;
     position: relative;
 }
 
+.center{
+    margin: 0 auto;
+}
+
 .emoji-lrg {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
+}
+
+.label {
+    font-family: 'OpenSans';
+    font-weight: 600;
 }
 
 .footer-group {
@@ -34,13 +47,25 @@
 
 .button-container {
     align-items: 'start';
-    margin-top: -2em;
+    /*margin-top: -1em;*/
 }
 
 .lg {
     font-size: 3rem;
 }
 
-@media screen and (max-width: 400px){
-    
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-justify_center {
+    justify-content: center;
+}
+
+.flex-align_center {
+    align-items: center;   
 }

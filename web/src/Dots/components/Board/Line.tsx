@@ -1,21 +1,24 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Button';
-import Container from '@mui/material/Button';
-import { SportsRugbySharp } from '@mui/icons-material';
 
+let turn = 0;
 const Line = ( props: any) => {
     
     const [disableButton, setDisableButton] = useState(false);
     const [lineColor, setLineColor] = useState('#DF2E0C');
 
     const lineClickHandler=(event:any)=>{
+        turn++;
         if(!disableButton){
             setDisableButton(true);
             //setLineColor("#54DF0C");
             //setLineColor("#12CDD4");
-            setLineColor("#FFFF6D");
-            console.log(props.value, props.width, props.height);
+            props.increment();
+            if (turn % 2 === 0){
+                setLineColor("#FFFF6D");
+            } else {
+                setLineColor("#12CDD4")
+            }
+            //console.log(props.value, props.width, props.height);
         }
     }
     
