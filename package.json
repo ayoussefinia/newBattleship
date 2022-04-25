@@ -19,5 +19,8 @@
   "homepage": "https://bitbucket.org/david_hinote/youversus#readme",
   "devDependencies": {
     "concurrently": "^7.1.0"
+  },
+  "dependencies": {
+    "apollo-server": "^3.6.7"
   }
 }

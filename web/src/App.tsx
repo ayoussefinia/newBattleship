@@ -31,7 +31,6 @@ const pages = [
   TicTacToe,
   Battleship,
   MatchingGame,
-  Battleship,
   RockPaperScissor,
   SimonThumbNail,
   ConnectFour

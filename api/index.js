@@ -1,53 +1,42 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { Connections } = require("./Connections.js");
+const { ApolloServer } = require('apollo-server');
+const { Connections } = require("./Connections");
+const { schema } = require('./schema')
 
-const fs = require('fs');
+const { randomUUID } = require('crypto');
 
-fs.readFile('./schema.graphql', 'utf8', (err, data) => {
-  if (err) throw err;
-  // Construct a schema, using GraphQL schema language
-  // WebSockets for players so we know if/when they drop
-  const typeDefs = gql(data);
+  const typeDefs = schema;
+
   const resolvers = {
     Query: {
-      ping: () => "pong"
+      checkMatchStatus: game => Connections.checkMatchStatus(game),
+
     },
     Mutation: {
-      takeTurn: (parent, args, context, info) => { 
-          Connections.incomingMessage(args);
-                  /* {
-                    playerId: 'asdfasdf',
-                    opponentId: 'fasfsfa',
-                    data: ? { }
-                  }*/
-          return "Ok!";
-      }
-    },
-    Subscription: {
-      playerConnected: (parent, args, context, info) => {
-        subscribe: Connections.playerConnected(args);
-        /* {
-          playerId: 'asdfasdf'
-        }*/
+      takeTurn: async (parent, args, context, info) => { 
+       //   Connections.takeTurn(args);
+          const response = new Promise((success, failure) => {
+            setTimeout(() => 
+            success({
+              playerId: randomUUID(),
+              opponentId: randomUUID(),
+              data: JSON.stringify({ row: 1, col: 1})
+            }), 5000);
+          });
+          return await response;
+      },
+      startGame: (parent, args, context, info) => { 
+        return "You are waiting in line";
       }
     }
   };
 
 
 
-  const server = new ApolloServer({ typeDefs, resolvers, 
-  subscriptions: {
-    onConnect: (connectionParams, webSocket) => { 
-      return true;
-    }
-  }
-});
+  const server = new ApolloServer({ typeDefs, resolvers });
   
-  // The `listen` method launches a web server.
-  server.listen().then(({ url, subscriptionsUrl }) => {
-    console.log(` Server ready at ${url} and ${subscriptionsUrl}`);
+  server.listen().then(({ url }) => {
+    console.log(` Server ready at ${url}`);
   });
-});
 
 
 
