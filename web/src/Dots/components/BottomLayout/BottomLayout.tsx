@@ -4,7 +4,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Emojis } from '../../../common/emojis';
-import { flexbox } from '@mui/system';
 
 export default function BottomLayout(props: any) {
     const [emojis, setEmojis] = useState([Emojis.Smiley, Emojis.Mocking, 

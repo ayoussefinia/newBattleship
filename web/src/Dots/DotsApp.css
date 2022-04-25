@@ -34,6 +34,7 @@
 
 .button-container {
     align-items: 'start';
+    margin-top: -2em;
 }
 
 .lg {
