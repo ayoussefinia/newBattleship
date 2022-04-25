@@ -1,18 +1,15 @@
-.top-layout{
+.top-layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #DF2E0C;    /*  #DF2E0C   <--Original color     */
+  background-color: #df2e0c; /*  #DF2E0C   <--Original color     */
   width: 100%;
-  padding-top: .5em;
+  padding-top: 0.5em;
 }
 
-.top-layout-grid{
+.top-layout-grid {
   display: grid;
-  grid-template-areas: 'left middle left';
+  grid-template-areas: "left middle left";
   grid-template-columns: fit-content(35%) auto fit-content(35%);
   width: 100%;
 }
-
-
-
