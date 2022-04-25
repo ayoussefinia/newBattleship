@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Square from './Square';
 import Line from './Line';
 import Dot from './Dot';
 import GameControl from './GameControl';
+import { Container } from '@mui/material';
 
 // helper function - increment char to next ascii value
 function nextChar(c: string) {
@@ -139,32 +141,41 @@ controller.printController();
 const Board =( props: any )=> {
     const [gameGrid, setGameGrid] = useState(grid);
 
+    const BoardStyle = {
+        width: "90%", 
+        height: "90%",
+        background: "rgba(0,0,0,0)"  /*  #DF2E0C   <--Original color     */
+    }
+    
+    const Style = {
+        width: "100%", 
+        background: "rgba(0,0,0,0)",   /*  #DF2E0C   <--Original color     */
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    }
+
     useEffect(() => {
         setGameGrid(grid);
     });
     
     return (
-        <div style={Style}>
-            <Grid container style={BoardStyle}>
-                {gameGrid}
-            </Grid>
-        </div>
+        <Container maxWidth="lg" sx={Style}>
+            <Paper elevation={3} sx={{
+                width: '100%', 
+                height: '100%', 
+                display: 'flex', 
+                justifyContent:'center', 
+                alignItems: 'center', 
+                marginTop: '2rem', 
+                background: 'rgba(0,0,0,0)'}}>
+                <Grid container style={BoardStyle}>
+                    {gameGrid}
+                </Grid>
+            </Paper>
+        </Container>
     )
 }
 export default Board;
-
-const BoardStyle = {
-    width: "350px", 
-    height: "350px",
-    background: "rgba(0,0,0,0)"  /*  #DF2E0C   <--Original color     */
-}
-
-const Style = {
-    width: "100%", 
-    background: "rgba(0,0,0,0)",   /*  #DF2E0C   <--Original color     */
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-}
 
 

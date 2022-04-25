@@ -1,30 +1,52 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import React, { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
 import Board from './components/Board/Board';
 import TopLayout from './components/TopLayout/TopLayout';
 import BottomLayout from './components/BottomLayout/BottomLayout';
 import './DotsApp.css';
 
 function DotsGame( props: any) {
+    const [playerEmoji, setPlayerEmoji] = useState("");
+    const [opponentEmoji, setOpponentEmoji] = useState("");
+    const [mute, setMute] = useState(false);
 
-    function mutePlayer(t: any){
-        console.log("mute opponent emots", t);
+    function mutePlayer(){
+        console.log("mute opponent emots");
+        let m = mute;
+        setMute(!m);
+        //setOpponentEmoji("");
     }
 
-    function sendEmot(){
+    function sendEmoji(emot: string){
         console.log("send emoji");
+        setPlayerEmoji(emot);
+
+        // TODO: emit emoji to opponent 
+        //
+
     }
 
+    // TODO: set the opponontEmoji state when emoji message received from opponent
+
+    //<Container className='game-style' sx={{
     return (
-        <div className='game-style'>
-            <TopLayout/>
+        
+        
+        <Container maxWidth='sm' sx={{
+            display: 'grid',
+            gridTemplateColumns: "auto",
+            gridTemplateRows: "25vh 50vh 25vh",
+            background: '#DF2E0C',
+            justifyContent: 'center',
+            width: '100vw',
+            height: '100vh',
+            }}>
+            <TopLayout emoji={playerEmoji} oppEmoji={opponentEmoji} muted={mute}/>
             <Board/>
-            <BottomLayout mute={mutePlayer} sendEmot={sendEmot}/>
-        </div>
+            <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
+        </Container>
+       
+
     );
 }
 

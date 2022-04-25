@@ -1,8 +1,15 @@
+.top-layout_container {
+  width: 100%;
+  height: 95%;
+  display: flex;
+  padding-bottom: 1rem;
+}
+
 .top-layout{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: purple;    /*  #DF2E0C   <--Original color     */
+  background-color: rgba(0,0,0,0);/*purple;    /*  #DF2E0C   <--Original color     */
   width: 100%;
   padding-top: .5em;
 }
@@ -10,7 +17,7 @@
 .top-layout-grid{
   display: grid;
   grid-template-areas: 'left middle left';
-  grid-template-columns: fit-content(35%) auto fit-content(35%);
+  grid-template-columns: 35vw auto 35vw;/*fit-content(35vw) auto fit-content(35vw);*/
   width: 100%;
 }
 

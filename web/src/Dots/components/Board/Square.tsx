@@ -1,5 +1,3 @@
-import { flexbox } from "@mui/system";
-
 const Square = (props: any) => {
     const squareContainerStyle = {
         width: '100%',
@@ -20,11 +18,17 @@ const Square = (props: any) => {
 
     return(
         <div style={squareContainerStyle}>
-            <div style={squareStyle}>{props.label}</div>
+            <div style={squareStyle}></div>
         </div>
     );
 }
 
 export default Square;
 
-//import React, { Component, ReactElement, useState } from 'react';
+/*
+return(
+        <div style={squareContainerStyle}>
+            <div style={squareStyle}>{props.label}</div>
+        </div>
+    );
+*/

@@ -1,10 +1,11 @@
 .player-div{
     display: grid;
-    background: blue;   /*  #DF2E0C   <--Original color     */
+    background: rgba(0,0,225, 0.9);   /*  #DF2E0C   <--Original color     */
     width: 105px;
     height: 100%;
     justify-content: center;
     grid-area: left;
+    border-radius: 12px;
 }
 
 .score{
