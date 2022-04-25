@@ -1,6 +1,6 @@
 .player-div{
     display: grid;
-    background: blue;   /*  #DF2E0C   <--Original color     */
+    background: #DF2E0C;   /*  #DF2E0C   <--Original color     */
     width: 105px;
     height: 100%;
     justify-content: center;
@@ -29,6 +29,7 @@
     font-weight: bold;
     margin: 0.5em auto;
 }
+
 
 .emoji{
     font-size: 50px;

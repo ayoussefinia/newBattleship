@@ -1,6 +1,6 @@
 .middle-div{
     display: grid;
-    background: brown;    /*  #DF2E0C   <--Original color     */
+    background: #DF2E0C;    /*  #DF2E0C   <--Original color     */
     width: 90px;
     height: 100%;
 }
