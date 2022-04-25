@@ -20,6 +20,7 @@ export default function Board(props: any){
             }
         }
     }
+    
     return <Canvas width={props.width} height={props.height} draw={drawArt}/>;
 }
 const degreesToRadians = (deg: number) => (deg * Math.PI)/180;

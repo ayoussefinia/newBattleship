@@ -11,6 +11,7 @@ import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 
 import MatchingGame from './MatchingGame/MatchingGame';
+import SimonThumbNail from './Simon/SimonThumbNail'
 
 const QUEUE_PLAYER = gql`
   mutation Mutation($game: String!) {
@@ -19,7 +20,7 @@ const QUEUE_PLAYER = gql`
   `;
 
 
-import SimonThumbNail from './Simon/SimonThumbNail'
+
 
 
 
