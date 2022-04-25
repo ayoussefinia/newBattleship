@@ -1,6 +1,4 @@
-const { PubSub } = require('graphql-subscriptions');
 
-const pubSub = new PubSub();
 
 const expired = { 
 
@@ -91,6 +89,9 @@ const takeTurn = (msg, playerId) => {
 }  */
 
 exports.Connections = {
+    checkMatchStatus: game => {
+        return "Not connected yet";
+    },
     playerConnected: (msg) => {
         const playerId = uuidv4();
         msg.playerId = playerId;

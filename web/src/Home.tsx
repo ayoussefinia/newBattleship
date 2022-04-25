@@ -2,8 +2,7 @@ import { gql, useSubscription } from "@apollo/client";
 import { Box, Paper } from "@mui/material";
 import { Key, ReactChild, ReactFragment, ReactPortal } from "react";
 import Relay from "./common/Relay";
-import Board from "./TicTacToe/board";
-import TicTacToe from "./TicTacToe/TicTacToe";
+
 
 export default function Home(props : any) {
     
@@ -26,7 +25,7 @@ export default function Home(props : any) {
         >
             {props.pages.map((page: { name: Key | null | undefined; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
                 <Paper key={page.name} elevation={3} onClick={() => show(page.game)}>
-                    <Relay>{page.thumbnail}</Relay>
+                    {page.thumbnail}
                 </Paper>
             )}
         </Box>
