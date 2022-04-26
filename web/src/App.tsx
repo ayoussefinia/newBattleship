@@ -6,7 +6,8 @@ import Board from './TicTacToe/board'
 import './common/assets/css/menu.css';
 import TicTacToe from './TicTacToe/TicTacToe';
 import ConnectFour from './ConnectFour/ConnectFour';
-import Battleship from './Battleship/Battleship'
+import Battleship from './Battleship/Battleship';
+import DotsApp from './Dots/DotsApp';
 import Home from './Home';
 import RockPaperScissor from './RockPaperScissor/RockPaperScissor'
 
@@ -32,10 +33,10 @@ const pages = [
   TicTacToe,
   Battleship,
   MatchingGame,
-  Battleship,
   RockPaperScissor,
   SimonThumbNail,
-  ConnectFour
+  ConnectFour,
+  DotsApp
 ];
 // =========================================================
 

@@ -1,0 +1,21 @@
+.top-layout_container {
+  width: 100%;
+  height: 95%;
+  display: flex;
+}
+
+.top-layout{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0);/*purple;    /*  #DF2E0C   <--Original color     */
+  width: 100%;
+  padding-top: 0.6em;
+}
+
+.top-layout-grid {
+  display: grid;
+  grid-template-areas: 'left middle left';
+  grid-template-columns: 35vw auto 35vw;/*fit-content(35vw) auto fit-content(35vw);*/
+  width: 100%;
+}

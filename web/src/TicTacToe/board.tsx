@@ -22,6 +22,10 @@ export default function Board( props: any) {
         
     }
 
-    return (<Canvas draw={drawBoard} height={props.height} width={props.width} />);
+    const onClicked = (x: number, y: number) => {
+
+    }
+
+    return (<Canvas clicked={onClicked} draw={drawBoard} height={props.height} width={props.width} />);
 
 }

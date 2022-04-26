@@ -1,0 +1,36 @@
+.middle-div{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    background: rgba(0,0,0,0);/*brown;    /*  #DF2E0C   <--Original color     */
+    width: 90px;
+    height: 100%;
+}
+
+.time {
+  display: flex;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  height: 42px;
+  width: 42px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.time-label {
+  font-size: small;
+  color: white;
+}
+
+.vs-label {
+  font-family: 'OpenSans';
+  font-size: large;
+  font-weight: bold;
+  color: white;
+  margin: 0.25em auto 0 auto;
+}
+
+.center {
+  margin: 0 auto;
+}
