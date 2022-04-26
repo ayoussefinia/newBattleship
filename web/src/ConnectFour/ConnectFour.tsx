@@ -12,10 +12,10 @@ function Game(props:any){
     return(<div><Board width={550} height={475}/><button onClick={props.exit}>Leave</button></div>);
 }
 
-function ConnectFour(this:any, exit:any){
-    this.game = <Game exit={exit}/>;
-    this.thumbnail = <div><h3>ConnectFour</h3><Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>;
-    this.name = 'ConnectFour';
+const ConnectFour = {
+    game: <Game />,
+    thumbnail: <div><h3>ConnectFour</h3><Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>,
+    name: 'ConnectFour'
 }
 
 export default ConnectFour;

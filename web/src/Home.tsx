@@ -6,7 +6,12 @@ import Relay from "./common/Relay";
 
 export default function Home(props : any) {
     
+    function exit() {
+        props.setPage(null);
+    }
+
     function show(page : any) {
+        //page.game.props.exit = exit;
         props.setPage(page);
     }
     
