@@ -8,7 +8,7 @@ interface Turn {
 }
 
 function Game(props: any) {
-    const [board, setBoard] = useState<Array<Array<string>>>([['o','x','x'],['x','x','x'],['x','x','x']]);
+    const [board, setBoard] = useState<Array<Array<boolean | null>>>([[null,false,true],[false,null,true],[true,false,null]]);
     const [turn, takeTurn] = useState<Turn | null>(null);
     
     useEffect(() => {
@@ -17,20 +17,18 @@ function Game(props: any) {
 
     props.setTurn = (data: Turn) => {
         const newBoard = board;
-        board[data.row][data.col] = 'x';
-        setBoard(board);
+        newBoard[data.row][data.col] = false;
+        setBoard(newBoard);
     };
       
-    return (!board?<p>waiting to connect to another player.</p>:<div><Board board={board} takeTurn={takeTurn} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
+    return (<div><Board board={board} takeTurn={takeTurn} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
 }
 
 
-function TicTacToe(this: any, exit: any) {
-
-
-    this.game = <Game exit={exit} />;
-    this.thumbnail = <div><h3>Tic Tac Toe</h3><Board width={256} height={200}/></div>;
-    this.name = 'Tic Tac Toe';
+const TicTacToe = {
+    game: <Game />,
+    thumbnail: <div><h3>Tic Tac Toe</h3><p> </p><Board width={256} height={200}/></div>,
+    name: 'Tic Tac Toe'
 }
 
 export default TicTacToe;

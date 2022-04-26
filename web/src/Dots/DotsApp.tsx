@@ -50,16 +50,16 @@ function DotsGame( props: any) {
     );
 }
 
-function Dots(this: any, exit: any) {
-    this.game = <DotsGame exit={exit} />;
-    this.thumbnail = 
+const Dots = {
+    game: <DotsGame />,
+    thumbnail:
         <div>
             <h3 style={{marginBottom: '0.2rem'}}>Dots</h3>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <img src={process.env.PUBLIC_URL + '/dots-thumbnail.png'} alt="dots-thumbnail" style={{width: '80%', height: '80%', borderRadius: '20px'}}/>
             </div>
-        </div>;
-    this.name = 'Dots';
-}
+        </div>,
+    name: 'Dots'
+};
 
 export default Dots;

@@ -44,7 +44,3 @@ const drawCircle = ({
         context.arc(x,y,radius, degreesToRadians(0), degreesToRadians(360), false);
         context.fill();
     };
-
-/*const onClick = (x:number, y:number) => {
-
-}*/

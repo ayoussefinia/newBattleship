@@ -28,15 +28,8 @@ function Game(props:any){
 
 const ConnectFour = {
     game: <Game />,
-    thumbnail: <div>
-                        <div className="centerWrapper">
-                            <h3>ConnectFour</h3>
-                        </div>
-                        <div className="centerWrapper">
-                            <Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/>
-                        </div>
-                    </div>,
-    name:'ConnectFour'
+    thumbnail: <div><h3>ConnectFour</h3><Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>,
+    name: 'ConnectFour'
 }
 
 export default ConnectFour;
