@@ -1,5 +1,11 @@
 import Board from "./board";
-import React, { useState, useEffect, useRef} from "react";
+//import React, { useState, useEffect, useRef} from "react";
+import Connect4image from "../common/assets/images/Connect4image.png"
+
+const gameBoard_height = 475;
+const gameBoard_width = 550;
+const gameBoard_offset = 1/44;
+const gameBoard_spacing = 3/22;
 
 const GAMEBOARD_EXAMPLE = [[0,0,0,0,0,0,0], 
                            [0,0,0,0,0,0,0],
@@ -17,16 +23,20 @@ let gameboard = [[0,0,0,0,0,0,0],
 
 function Game(props:any){
 
-    if(FourInARow(3,0)){
-        console.log("works. Player " + gameboard[3][0] + " wins.");
-    }
-    return(<div><Board id="playing_board" array={gameboard} width={550} height={475}/><button onClick={props.exit}>Leave</button></div>);
+    return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;
 }
 
-function ConnectFour(this:any, exit:any){
-    this.game = <Game exit={exit}/>;
-    this.thumbnail = <div><h3>ConnectFour</h3><Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>;
-    this.name = 'ConnectFour';
+const ConnectFour = {
+    game: <Game />,
+    thumbnail: <div>
+                        <div className="centerWrapper">
+                            <h3>ConnectFour</h3>
+                        </div>
+                        <div className="centerWrapper">
+                            <Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/>
+                        </div>
+                    </div>,
+    name:'ConnectFour'
 }
 
 export default ConnectFour;
@@ -59,9 +69,16 @@ function FourInARow(x:number, y:number ):boolean{
     }
     if(GAMEBOARD_EXAMPLE[newX][newY] === GAMEBOARD_EXAMPLE[x][y]){
         count = count+1;
-        console.log(count + " going " + xIncrement + ", " + yIncrement +" with a player " + GAMEBOARD_EXAMPLE[newX][newY]);
         return NextInLine(newX, newY, xIncrement, yIncrement, count);
     }else{
         return count;
     }
+}
+
+function onClick(x:number, y:number){
+    const offSet = gameBoard_width*gameBoard_offset;
+    const spacing = gameBoard_width*gameBoard_spacing;
+    let column:number = Math.trunc((x - offSet)/spacing);
+    if(column > 6){column = 6;}
+    alert('column = ' + column);
 }

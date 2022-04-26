@@ -6,10 +6,11 @@ const GAMEBOARD_COLUMNS = [2/19, 5/19, 8/19, 11/19, 14/19, 17/19];
 const GAMEBOARD_CIRCLE_RATIO = 1/22;
 
 
+
 export default function Board(props: any){
 
     const drawArt = (context: CanvasRenderingContext2D) => {
-        context.fillStyle = 'blue'
+        context.fillStyle = 'blue';
         context.fillRect(0 ,0 , props.width , props.height);
         for(let column = 0; column < GAMEBOARD_COLUMNS.length; column++){
             for(let row = 0; row < GAMEBOARD_ROWS.length; row++){
@@ -21,7 +22,7 @@ export default function Board(props: any){
         }
     }
     
-    return <Canvas width={props.width} height={props.height} draw={drawArt}/>;
+    return <Canvas clicked={props.onClick} width={props.width} height={props.height} draw={drawArt}/>;
 }
 const degreesToRadians = (deg: number) => (deg * Math.PI)/180;
 
@@ -43,3 +44,7 @@ const drawCircle = ({
         context.arc(x,y,radius, degreesToRadians(0), degreesToRadians(360), false);
         context.fill();
     };
+
+/*const onClick = (x:number, y:number) => {
+
+}*/
