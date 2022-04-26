@@ -23,7 +23,6 @@ const pages = [
   ConnectFour,
   DotsApp
 ];
-// =========================================================
 
 const home = <Home pages={pages} setPage={setPage} />;
 
