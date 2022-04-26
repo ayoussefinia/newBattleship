@@ -2,7 +2,7 @@
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     background: rgba(0,0,0,0);/*brown;    /*  #DF2E0C   <--Original color     */
-    width: 90px;
+    width: 60%;
     height: 100%;
 }
 
@@ -25,7 +25,7 @@
 
 .vs-label {
   font-family: 'OpenSans';
-  font-size: large;
+  font-size: 18px;
   font-weight: bold;
   color: white;
   margin: 0.25em auto 0 auto;

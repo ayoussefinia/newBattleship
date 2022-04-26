@@ -19,13 +19,14 @@ const PlayerDiv = (props: any) => {
       </div>
 
       <div className="flex flex-align flex-justify_center flex-column">
-        <div className="center score">
-          <div className="opensans">{props.score}</div>
+        <div className="center">
+          <div className="opensans score">{props.score}</div>
         </div>
         <label className="center score-label label">Score</label>
       </div>
-
-      <label className="center emoji">{props.emoji}</label>
+      <div className="center">
+      <div className="center emoji-player-div">{props.emoji}</div>
+      </div>
     </div>
   );
 };

@@ -22,7 +22,7 @@ button, .opensans {
 }
 
 .emoji-lrg {
-    font-size: 2.5rem;
+    font-size: 2.60rem;
 }
 
 .label {
@@ -42,12 +42,13 @@ button, .opensans {
     max-width: 100%;
     align-items: flex-end;
     padding-top: 1rem;
-    height: 70%;
+    height: 100%;
 }
 
 .button-container {
     align-items: 'start';
-    /*margin-top: -1em;*/
+    margin-top: 1.33em;
+    margin-bottom: 1em;
 }
 
 .lg {
