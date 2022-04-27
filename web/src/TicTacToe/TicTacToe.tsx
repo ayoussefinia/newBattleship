@@ -8,26 +8,32 @@ interface Turn {
 }
 
 function Game(props: any) {
-    const [board, setBoard] = useState<Array<Array<boolean | null>>>([[null,false,true],[false,null,true],[true,false,null]]);
+    const [board, setBoard] = useState<Array<Array<boolean | null>>>([[null,null,null],[null,null,null],[null,null,null]]);
     const [turn, takeTurn] = useState<Turn | null>(null);
     
-    useEffect(() => {
-        props.takeTurn(turn);
-    }, [turn]);
-
-    props.setTurn = (data: Turn) => {
+    const setTurn = (data: Turn) => {
         const newBoard = board;
         newBoard[data.row][data.col] = false;
         setBoard(newBoard);
     };
+
+    // Incoming Turn
+    useEffect(() => {
+        setTurn(props.turn);
+    }, [props.turn]);
+
+    // Outoging turn
+    useEffect(() => {
+        props.takeTurn(turn);
+    }, [turn]);
       
-    return (<div><Board board={board} takeTurn={takeTurn} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
+    return (<div><Board board={board} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
 }
 
 
 const TicTacToe = {
     game: <Game />,
-    thumbnail: <div><h3>Tic Tac Toe</h3><p> </p><Board width={256} height={200}/></div>,
+    thumbnail: <div><h3>Tic Tac Toe</h3><p> </p><Board board={[[true,null,null],[null,false,null],[null,null,true]]} width={256} height={200}/></div>,
     name: 'Tic Tac Toe'
 }
 

@@ -10,9 +10,8 @@ export default function Home(props : any) {
         props.setPage(null);
     }
 
-    function show(page : any) {
-        //page.game.props.exit = exit;
-        props.setPage(page);
+    function show(page : any, name: String) {
+        props.setPage(<Relay name={name} exit={exit}>{page}</Relay>);
     }
     
     return (<div>
@@ -29,7 +28,7 @@ export default function Home(props : any) {
             }}
         >
             {props.pages.map((page: { name: Key | null | undefined; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
-                <Paper key={page.name} elevation={3} onClick={() => show(page.game)}>
+                <Paper key={page.name} elevation={3} onClick={() => show(page.game, page.name)}>
                     {page.thumbnail}
                 </Paper>
             )}
