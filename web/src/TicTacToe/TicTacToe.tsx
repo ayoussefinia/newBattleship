@@ -27,7 +27,7 @@ function Game(props: any) {
         props.takeTurn(turn);
     }, [turn]);
       
-    return (<div><Board board={board} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
+    return (<div><Board board={board} takeTurn={takeTurn} width={window.innerWidth} height={window.innerHeight}/><button onClick={props.exit}>Leave</button></div>);
 }
 
 
