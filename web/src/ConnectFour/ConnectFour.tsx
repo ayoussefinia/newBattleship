@@ -1,6 +1,5 @@
 import Board from "./board";
 //import React, { useState, useEffect, useRef} from "react";
-import Connect4image from "../common/assets/images/Connect4image.png"
 
 const gameBoard_height = 475;
 const gameBoard_width = 550;
