@@ -1,3 +1,4 @@
+import { Rowing } from "@mui/icons-material";
 import Board from "./board";
 //import React, { useState, useEffect, useRef} from "react";
 
@@ -20,8 +21,13 @@ let gameboard = [[0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0]];
 
+const testcolumn = 2;
+const testrow = 5;
 function Game(props:any){
 
+    if(FourInARow(testcolumn, testrow)){
+        alert("Winner!");
+    }
     return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;
 }
 
@@ -33,15 +39,15 @@ const ConnectFour = {
 
 export default ConnectFour;
 
-function FourInARow(x:number, y:number ):boolean{
+function FourInARow(column:number, row:number ):boolean{
     let count = 0;
     let i = -1;
     for(let j = -1; j <= 1; j++){
-        if((NextInLine(x,y,i,j,count) + NextInLine(x,y,-i,-j,count)) >= 3){
+        if((NextInLine(column,row,i,j,count) + NextInLine(column,row,-i,-j,count)) >= 3){
             return true;
         }   
     }
-    if((NextInLine(x,y, 0, -1, count) + NextInLine(x,y,0,1,count)) >= 3){
+    if((NextInLine(column,row, 0, -1, count) + NextInLine(column,row,0,1,count)) >= 3){
         return true;
     }
     return false;
@@ -53,15 +59,15 @@ function FourInARow(x:number, y:number ):boolean{
    x/yIncrement values into the return 'false' 'if' and 'else' statements. This allows it to maintain the 
    counter and continue checking for a complete row in the opposite direction, but it would need an  
    additional condition to prevent it from repeating this process more than once.*/
-   function NextInLine(x:number, y:number, xIncrement:number, yIncrement:number, count:number):number{
-    let newX = x+xIncrement;
-    let newY = y+yIncrement;
-    if(newX < 0 || newY < 0 || newX > 5 || newY > 6){
+   function NextInLine(column:number, row:number, xIncrement:number, yIncrement:number, count:number):number{
+    let newColumn = column+xIncrement;
+    let newRow = row+yIncrement;
+    if(newColumn < 0 || newRow < 0 || newColumn > 5 || newRow > 6){
         return count;
     }
-    if(GAMEBOARD_EXAMPLE[newX][newY] === GAMEBOARD_EXAMPLE[x][y]){
+    if(GAMEBOARD_EXAMPLE[newColumn][newRow] === GAMEBOARD_EXAMPLE[column][row]){
         count = count+1;
-        return NextInLine(newX, newY, xIncrement, yIncrement, count);
+        return NextInLine(newColumn, newRow, xIncrement, yIncrement, count);
     }else{
         return count;
     }
