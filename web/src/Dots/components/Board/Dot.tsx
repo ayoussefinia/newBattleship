@@ -1,12 +1,4 @@
 const Dot = () => {
-    const dotStyle = {
-        background: 'white',
-        borderRadius: '50%',
-        height: '15px',
-        width: '15px',
-        transform: 'scale(1.5)'
-    };
-    
     const containerStyle = {
         height: '100%',
         width: '100%',
@@ -14,6 +6,14 @@ const Dot = () => {
         justifyContent: 'center',
         alignItems: 'center'
     }
+
+    const dotStyle = {
+        background: 'white',
+        borderRadius: '50%',
+        //height: 'auto',
+        width: '75%',
+        paddingBottom: '75%',
+    };
 
     return(
         <div style={containerStyle}>

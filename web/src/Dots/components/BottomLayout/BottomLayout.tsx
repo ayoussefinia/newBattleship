@@ -19,12 +19,12 @@ export default function BottomLayout(props: any) {
     }
     
     const footerButtons = {
-        width: '37.5%', 
+        width: '32.5%', 
         background: 'white',
         height: '2.5em',
         color: 'black',
         fontFamily: 'OpenSans',
-        fontSize: '1.25rem',
+        fontSize: '1rem',
         fontWeight: '600',
         borderRadius: '10px'
     }

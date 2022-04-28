@@ -174,13 +174,13 @@ const Board =( props: any )=> {
     
     return (
         <Container maxWidth="lg" sx={Style}>
-            <Paper elevation={3} sx={{
+            <Paper elevation={2} sx={{
                 width: '100%', 
                 height: '100%', 
                 display: 'flex', 
                 justifyContent:'center', 
                 alignItems: 'center', 
-                marginTop: '2rem', 
+                marginTop: '1rem', 
                 background: 'rgba(0,0,0,0)'}}>
                 <Grid container style={BoardStyle}>
                     {gameGrid}
