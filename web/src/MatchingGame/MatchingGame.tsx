@@ -1,7 +1,6 @@
 import Board from "./Board/Board";
 import React, { useRef } from "react";
-import match from "./Images/match.png"
-
+import match from "./Images/match.png";
 
 
 function Game(props: any) {

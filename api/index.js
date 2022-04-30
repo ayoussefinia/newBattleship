@@ -4,12 +4,14 @@ const { schema } = require('./schema')
 
 const { randomUUID } = require('crypto');
 
+
+
   const typeDefs = schema;
 
   const resolvers = {
     Query: {
-      checkMatchStatus: game => Connections.checkMatchStatus(game),
-
+      // checkMatchStatus: game => Connections.checkMatchStatus(game),
+      testQuery: (parent, {payload})=> {return payload+payload}
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
@@ -26,7 +28,8 @@ const { randomUUID } = require('crypto');
       },
       startGame: (parent, args, context, info) => { 
         return "You are waiting in line";
-      }
+      },
+      testMutation:(parent, {payload})=>{return payload }
     }
   };
 

@@ -5,12 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloProvider } from '@apollo/client';
 import client from './GraphQL';
+import ExampleMuation from './ExampleMutation';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(rootElement);
 root.render(<ApolloProvider client={client}>
               <App />
+              {/* <ExampleMuation/> */}
             </ApolloProvider>);
 
 // If you want to start measuring performance in your app, pass a function

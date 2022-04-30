@@ -1,11 +1,26 @@
 import Game from "./Game";
-import React, { useRef} from "react";
+import React, { useRef, useContext} from "react";
 import testBattleShip from "../common/assets/images/testBattleShip.jpg"
+import { AppContext } from '../AppContext';
+import Relay from '../common/Relay';
+
 
 
 
 function game( props: any) {
-    return <div><Game></Game></div>
+    // var text = useContext(AppContext);
+    //console.log(props['test'])
+   
+    return <div><Game/></div>
+    //return (<AppContext.Consumer>{value => (<Game data={value}></Game>)}</AppContext.Consumer>)
+    //return (<AppContext.Consumer><Game></Game></AppContext.Consumer>)
+
+
+
+    // var text = useContext(AppContext);
+    // // console.log(text)
+   
+    // return <div><Game text={text}/></div>
 } 
 
 const BattleShip = {

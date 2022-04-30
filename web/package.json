@@ -21,6 +21,7 @@
     "react-dom": "^18.1.0-next-5b2e7253f-20220408",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.3",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

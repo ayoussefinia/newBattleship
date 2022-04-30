@@ -84,7 +84,7 @@ const useStyles = makeStyles({
 
 const ALL_COLORS = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW];
 
-export default function Simon() {
+export default function Simon(props:any) {
   const classes = useStyles();
   const players = ["Player1", "Player2"];
 
@@ -179,6 +179,7 @@ export default function Simon() {
     () => {
       //if (pattern.length === 0) {
       console.log("loading pattern ...", pattern);
+   
       runColors();
     },
     //},
@@ -222,6 +223,8 @@ export default function Simon() {
     console.log("loading player pattern ...", playerPattern);
     checkMove();
   }, [playerPattern]);
+
+
 
   return (
     <>
