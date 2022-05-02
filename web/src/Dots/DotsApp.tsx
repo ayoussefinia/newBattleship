@@ -14,20 +14,23 @@ function DotsGame( props: any) {
     const [opponentColor, setOpponentColor] = useState("#12CDD4")
     const [mute, setMute] = useState(false);
 
+    let g = { // your GameInput object to pass to 'startGame' mutation
+        playerId: 'wwwwwww',
+        opponentId: 'zzzzzzz',
+        data: 'dssdassd'
+    }
+
     // trigger the API mutation to start game
     function starting(){
         //setStart(true);
         props.start(true);
-        let g = { // your GameInput object to pass to 'startGame' mutation
-            playerId: 'wwwwwww',
-            opponentId: 'zzzzzzz',
-            data: 'dssdassd'
-        }
         props.gameObject(g);
     }
 
 
+    function setTurn(){
 
+    }
 
 
     function mutePlayer(){

@@ -14,7 +14,6 @@ const Board =( props: any )=> {
     const [boardReady, setBoardReady] = useState(false);
 
     /************ INITIALIZE BOARD **************************************/
-    // helper function - increment char to next ascii value
     function initializeBoard(){
         // game board layout/data object initialization
         const grid_size = 5; // EDIT TO CHANGE GRID SIZE. In terms of dots, grid_size x grid_size
@@ -143,11 +142,12 @@ const Board =( props: any )=> {
         //props.starting();
         return grid;
     }
+    /********************************************************************* */
 
+    // helper function - increment char to next ascii value
     function nextChar(c: string) {
         return String.fromCharCode(c.charCodeAt(0) + 1);
     }
-    /********************************************************************* */
 
     const BoardStyle = {
         width: "90%", 

@@ -17,7 +17,7 @@ export default function StartGame(props: any) {
 
     useEffect(()=>{
         startGame({ variables: { game: props.gameObj as GameInput}});
-        console.log(props.gameObj);
+        console.log("starting a game: ", props.gameObj);
     },[]);
 
     useEffect(() =>{

@@ -10,7 +10,6 @@ export default function Home(props : any) {
     }
 
     function show(page : any) {
-        //console.log(typeof page());
         props.setPage(<Relay exit={exit}>{page}</Relay>);
         //props.setPage(<Relay>{React.cloneElement(page, { test: "hiiiuuuu", exit: exit })}</Relay>);
     }

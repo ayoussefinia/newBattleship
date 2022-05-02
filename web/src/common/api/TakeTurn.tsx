@@ -17,7 +17,7 @@ export default function TakeTurn(props: any) {
 
     useEffect(()=>{
         takeTurn({ variables: { game: props.gameObj as GameInput}});
-        console.log(props.gameObj);
+        console.log("taking a turn: ", props.gameObj);
     },[]);
 
     useEffect(() =>{
