@@ -5,7 +5,7 @@ import TopLayout from './components/TopLayout/TopLayout';
 import BottomLayout from './components/BottomLayout/BottomLayout';
 import './DotsApp.css';
 
-function DotsGame( props: any) {
+function DotsGame( props: any) { 
     const [playerEmoji, setPlayerEmoji] = useState("");
     const [playerIcon, setPlayerIcon] = useState(1);
     const [playerColor, setPlayerColor] = useState("#FFFF6D");
@@ -13,6 +13,22 @@ function DotsGame( props: any) {
     const [opponentIcon, setOpponentIcon] = useState(5);
     const [opponentColor, setOpponentColor] = useState("#12CDD4")
     const [mute, setMute] = useState(false);
+
+    // trigger the API mutation to start game
+    function starting(){
+        //setStart(true);
+        props.start(true);
+        let g = { // your GameInput object to pass to 'startGame' mutation
+            playerId: 'wwwwwww',
+            opponentId: 'zzzzzzz',
+            data: 'dssdassd'
+        }
+        props.gameObject(g);
+    }
+
+
+
+
 
     function mutePlayer(){
         console.log("mute opponent emots");
@@ -31,7 +47,6 @@ function DotsGame( props: any) {
     }
 
     // TODO: set the opponontEmoji state when emoji message received from opponent
-
     
     return (    
         <Container maxWidth='sm' sx={{
@@ -44,7 +59,7 @@ function DotsGame( props: any) {
             height: '100vh',
             }}>
             <TopLayout emoji={playerEmoji} icon={playerIcon} color={playerColor} oppEmoji={opponentEmoji} oppIcon={opponentIcon} oppColor={opponentColor} muted={mute}/>
-            <Board/>
+            <Board starting={starting}/>
             <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
         </Container>
     );

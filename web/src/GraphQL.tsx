@@ -11,4 +11,13 @@ import {
     cache: new InMemoryCache()
   });
 
+  /*client
+    .query({
+      query: gql`
+        query {
+          checkMatchStatus(game: {playerId: "howdy", opponentId: "fine", data: "dwqdwq"})
+        }
+      `
+    }).then(result => console.log(result));*/
+
   export default client;

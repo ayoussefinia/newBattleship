@@ -3,6 +3,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { gql, useMutation, useQuery} from '@apollo/client';
 import { AppContext } from "../AppContext";
+import GameInput from "./GameInput";
+import StartGame from "./api/StartGame";
+
 // interface Game {
 //   playerId: String;
 //   opponentId: String;
@@ -21,75 +24,25 @@ import { AppContext } from "../AppContext";
 
 export default function Relay(props: any) {
 
-
-  const TEST_MUTATION=gql`
-  mutation {
+  /*const TEST_MUTATION=gql`
+    mutation {
       testMutation(payload: "hello")
-  }
-  `;
-  useEffect(()=>{
-    testMutation();
-},[])
+    }
+  `;*/
 
-// var text = useContext(AppContext);
-// console.log(text)
-var text= {
-  playerID:"hi now",
-  data: {},
-  opponentID: 'yoooooo'
+  const [startMatch, setStartMatch] = useState(false);
+  const [gameObj, setGameObj] = useState({} as GameInput);
+
+  return (
+    <div>
+      {startMatch && <StartGame gameObj={gameObj}/>}
+      {React.Children.map(props.children, child => (
+        React.cloneElement(child, {
+          exit: props.exit,
+          start: setStartMatch,
+          gameObject: setGameObj
+        })
+      ))}
+    </div>
+  );
 }
-
-// return <div><Game text={text}/></div>
-
-  const [testMutation, { data, loading, error }] = useMutation(TEST_MUTATION);
-
-  return <AppContext.Provider value={text}>{props.children}</AppContext.Provider>
-}
-
-// var Wrapper = React.createClass({
-//   render: function() {
-//     return (
-//       <div className="wrapper">
-//         before
-//           {this.props.children}
-//         after
-//       </div>
-//     );
-//   }
-// });
-// export default function Relay(props: any) {
-
-//   console.log(props.children)
-//       const child = props.children[0];
-
-//       child.props.takeTurn = (data: any) => {
-
-//       };
-
-//       const { data, loading } = useSubscription<Game>(
-//           QUEUE_PLAYER,
-//           { variables: { game: props.game } }
-//       );
-
-//       useEffect(() => {
-//           child.props.setTurn(data?.data)
-//       }, [data]);
-
-//     return child;
-
-// }
-// class Relay extends Component {
-  //   constructor(props: any){
-  //     super(props)
-  //     // props.children[0].props.something = 'hello';
-  //    this.state = {greeting: 'hello'}
-  
-  //   }
-  
-    
-  //   render() {
-  //     return (<div>{this.props.children}</div>);
-  //   }
-  // }
-  
-  // export default Relay;

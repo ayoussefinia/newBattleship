@@ -40,7 +40,7 @@ export default class GameControl {
                 let tmp = this.getDot(d);
                 tmp.boxes.push(key);
                 this.setDot(d, {type: tmp.type, boxes: tmp.boxes});
-                console.log(d, this.getDot(d));
+                //console.log(d, this.getDot(d));
             })
         });
     }

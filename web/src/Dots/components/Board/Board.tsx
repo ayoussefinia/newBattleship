@@ -9,8 +9,9 @@ import { Container } from '@mui/material';
 
 // Board component
 const Board =( props: any )=> {
-    const [gameGrid, setGameGrid] = useState( () => initializeBoard());
+    const [gameGrid, setGameGrid] = useState(() => initializeBoard());
     const [counter, setCounter] = useState(0);
+    const [boardReady, setBoardReady] = useState(false);
 
     /************ INITIALIZE BOARD **************************************/
     // helper function - increment char to next ascii value
@@ -138,8 +139,8 @@ const Board =( props: any )=> {
             }
         }
         controller.updateDots();
-        controller.printController();
-
+        //controller.printController();
+        //props.starting();
         return grid;
     }
 
@@ -168,9 +169,10 @@ const Board =( props: any )=> {
         setCounter(c);
     }
 
-    //useEffect(() => {
-    //    setGameGrid(grid);
-    //});
+    // triggers useEffect only once
+    useEffect(() => {
+        props.starting()
+    }, []);
     
     return (
         <Container maxWidth="lg" sx={Style}>
