@@ -3,13 +3,15 @@ const { gql } = require('apollo-server');
 module.exports.schema = gql`
   type Query {
     testQuery(payload: String!): String
+    getGameData(payload: String!): String
   }
 
 
   type Mutation {
-    takeTurn(game: GameInput!): GameOutput
-    startGame(game: GameInput!): String
+    takeTurn(payload: String!): String
+    startGame(payload:String!):String
     testMutation(payload: String!): String
+    turnResult(payload: String!): String
   }
 
   type GameOutput {
@@ -23,3 +25,8 @@ module.exports.schema = gql`
     opponentId: String
     data: String
   }`;
+
+
+
+  // """startGame(game: GameInput!): String"""
+  // takeTurn(game: GameInput!): GameOutput
