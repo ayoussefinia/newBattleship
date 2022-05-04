@@ -14,6 +14,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 // import ActiveGameMessage from './ActiveGameMessage';
 import { CSSTransition } from 'react-transition-group';
 import './border.scss'
+import './game.css'
 
 
 
@@ -485,11 +486,24 @@ export default  function BattleShip() {
         let halfShipHeight = 20;
         let vert = false;
         switch (ship) {
-            case 'battleship': leftShip = 2, rightShip = 2, upShip = 0, downShip = 4,  vert = gameState.battleShipVertical;
+            case 'battleship': leftShip = 2
+                rightShip = 2
+                upShip = 0
+                downShip = 4
+                vert = gameState.battleShipVertical;
                 break;
-            case 'carrier' : leftShip = 3, rightShip = 2, upShip = 0, downShip = 5, vert = gameState.carrierVertical;
+            case 'carrier' : 
+                leftShip = 3 
+                rightShip = 2 
+                upShip = 0
+                downShip = 5 
+                vert = gameState.carrierVertical;
                 break
-            case 'destroyer' : leftShip = 1, rightShip = 1, upShip = 0, downShip = 2, vert = gameState.destroyerVertical;
+            case 'destroyer' : leftShip = 1
+                rightShip = 1 
+                upShip = 0 
+                downShip = 2
+                vert = gameState.destroyerVertical;
                 break
         }
         if (!vert){
@@ -512,7 +526,7 @@ export default  function BattleShip() {
     }
 
     function placeShip(ship: any, gridX:any, gridY:any){
-        setGameGridCursor({cursor: 'auto'})
+        // setGameGridCursor({cursor: 'auto'})
         if(ship == 'battleship') {
             const battleShip = [...gameState.battleShip];
             for(var i=0; i<battleShip.length; i++) {
@@ -538,6 +552,7 @@ export default  function BattleShip() {
             setGameState({...gameState, destroyerPlaced:true, destroyer:destroyer})
             console.log(gameState.destroyer);
        }
+       console.log(gameState)
 
    }
 
@@ -985,7 +1000,7 @@ function clicked() {
 
     return(
 
-        <div className='gameBody'  onClick={clicked}>
+        <div  onClick={clicked} className="noSelect gameBody">
             {/* {gameState.gameStarted ? <GameStartedMessage uuid={gameState.uuid}/> : <div/>} */}
             <div className='centerWrapper'>
                 <div
@@ -1035,7 +1050,27 @@ function clicked() {
                                                                         
                                                              ></div>)}) 
                         )})} */}
-                        <CSSTransition in={gameState.carrierPlaced && gameState.turn != gameState.uuid} timeout={1000} 
+                        {/* temproary because uuid issues, remove later*/}
+                        <CSSTransition in={gameState.carrierPlaced} timeout={1000} 
+                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
+                            <>
+                                 <div onClick={handleGridCarrierClick} style={gridCarrierStyle}> </div>
+                            </>
+                        </CSSTransition>
+                        <CSSTransition in={gameState.battleShipsPlaced} timeout={1000} 
+                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
+                            <>
+                            <div onClick={handleGridBattleShipClick} style={gridBattleShipStyle}> </div>
+                            </>
+                        </CSSTransition>
+                        <CSSTransition in={gameState.destroyerPlaced} timeout={1000}
+                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
+                            <>
+                             <div onClick={handleGridDestroyerClick} style={gridDestroyerStyle}> </div>
+                            </>
+                        </CSSTransition>
+                        {/* uncomment below out when uuid is fixed */}
+                        {/* <CSSTransition in={gameState.carrierPlaced && gameState.turn != gameState.uuid} timeout={1000} 
                         mountOnEnter={true} unmountOnExit={true} classNames="fade">
                             <>
                                  <div onClick={handleGridCarrierClick} style={gridCarrierStyle}> </div>
@@ -1052,7 +1087,7 @@ function clicked() {
                             <>
                              <div onClick={handleGridDestroyerClick} style={gridDestroyerStyle}> </div>
                             </>
-                        </CSSTransition>
+                        </CSSTransition> */}
 
                         
                         
@@ -1123,7 +1158,7 @@ function clicked() {
                                     mountOnEnter={true} unmountOnExit={true} classNames="fade">
                                         <>
                                         <div className='manipulateShipPanel'>
-                                            <div className='manipulateTitle'>Position Ship</div>
+                                            <div className='manipulateTitle noSelect'>Position Ship</div>
                                             <div style={arrowUpContainer}>
                                                 <FontAwesomeIcon  icon={faArrowUp} 
                                                                 style={arrowStyles}  
