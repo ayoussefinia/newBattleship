@@ -48,3 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+#Stupid lock files
+yarn.lock
+package-lock.json
