@@ -1,41 +1,24 @@
 const { ApolloServer } = require('apollo-server');
-const { Connections } = require("./Connections");
-const { schema } = require('./schema')
+const gql = require('graphql');
+const { typeDefs } = require('./schema');
+const { queue } = require('./Queue');
 
-const { randomUUID } = require('crypto');
-
-  const typeDefs = schema;
-
-  const resolvers = {
+const resolvers = {
     Query: {
-      checkMatchStatus: game => Connections.checkMatchStatus(game),
-
+      ping: () => "Pong"
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
-       //   Connections.takeTurn(args);
-          const response = new Promise((success, failure) => {
-            setTimeout(() => 
-            success({
-              playerId: randomUUID(),
-              opponentId: randomUUID(),
-              data: JSON.stringify({ row: 1, col: 1})
-            }), 5000);
-          });
-          return await response;
+        return await queue(args.game.opponentId, args.game);
       },
-      startGame: (parent, args, context, info) => { 
-        return "You are waiting in line";
+      startGame: async (parent, args, context, info) => { 
+        return await queue(args.game.data, args.game);
       }
     }
   };
-
-
-
-  const server = new ApolloServer({ typeDefs, resolvers });
   
-  server.listen().then(({ url }) => {
-    console.log(` Server ready at ${url}`);
+  new ApolloServer({ typeDefs, resolvers }).listen().then(({ url }) => {
+    console.log(`Server ready at ${url}`);
   });
 
 

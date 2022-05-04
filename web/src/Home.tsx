@@ -2,6 +2,7 @@ import { gql, useSubscription } from "@apollo/client";
 import { Box, Paper } from "@mui/material";
 import { Key, ReactChild, ReactFragment, ReactPortal } from "react";
 import Relay from "./common/Relay";
+import { v4 } from "uuid";
 
 
 export default function Home(props : any) {
@@ -10,8 +11,8 @@ export default function Home(props : any) {
         props.setPage(null);
     }
 
-    function show(page : any, name: String) {
-        props.setPage(<Relay name={name} exit={exit}>{page}</Relay>);
+    function show(page : any, name: string) {
+        props.setPage(<Relay name={name} exit={exit} page={page} playerId={v4()}/>);
     }
     
     return (<div>
@@ -27,7 +28,7 @@ export default function Home(props : any) {
                 },
             }}
         >
-            {props.pages.map((page: { name: Key | null | undefined; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
+            {props.pages.map((page: { name: string; game: string; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
                 <Paper key={page.name} elevation={3} onClick={() => show(page.game, page.name)}>
                     {page.thumbnail}
                 </Paper>
