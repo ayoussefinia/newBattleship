@@ -10,8 +10,8 @@ import { faArrowUp, faArrowLeft, faArrowRight, faArrowDown, faRotateLeft, faRota
 import { gql, useMutation, useQuery } from '@apollo/client';
 // import  JoinGame  from './JoinGame'
 // import { DEFAULT_MIN_VERSION } from 'tls';
-import GameStartedMessage from './GameStartedMessage';
-import ActiveGameMessage from './ActiveGameMessage';
+// import GameStartedMessage from './GameStartedMessage';
+// import ActiveGameMessage from './ActiveGameMessage';
 import { CSSTransition } from 'react-transition-group';
 import './border.scss'
 
@@ -992,12 +992,12 @@ function clicked() {
                     className='center'
                     >
                         <br/>
-                    <GameStartedMessage uuid={gameState.uuid}
+                    {/* <GameStartedMessage uuid={gameState.uuid}
                                 setGameState={(gameId:any, turn:any)=> {
                                 setGameState({...gameState, turn:turn, gameId:gameId, gameStartedBackend:true})}}  />
                         
                     <ActiveGameMessage gameState={gameState}
-                                fire={(row:any,col:any)=>fire(row,col)}/>
+                                fire={(row:any,col:any)=>fire(row,col)}/> */}
                 </div>
             </div>
             <br/>
