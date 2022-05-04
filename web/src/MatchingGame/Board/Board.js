@@ -1,29 +1,91 @@
-import React, { useState } from "react";
+import { LocalFireDepartment } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import SingleCard from "../SingleCard/SingleCard";
 import "./Board.css"
 
 export default function Board() {
-  const [cards, setCards] = useState([])
+  const [deck, setDeck] = useState([])
+  const [cardOne, setCardOne] = useState(null)
+  const [cardTwo, setCardTwo] = useState(null)
+  const [disabled, setDisabled] = useState(false)
 
-  // This array will probably change or be added to, this is only temp
-  let suites = ["♠️", "♣️", "♥️", "♦️", "🃏"]
+  const suites = [{ value: "♠️", matched: false }, { value: "♦️", matched: false }, { value: "♥️", matched: false }, { value: "♣️", matched: false }, { value: "🃏", matched: false }, { value: "🗿", matched: false }, { value: "♠️", matched: false }, { value: "♦️", matched: false }, { value: "♥️", matched: false }, { value: "♣️", matched: false }, { value: "🃏", matched: false }, { value: "🗿", matched: false }]
 
-  function shuffle(){
-    let shuffledSuites = [...suites, ...suites].sort (() => Math.random() - .5)
-    setCards(shuffledSuites)
+  function clickReveal(card) {
+    cardOne ? setCardTwo(card) : setCardOne(card)
   }
 
-  // button is also only temp
+  function reset() {
+    setCardOne(null)
+    setCardTwo(null)
+    setDisabled(false)
+  }
+
+  function shuffle() {
+    let shuffledSuites = suites.sort(() => Math.random() - .5)
+    shuffledSuites.map((card, index) => {
+      card.index = index
+    })
+    setDeck(shuffledSuites)
+  }
+
+
+  useEffect(() => {
+    if (deck.length === 0) {
+      shuffle()
+    }
+  }, [deck])
+
+  function checkWinState(){
+    if(!deck.some((card) => card.matched == false)){
+      return(
+        <div>
+          <div>Congratulations</div>
+          <button onClick={shuffle}>Rematch</button>
+        </div>
+      )
+    }
+  }
+
+  function evaluateCards() {
+    if (cardOne.value === cardTwo.value) {
+      setDeck(prevCards => {
+        return prevCards.map(card => {
+          if (card.value === cardOne.value) {
+            return { ...card, matched: true }
+          } else {
+            return card
+          }
+        })
+      })
+      reset()
+    } else {
+      reset()
+    }
+  }
+
+  useEffect(() => {
+    if (cardOne && cardTwo) {
+      setDisabled(true)
+      setTimeout(() => evaluateCards(), 2000)
+    }
+  }, [cardOne, cardTwo])
+
+
   return (
     <div>
-      <button onClick={shuffle}>New Game</button>
       <div className="grid">
-      {cards.map(card => (
-        <SingleCard
-        card={card}
-        />
-      ))}
+        {deck.map((card, index) => (
+          <SingleCard
+            key={index}
+            card={card}
+            clickReveal={clickReveal}
+            disabled={disabled}
+            flipped={card === cardOne || card === cardTwo}
+          />
+        ))}
       </div>
+      {checkWinState()}
     </div>
   )
 }
