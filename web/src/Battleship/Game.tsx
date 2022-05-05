@@ -16,8 +16,6 @@ import { CSSTransition } from 'react-transition-group';
 import './border.scss'
 import './game.css'
 
-
-
 export default  function BattleShip() {
     const [gameState, setGameState] = useState({
                                     grid: [
