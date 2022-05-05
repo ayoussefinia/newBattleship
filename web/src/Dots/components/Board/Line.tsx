@@ -7,18 +7,17 @@ const Line = ( props: any) => {
     const [lineColor, setLineColor] = useState('#DF2E0C');
 
     const lineClickHandler=(event:any)=>{
+        console.log(props.value);
+        props.makeMove(props.value);
         turn++;
         if(!disableButton){
             setDisableButton(true);
-            //setLineColor("#54DF0C");
-            //setLineColor("#12CDD4");
             props.increment();
             if (turn % 2 === 0){
                 setLineColor("#FFFF6D");
             } else {
                 setLineColor("#12CDD4")
             }
-            //console.log(props.value, props.width, props.height);
         }
     }
     
@@ -27,8 +26,8 @@ const Line = ( props: any) => {
         width: props.width,
         height: props.height,
         padding: '0',
-        border: 'none'
-        // border-radius ??lmk 
+        border: 'none',
+        borderRadius: '8px' 
     };
 
     const containerStyle = {
@@ -42,8 +41,7 @@ const Line = ( props: any) => {
 
     return(
         <div style={containerStyle} onClick={lineClickHandler}>
-            <button value={props.value} disabled={disableButton} 
-            style={lineStyle}/>
+            <button value={props.value} disabled={disableButton} style={lineStyle}/>
         </div>
     );
 }

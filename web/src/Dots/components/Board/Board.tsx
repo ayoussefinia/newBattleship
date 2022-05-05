@@ -6,42 +6,41 @@ import Line from './Line';
 import Dot from './Dot';
 import GameControl from './GameControl';
 import { Container } from '@mui/material';
+import { ReadableByteStreamController } from 'stream/web';
+
+//const controller = new GameControl;
+// game board layout/data object initialization
+const grid_size = 5; // EDIT TO CHANGE GRID SIZE. In terms of dots, grid_size x grid_size
+
+// define game board layout grid setting from grid size
+const size = (grid_size + grid_size - 1) * (grid_size + grid_size - 1); // compute real element cardinality for JSX Element array
+const rowOffset = Math.sqrt(size); // used when iterating the game board
+
+// compute the ratio value to use for mui grid
+let t = grid_size - 1;
+let gridLong = t;
+let tmp = t * gridLong;
+if(tmp < 12){
+    gridLong *= 2;
+}
+
+tmp = t * gridLong;
+while(tmp >= 12){
+    gridLong--;
+    tmp = t * gridLong;
+}
+let gridShort = (12 - tmp) / grid_size;
 
 // Board component
 const Board =( props: any )=> {
-    const [gameGrid, setGameGrid] = useState( () => initializeBoard());
+    const [gameGrid, setGameGrid] = useState( () => initializeBoard() );
+    const [gameControl, setGameControl] = useState( () => initializeDataStructure() );
     const [counter, setCounter] = useState(0);
 
     /************ INITIALIZE BOARD **************************************/
-    // helper function - increment char to next ascii value
     function initializeBoard(){
-        // game board layout/data object initialization
-        const grid_size = 5; // EDIT TO CHANGE GRID SIZE. In terms of dots, grid_size x grid_size
-
-        // define game board layout grid setting from grid size
-        const size = (grid_size + grid_size - 1) * (grid_size + grid_size - 1); // compute real element cardinality for JSX Element array
-        const rowOffset = Math.sqrt(size); // used when iterating the game board
-
-        // compute the ratio value to use for mui grid
-        let t = grid_size - 1;
-        let gridLong = t;
-        let tmp = t * gridLong;
-        if(tmp < 12){
-            gridLong *= 2;
-        }
-
-        tmp = t * gridLong;
-        while(tmp >= 12){
-        gridLong--;
-        tmp = t * gridLong;
-        }
-        let gridShort = (12 - tmp) / grid_size;
-
         // create board layout
         const grid: JSX.Element[] = [];
-
-        // no need for a true graph data structure to manage game logic, 3 maps will be used to execute the game logic encapsulated in the GameControl class
-        const controller = new GameControl();
 
         let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
         let lc = 1;
@@ -58,7 +57,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridLong} >
-                            <Line value={lc.toString()} width="100%" height="6px" increment={increment}></Line>
+                            <Line value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove}></Line>
                         </Grid>
                     );
                     lc++;
@@ -74,7 +73,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridShort} >
-                            <Line value={lc.toString()} width="6px" height="100%" increment={increment}></Line>
+                            <Line value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove}></Line>
                         </Grid>
                     );
                     lc++;
@@ -84,13 +83,17 @@ const Board =( props: any )=> {
                 rowToggle = !rowToggle;
             }
         }
+        return grid;
+    }
 
-        // Iterating over gameboard twice on initialization. The first time to build the game board grid, and the second time to set up the logic data structures
-        rowToggle = true;
+    function initializeDataStructure(){
+        const controller = new GameControl();
+        let grid = gameGrid;
+        let rowToggle = true;
         let queue: number[] = [];
         let dotCounter = 1;
         let lineCounter = 1;
-        boxLabel = 'A';
+        let boxLabel = 'A';
         let columnCounter = 0;
         let rowCounter = 1;
         let dotTemp = 0;
@@ -112,14 +115,14 @@ const Board =( props: any )=> {
                     queue.push(dotCounter);
                     dotCounter++;
                 }else if(elem === 'Line'){
-                    controller.setLine(lineCounter.toString(), { endpoints: [dotCounter-1, dotCounter]});
+                    controller.setLine(lineCounter.toString(), { endpoints: [dotCounter-1, dotCounter], active: false});
                     lineCounter++;
                 }
             }else{ // (line - box) rows
                 if(elem === 'Line'){
                     let top = queue[0];
                     queue.shift();
-                    controller.setLine(lineCounter.toString(), { endpoints: [top, top+grid_size]});
+                    controller.setLine(lineCounter.toString(), { endpoints: [top, top+grid_size], active: false});
                     lineCounter++;
                 }else if(elem === 'Square'){
                     //controller.addBox(boxLabel, { sides: [lineCounter-grid_size, lineCounter, lineCounter+grid_size,lineCounter-1], owner: null, status: 0}); // sides: [top, right, bottom, left]
@@ -138,15 +141,27 @@ const Board =( props: any )=> {
             }
         }
         controller.updateDots();
-        controller.printController();
-
-        return grid;
+        return controller;
     }
 
+    // helper function - increment char to next ascii value
     function nextChar(c: string) {
         return String.fromCharCode(c.charCodeAt(0) + 1);
     }
     /********************************************************************* */
+
+    function increment() {
+        let c = counter+1;
+        console.log(c)
+        setCounter(c);
+    }
+
+    // when player clicks a line, register the move
+    function makeMove(line: String) {
+        console.log(gameControl);
+        gameControl.consumeLine(line);
+        //setGameControl(t);
+    }
 
     const BoardStyle = {
         width: "90%", 
@@ -162,17 +177,13 @@ const Board =( props: any )=> {
         alignItems: "center"
     }
 
-    function increment() {
-        let c = counter+1;
-        console.log(c)
-        setCounter(c);
-    }
-
-    //useEffect(() => {
-    //    setGameGrid(grid);
-    //});
+    useEffect(() => {
+        //setGameControl(controller);
+        gameControl.printController();
+    }, [gameControl]);
     
     return (
+        
         <Container maxWidth="lg" sx={Style}>
             <Paper elevation={2} sx={{
                 width: '100%', 

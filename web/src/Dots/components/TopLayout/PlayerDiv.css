@@ -21,6 +21,7 @@
   width: 35px;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 
 .score-label {

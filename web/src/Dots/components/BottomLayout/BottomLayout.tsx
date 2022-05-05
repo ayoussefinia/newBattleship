@@ -8,7 +8,7 @@ import { Emojis } from '../../../common/emojis';
 export default function BottomLayout(props: any) {
     const [emojis, setEmojis] = useState([ Emojis.Freezing, 
         Emojis.ThumpsUp, Emojis.Devil,
-        Emojis.Sneaky]);
+        Emojis.Eyes]);
 
     const footerLayout = {
         display: 'flex',
@@ -21,7 +21,7 @@ export default function BottomLayout(props: any) {
     const footerButtons = {
         width: '32.5%', 
         background: 'white',
-        height: '2.5em',
+        height: '2em',
         color: 'black',
         fontFamily: 'OpenSans',
         fontSize: '1rem',
