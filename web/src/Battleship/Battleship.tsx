@@ -1,6 +1,6 @@
 import Game from "./Game";
 import React, { useRef} from "react";
-import testBattleShip from "../common/assets/images/testBattleShip.jpg"
+import battleshipLogo from "../common/assets/images/battleshipLogo.png"
 
 
 
@@ -15,7 +15,7 @@ const BattleShip = {
             <h3>BattleShip</h3>
         </div>
         <div className="centerWrapper">
-            <img src={testBattleShip} width="50%"></img>
+            <img src={battleshipLogo} width="215px"></img>
         </div>
     </div>,
     name: 'BattleShip'
