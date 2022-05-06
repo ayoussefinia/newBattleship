@@ -10,32 +10,32 @@ export default class GameControl {
     }
 
     // create dot
-    setDot(key: Number, value: Object) {
+    setDot(key: number, value: object) {
         this.dots.set(key, value);
     }
 
     // retrieve dot
-    getDot(key: Number){
+    getDot(key: number){
         return this.dots.get(key);
     }
 
     // create line
-    setLine(key: String, value: Object) {
+    setLine(key: string, value: object) {
         this.lines.set(key, value);
     }
 
     // retrieve line
-    getLine(key: String){
+    getLine(key: string){
         return this.lines.get(key);
     }
 
     // create box
-    setBox(key: String, value: Object) {
+    setBox(key: string, value: object) {
         this.boxes.set(key, value);
     }
 
     // retrieve box
-    getBox(key: String){
+    getBox(key: string){
         return this.boxes.get(key);
     }
 
@@ -51,10 +51,25 @@ export default class GameControl {
         });
     }
 
-    // 
-    consumeLine(key: String){
-        this.getLine(key).active = true;
-        //return this;
+    // after player makes a move, update data structure
+    update(key: string, playerId: string){
+        let tmp = this.getLine(key);
+        tmp.active = true;
+
+        let pt1 = tmp.endpoints[0];
+        let pt2 = tmp.endpoints[1];
+        let pt1_boxes = this.getDot(pt1).boxes;
+        let pt2_boxes = this.getDot(pt2).boxes;
+
+        let intersection = pt1_boxes.filter((bx: string) => pt2_boxes.includes(bx));
+        //console.log(intersection);
+        intersection.forEach((box: string) => {
+            let b = this.getBox(box);
+            if (b.owner === null && b.status === 3) {
+                b.owner = playerId;
+            }
+            b.status++
+        })
     }
 
     gameComplete() {

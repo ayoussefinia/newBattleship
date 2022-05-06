@@ -1,26 +1,10 @@
 import { useState } from 'react';
 
-let turn = 0;
+//let turn = 0;
 const Line = ( props: any) => {
-    
     const [disableButton, setDisableButton] = useState(false);
-    const [lineColor, setLineColor] = useState('#DF2E0C');
+    const [lineColor, setLineColor] = useState('rgba(0,0,0,0)');
 
-    const lineClickHandler=(event:any)=>{
-        console.log(props.value);
-        props.makeMove(props.value);
-        turn++;
-        if(!disableButton){
-            setDisableButton(true);
-            props.increment();
-            if (turn % 2 === 0){
-                setLineColor("#FFFF6D");
-            } else {
-                setLineColor("#12CDD4")
-            }
-        }
-    }
-    
     const lineStyle = {
         background: lineColor,
         width: props.width,
@@ -37,6 +21,22 @@ const Line = ( props: any) => {
         justifyContent: 'center',
         alignItems: 'center',
         background: 'rgba(0,0,0,0)'
+    }
+
+    const lineClickHandler = ( event: any ) => { 
+        //turn++;
+        if(!disableButton){
+            console.log(props.value);
+            props.makeMove(props.value);
+            setDisableButton(true);
+            props.increment();
+            setLineColor(props.color);
+            //if (turn % 2 === 0){
+            //    setLineColor("#FFFF6D");
+            //} else {
+            //    setLineColor("#12CDD4")
+            //}
+        }
     }
 
     return(

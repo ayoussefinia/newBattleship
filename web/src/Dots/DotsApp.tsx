@@ -44,7 +44,7 @@ function DotsGame( props: any) {
             height: '100vh',
             }}>
             <TopLayout emoji={playerEmoji} icon={playerIcon} color={playerColor} oppEmoji={opponentEmoji} oppIcon={opponentIcon} oppColor={opponentColor} muted={mute}/>
-            <Board/>
+            <Board playerId="dummy_id" color={playerColor}/>
             <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
         </Container>
     );

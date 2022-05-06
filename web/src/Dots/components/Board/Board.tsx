@@ -7,6 +7,7 @@ import Dot from './Dot';
 import GameControl from './GameControl';
 import { Container } from '@mui/material';
 import { ReadableByteStreamController } from 'stream/web';
+import { GMobiledata } from '@mui/icons-material';
 
 //const controller = new GameControl;
 // game board layout/data object initialization
@@ -57,7 +58,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridLong} >
-                            <Line value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove}></Line>
+                            <Line value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove} color={props.color}></Line>
                         </Grid>
                     );
                     lc++;
@@ -73,7 +74,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridShort} >
-                            <Line value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove}></Line>
+                            <Line value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove} color={props.color}></Line>
                         </Grid>
                     );
                     lc++;
@@ -152,14 +153,14 @@ const Board =( props: any )=> {
 
     function increment() {
         let c = counter+1;
-        console.log(c)
+        //console.log(c)
         setCounter(c);
     }
 
     // when player clicks a line, register the move
-    function makeMove(line: String) {
+    function makeMove(line: string) {
         console.log(gameControl);
-        gameControl.consumeLine(line);
+        gameControl.update(line, props.playerId);
         //setGameControl(t);
     }
 
