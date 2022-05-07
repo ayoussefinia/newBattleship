@@ -1,4 +1,4 @@
-import { Rowing } from "@mui/icons-material";
+import { Rowing, WindowSharp } from "@mui/icons-material";
 import {useState, useEffect} from 'react'
 import Board from "./board";
 //import React, { useState, useEffect, useRef} from "react";
@@ -25,26 +25,30 @@ let gameboard_empty = [[0,0,0,0,0,0,0],
 
 function Game(props:any){
     let [turn, takeTurn] = useState(0);
+    let [placement, setPlacement] = useState(0);
     let [gameboard, setGameboard] = useState(gameboard_empty);
+    
     let row = 0;
+    let playable:boolean = true;
     
 
-    function FourInARow(column:number, row:number):boolean{
+    function FourInARow(row:number, column:number):boolean{
         let count = 0;
         let i = -1;
         let player:number;
-        if(gameboard[column][row] !== 0){
-            player = gameboard[column][row];
+
+        if(gameboard[row][column] !== 0){
+            player = gameboard[row][column];
         }else{
             return false;
         }
         for(let j = -1; j <= 1; j++){
-            console.log("Looking at "+ gameboard[column][row] + " at " + column + ", " + row);
-            if((NextInLine(column,row,i,j,count, player) + NextInLine(column,row,-i,-j,count,player)) >= 3){
+            //console.log("Looking at "+ gameboard[row][column] + " at " + row + ", " + column);
+            if((NextInLine(row,column,i,j,count, player) + NextInLine(row,column,-i,-j,count,player)) >= 3){
                 return true;
             }   
         }
-        if((NextInLine(column,row, 0, -1, count,player) + NextInLine(column,row,0,1,count,player)) >= 3){
+        if((NextInLine(row,column, 0, -1, count,player) + NextInLine(row,column,0,1,count,player)) >= 3){
             return true;
         }
         return false;
@@ -72,6 +76,7 @@ function Game(props:any){
             board[i][column] = 1 ; // in a real game this would be the player number.
             //row = i * -1 + 6;
             row = i;
+            setPlacement(row);
             break;
         }
     }
@@ -79,21 +84,25 @@ function Game(props:any){
 }
 
     function onClick(x:number, y:number){
-        const offSet = gameBoard_width*gameBoard_offset;
+        //const offSet = gameBoard_width*gameBoard_offset;
         const spacing = gameBoard_width*gameBoard_spacing;
-        let column:number = Math.trunc((x - offSet)/spacing)-1;
-        console.log(column);
-        if(column > 6){column = 6;}
-        takeTurn(column);
-        updateBoard(turn);
-        if (FourInARow(row, turn)) {
-            console.log("winner");
+        const gameOffset = window.innerWidth/2 - gameBoard_width/2;
+        let column:number;
+        if(playable){
+            column = Math.trunc((x - gameOffset)/spacing);
+            //playable = false;
+            console.log(column);
+            if(column > 6){column = 6;}
+            updateBoard(column);
+            if (FourInARow(placement, column)) {
+                console.log("winner");
+            }
         }
-       
     }
 
     useEffect(() =>{
         updateBoard(props.turn);
+        playable = true;
     },[props.turn])
     
     
@@ -105,6 +114,7 @@ function Game(props:any){
     };*/
     function updateBoard(location:number) {
         //props.takeTurn(turn);
+        takeTurn(location);
         let newboard = gameboard;
         newboard = dropToken(location, newboard);
         setGameboard(newboard);
@@ -114,9 +124,7 @@ function Game(props:any){
     
 
 
-    return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;
-
-    
+    return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;    
 }
 
 const ConnectFour = {
