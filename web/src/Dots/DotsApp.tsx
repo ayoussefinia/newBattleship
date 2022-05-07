@@ -13,6 +13,7 @@ function DotsGame( props: any) {
     const [opponentIcon, setOpponentIcon] = useState(5);
     const [opponentColor, setOpponentColor] = useState("#12CDD4")
     const [mute, setMute] = useState(false);
+    const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: 2})
 
     function mutePlayer(){
         console.log("mute opponent emots");
@@ -44,7 +45,7 @@ function DotsGame( props: any) {
             height: '100vh',
             }}>
             <TopLayout emoji={playerEmoji} icon={playerIcon} color={playerColor} oppEmoji={opponentEmoji} oppIcon={opponentIcon} oppColor={opponentColor} muted={mute}/>
-            <Board playerId="dummy_id" color={playerColor}/>
+            <Board playerId="dummy_id" color={playerColor} oppTurn={oppTurn}/>
             <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
         </Container>
     );

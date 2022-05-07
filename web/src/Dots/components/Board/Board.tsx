@@ -7,7 +7,7 @@ import Dot from './Dot';
 import GameControl from './GameControl';
 import { Container } from '@mui/material';
 import { ReadableByteStreamController } from 'stream/web';
-import { GMobiledata } from '@mui/icons-material';
+import { ConnectedTvOutlined, GMobiledata } from '@mui/icons-material';
 
 //const controller = new GameControl;
 // game board layout/data object initialization
@@ -36,13 +36,13 @@ let gridShort = (12 - tmp) / grid_size;
 const Board =( props: any )=> {
     const [gameGrid, setGameGrid] = useState( () => initializeBoard() );
     const [gameControl, setGameControl] = useState( () => initializeDataStructure() );
+    const [liveGrid, setLiveGrid] = useState( () => connectLinesToData(gameGrid) );
     const [counter, setCounter] = useState(0);
 
     /************ INITIALIZE BOARD **************************************/
     function initializeBoard(){
         // create board layout
         const grid: JSX.Element[] = [];
-
         let rowToggle = true; // 'true' -> dot-line row, 'false' -> line-square row
         let lc = 1;
         let boxLabel = 'A';
@@ -58,7 +58,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridLong} >
-                            <Line value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove} color={props.color}></Line>
+                            <Line key={lc} value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove} color={props.color}></Line>
                         </Grid>
                     );
                     lc++;
@@ -74,7 +74,7 @@ const Board =( props: any )=> {
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridShort} >
-                            <Line value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove} color={props.color}></Line>
+                            <Line key={lc} value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove} color={props.color}></Line>
                         </Grid>
                     );
                     lc++;
@@ -151,6 +151,7 @@ const Board =( props: any )=> {
     }
     /********************************************************************* */
 
+    // increment and track global move counter (when limit reached, end the game)
     function increment() {
         let c = counter+1;
         //console.log(c)
@@ -158,10 +159,81 @@ const Board =( props: any )=> {
     }
 
     // when player clicks a line, register the move
-    function makeMove(line: string) {
+    function makeMove(line: string, update: any) {
         console.log(gameControl);
+        //console.log(gameGrid);
+        console.log(liveGrid);
         gameControl.update(line, props.playerId);
-        //setGameControl(t);
+        update(true);
+        let t = updateBoard(liveGrid);
+        setLiveGrid(t);
+        //connectLinesToData();
+    }
+
+    // when we get the player's move, update board and data structure. TODO
+    function makeOppMove(){
+        console.log(props.oppTurn);
+        let lineNo = props.oppTurn.lineNo;
+        let lines = gameGrid.filter(child => child.props.children.type["name"] == "Line");
+        let selected = lines.filter(line => line.props.children.props.value == lineNo);
+        //console.log(selected[0]);
+        React.cloneElement(selected[0], {
+            active: true
+        })
+    }
+    
+    function connectLinesToData(grid_t: any){
+
+        let grid = updateBoard(grid_t);
+
+        /*let grid = gameGrid;
+    
+        let lines = grid.filter(child => child.props.children.type["name"] == "Line");
+
+        for(let i = 0; i < grid.length; i++){
+            if(grid[i].props.children.type["name"] === "Line"){
+                let child = grid[i];
+                grid[i] = React.cloneElement(child, {
+                    children: React.cloneElement(child.props.children, {
+                        live: gameControl.getLine(child.props.children.props.value).active
+                    })
+                })
+            }
+        }*/
+
+        /*et rewrappedLines = React.Children.map(lines, child => {
+            //console.log(child);
+            return React.cloneElement( child, {
+                children: React.cloneElement(child.props.children, {
+                    live: gameControl.getLine(child.props.children.props.value).active
+                })
+            })
+        })
+        //console.log(rewrappedLines);*/
+        console.log(grid);
+        //setLiveGrid(grid);
+        //setGameGrid(grid);
+        //console.log(gameGrid);
+        return grid;
+    }
+
+    function updateBoard(grid_t: any) {
+        let grid = grid_t;
+    
+        //let lines = grid.filter((child:any) => child.props.children.type["name"] == "Line");
+
+        for(let i = 0; i < grid.length; i++){
+            if(grid[i].props.children.type["name"] === "Line"){
+                let child = grid[i];
+                grid[i] = React.cloneElement(child, {
+                    children: React.cloneElement(child.props.children, {
+                        live: gameControl.getLine(child.props.children.props.value).active
+                    })
+                })
+            }
+        }
+        
+        return grid;
     }
 
     const BoardStyle = {
@@ -177,6 +249,18 @@ const Board =( props: any )=> {
         justifyContent: "center",
         alignItems: "center"
     }
+
+    useEffect(() => {
+        console.log(gameGrid);
+    }, [gameGrid])
+    
+    useEffect(() => {
+        connectLinesToData(liveGrid);
+    }, []);
+
+    useEffect(() => {
+        //makeOppMove();
+    }, [props.oppTurn]);
 
     useEffect(() => {
         //setGameControl(controller);
@@ -195,7 +279,7 @@ const Board =( props: any )=> {
                 marginTop: '1rem', 
                 background: 'rgba(0,0,0,0)'}}>
                 <Grid container style={BoardStyle}>
-                    {gameGrid}
+                    {liveGrid}
                 </Grid>
             </Paper>
         </Container>

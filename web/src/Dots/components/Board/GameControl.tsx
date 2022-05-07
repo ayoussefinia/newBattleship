@@ -70,6 +70,8 @@ export default class GameControl {
             }
             b.status++
         })
+
+        //return this;
     }
 
     gameComplete() {
