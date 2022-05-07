@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Square from './Square';
@@ -6,10 +6,8 @@ import Line from './Line';
 import Dot from './Dot';
 import GameControl from './GameControl';
 import { Container } from '@mui/material';
-import { ReadableByteStreamController } from 'stream/web';
-import { ConnectedTvOutlined, GMobiledata } from '@mui/icons-material';
 
-//const controller = new GameControl;
+
 // game board layout/data object initialization
 const grid_size = 5; // EDIT TO CHANGE GRID SIZE. In terms of dots, grid_size x grid_size
 
@@ -33,11 +31,26 @@ while(tmp >= 12){
 let gridShort = (12 - tmp) / grid_size;
 
 // Board component
-const Board =( props: any )=> {
+const Board = ( props: any ) => {
+    const [lastTurn, setLastTurn] = useState({lineNo: '-1', active: false});
     const [gameGrid, setGameGrid] = useState( () => initializeBoard() );
     const [gameControl, setGameControl] = useState( () => initializeDataStructure() );
     const [liveGrid, setLiveGrid] = useState( () => connectLinesToData(gameGrid) );
     const [counter, setCounter] = useState(0);
+
+    const BoardStyle = {
+        width: "90%", 
+        height: "90%",
+        background: "rgba(0,0,0,0)"  /*  #DF2E0C   <--Original color     */
+    }
+    
+    const Style = {
+        width: "100%", 
+        background: "rgba(0,0,0,0)",   /*  #DF2E0C   <--Original color     */
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    }
 
     /************ INITIALIZE BOARD **************************************/
     function initializeBoard(){
@@ -88,6 +101,7 @@ const Board =( props: any )=> {
     }
 
     function initializeDataStructure(){
+
         const controller = new GameControl();
         let grid = gameGrid;
         let rowToggle = true;
@@ -98,6 +112,7 @@ const Board =( props: any )=> {
         let columnCounter = 0;
         let rowCounter = 1;
         let dotTemp = 0;
+
         for(let i = 1; i < (size+1); i++){
             // go row by row, alternating row types like above
             let elem = grid[i-1].props.children.type["name"];
@@ -141,6 +156,7 @@ const Board =( props: any )=> {
                 dotTemp = dotCounter;
             }
         }
+
         controller.updateDots();
         return controller;
     }
@@ -154,32 +170,27 @@ const Board =( props: any )=> {
     // increment and track global move counter (when limit reached, end the game)
     function increment() {
         let c = counter+1;
-        //console.log(c)
         setCounter(c);
     }
 
     // when player clicks a line, register the move
-    function makeMove(line: string, update: any) {
+    function makeMove(line: string) {
         console.log(gameControl);
-        //console.log(gameGrid);
         console.log(liveGrid);
         gameControl.update(line, props.playerId);
-        update(true);
+        //update(true);
         let t = updateBoard(liveGrid);
         setLiveGrid(t);
-        //connectLinesToData();
     }
 
     // when we get the player's move, update board and data structure. TODO
     function makeOppMove(){
+        // when opponent move is processed...(1) update game data structure, then (2) updateBoard
         console.log(props.oppTurn);
-        let lineNo = props.oppTurn.lineNo;
-        let lines = gameGrid.filter(child => child.props.children.type["name"] == "Line");
-        let selected = lines.filter(line => line.props.children.props.value == lineNo);
-        //console.log(selected[0]);
-        React.cloneElement(selected[0], {
-            active: true
-        })
+        gameControl.update(props.oppTurn.lineNo, props.oppTurn.dummy);
+        return updateBoard(liveGrid);
+        //console.log(t);
+        //setLiveGrid(t);
     }
     
     function connectLinesToData(grid_t: any){
@@ -211,23 +222,21 @@ const Board =( props: any )=> {
         })
         //console.log(rewrappedLines);*/
         console.log(grid);
-        //setLiveGrid(grid);
-        //setGameGrid(grid);
-        //console.log(gameGrid);
         return grid;
     }
 
     function updateBoard(grid_t: any) {
+
         let grid = grid_t;
     
         //let lines = grid.filter((child:any) => child.props.children.type["name"] == "Line");
-
         for(let i = 0; i < grid.length; i++){
             if(grid[i].props.children.type["name"] === "Line"){
                 let child = grid[i];
                 grid[i] = React.cloneElement(child, {
                     children: React.cloneElement(child.props.children, {
                         live: gameControl.getLine(child.props.children.props.value).active
+                        //live: lastTurn // when a move is made, update the gameControl and set the last move to lastTurn (similar procedure for opponent's move)
                     })
                 })
             }
@@ -235,40 +244,36 @@ const Board =( props: any )=> {
         
         return grid;
     }
-
-    const BoardStyle = {
-        width: "90%", 
-        height: "90%",
-        background: "rgba(0,0,0,0)"  /*  #DF2E0C   <--Original color     */
-    }
-    
-    const Style = {
-        width: "100%", 
-        background: "rgba(0,0,0,0)",   /*  #DF2E0C   <--Original color     */
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    }
-
-    useEffect(() => {
-        console.log(gameGrid);
-    }, [gameGrid])
     
     useEffect(() => {
-        connectLinesToData(liveGrid);
-    }, []);
+        //connectLinesToData(liveGrid);
+        console.log(props.count);
+    }, [props.count]);
 
     useEffect(() => {
-        //makeOppMove();
+        console.log("processing user move");
+        setLiveGrid(makeOppMove());
+        
+        //console.log(gameControl)
     }, [props.oppTurn]);
 
     useEffect(() => {
         //setGameControl(controller);
         gameControl.printController();
     }, [gameControl]);
+
+    useEffect(() =>{
+        //let x = liveGrid; 
+        //setLiveGrid(x);
+        console.log(liveGrid);
+    }, [liveGrid]);
     
+    useEffect(() => {
+        //let x = liveGrid; 
+        //setLiveGrid(x);
+    })
+
     return (
-        
         <Container maxWidth="lg" sx={Style}>
             <Paper elevation={2} sx={{
                 width: '100%', 
@@ -277,7 +282,7 @@ const Board =( props: any )=> {
                 justifyContent:'center', 
                 alignItems: 'center', 
                 marginTop: '1rem', 
-                background: 'rgba(0,0,0,0)'}}>
+                background: 'rgba(0,0,0,0)'}}>      
                 <Grid container style={BoardStyle}>
                     {liveGrid}
                 </Grid>
@@ -285,6 +290,5 @@ const Board =( props: any )=> {
         </Container>
     )
 }
+
 export default Board;
-
-

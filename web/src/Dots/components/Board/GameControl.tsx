@@ -54,6 +54,7 @@ export default class GameControl {
     // after player makes a move, update data structure
     update(key: string, playerId: string){
         let tmp = this.getLine(key);
+        console.log(tmp);
         tmp.active = true;
 
         let pt1 = tmp.endpoints[0];
