@@ -29,4 +29,5 @@ module.exports.schema = gql`
 
 
   // """startGame(game: GameInput!): String"""
-  // takeTurn(game: GameInput!): GameOutput
+  // takeTurn(game: GameInput!): GameOutpu
+  
