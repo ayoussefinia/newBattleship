@@ -6,6 +6,7 @@ import Line from './Line';
 import Dot from './Dot';
 import GameControl from './GameControl';
 import { Container } from '@mui/material';
+var _ = require('lodash');
 
 
 // game board layout/data object initialization
@@ -176,8 +177,10 @@ const Board = ( props: any ) => {
     // when player clicks a line, register the move
     function makeMove(line: string) {
         console.log(gameControl);
-        console.log(liveGrid);
+        console.log(liveGrid); 
+        //setLastTurn({lineNo: line, active: true})
         gameControl.update(line, props.playerId);
+        setLastTurn({lineNo: line, active: true})
         //update(true);
         let t = updateBoard(liveGrid);
         setLiveGrid(t);
@@ -194,42 +197,15 @@ const Board = ( props: any ) => {
     }
     
     function connectLinesToData(grid_t: any){
-
         let grid = updateBoard(grid_t);
-
-        /*let grid = gameGrid;
-    
-        let lines = grid.filter(child => child.props.children.type["name"] == "Line");
-
-        for(let i = 0; i < grid.length; i++){
-            if(grid[i].props.children.type["name"] === "Line"){
-                let child = grid[i];
-                grid[i] = React.cloneElement(child, {
-                    children: React.cloneElement(child.props.children, {
-                        live: gameControl.getLine(child.props.children.props.value).active
-                    })
-                })
-            }
-        }*/
-
-        /*et rewrappedLines = React.Children.map(lines, child => {
-            //console.log(child);
-            return React.cloneElement( child, {
-                children: React.cloneElement(child.props.children, {
-                    live: gameControl.getLine(child.props.children.props.value).active
-                })
-            })
-        })
-        //console.log(rewrappedLines);*/
         console.log(grid);
         return grid;
     }
 
     function updateBoard(grid_t: any) {
 
-        let grid = grid_t;
-    
-        //let lines = grid.filter((child:any) => child.props.children.type["name"] == "Line");
+        let grid = _.cloneDeep(grid_t); // THIS WAS THE ISSUE. NEED TO DEEP COPY/CLONE
+
         for(let i = 0; i < grid.length; i++){
             if(grid[i].props.children.type["name"] === "Line"){
                 let child = grid[i];
@@ -245,22 +221,18 @@ const Board = ( props: any ) => {
         return grid;
     }
     
-    useEffect(() => {
-        //connectLinesToData(liveGrid);
+    /*useEffect(() => {
         console.log(props.count);
-    }, [props.count]);
+    }, [props.count]);*/
 
     useEffect(() => {
         console.log("processing user move");
         setLiveGrid(makeOppMove());
-        
-        //console.log(gameControl)
     }, [props.oppTurn]);
 
-    useEffect(() => {
-        //setGameControl(controller);
+    /*useEffect(() => {
         gameControl.printController();
-    }, [gameControl]);
+    }, [gameControl]);*/
 
     useEffect(() =>{
         //let x = liveGrid; 
@@ -271,7 +243,8 @@ const Board = ( props: any ) => {
     useEffect(() => {
         //let x = liveGrid; 
         //setLiveGrid(x);
-    })
+        console.log(lastTurn);
+    }, [lastTurn])
 
     return (
         <Container maxWidth="lg" sx={Style}>

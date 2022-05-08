@@ -13,7 +13,7 @@ function DotsGame( props: any) {
     const [opponentIcon, setOpponentIcon] = useState(5);
     const [opponentColor, setOpponentColor] = useState("#12CDD4")
     const [mute, setMute] = useState(false);
-    const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "2"})
+    const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "12"})
     const [c, setC] = useState(0);
 
     // to tell board to process opponenet's turn when received from api
