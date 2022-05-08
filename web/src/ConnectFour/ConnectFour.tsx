@@ -5,7 +5,7 @@ import Board from "./board";
 
 const gameBoard_height = 475;
 const gameBoard_width = 550;
-const gameBoard_offset = 1/44;
+//const gameBoard_offset = 1/44;
 const gameBoard_spacing = 3/22;
 
 const GAMEBOARD_EXAMPLE = [[0,0,0,0,0,0,0], 
@@ -24,9 +24,11 @@ let gameboard_empty = [[0,0,0,0,0,0,0],
 
 
 function Game(props:any){
-    let [turn, takeTurn] = useState(0);
-    let [placement, setPlacement] = useState(0);
+    
     let [gameboard, setGameboard] = useState(gameboard_empty);
+    let [turn, takeTurn] = useState(0);
+    let [currentPlayer, setPlayer] = useState(1);
+
     
     let row = 0;
     let playable:boolean = true;
@@ -40,10 +42,11 @@ function Game(props:any){
         if(gameboard[row][column] !== 0){
             player = gameboard[row][column];
         }else{
+            console.log("four in a row failed");
             return false;
         }
         for(let j = -1; j <= 1; j++){
-            //console.log("Looking at "+ gameboard[row][column] + " at " + row + ", " + column);
+            console.log("Looking at "+ gameboard[row][column] + " at " + row + ", " + column);
             if((NextInLine(row,column,i,j,count, player) + NextInLine(row,column,-i,-j,count,player)) >= 3){
                 return true;
             }   
@@ -73,10 +76,9 @@ function Game(props:any){
     // A [for-loop] which checks for the first empty index in a given column and updates it's value.
     for (let i = 5; i >= 0 ; i--) {
         if (!board[i][column]) {
-            board[i][column] = 1 ; // in a real game this would be the player number.
+            board[i][column] = currentPlayer ; // in a real game this would be the player number.
             //row = i * -1 + 6;
             row = i;
-            setPlacement(row);
             break;
         }
     }
@@ -94,9 +96,18 @@ function Game(props:any){
             console.log(column);
             if(column > 6){column = 6;}
             updateBoard(column);
-            if (FourInARow(placement, column)) {
-                console.log("winner");
+            takeTurn(column);
+            if (FourInARow(row, column)) {
+                alert("Winner");
             }
+            if(currentPlayer === 1){
+                setPlayer(2);
+                console.log("set to player 2");
+            }else{
+                setPlayer(1);
+                console.log("set to player 1");
+            }
+
         }
     }
 
@@ -114,7 +125,6 @@ function Game(props:any){
     };*/
     function updateBoard(location:number) {
         //props.takeTurn(turn);
-        takeTurn(location);
         let newboard = gameboard;
         newboard = dropToken(location, newboard);
         setGameboard(newboard);
