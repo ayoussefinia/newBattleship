@@ -37,7 +37,7 @@ function Game(props: any) {
         const newTurn = { row: turnX, col: turnY };
         if(board[newTurn.row][newTurn.col] === null) {
             setTurn(newTurn);
-            props.useTurn(newTurn);
+            props.turn = newTurn;
         }
     }
 

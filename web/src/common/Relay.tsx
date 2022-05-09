@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ interface Game {
 function StartGame(props: any) {
 
   const START_GAME = () => gql`
-    mutation StartGame($playerId: String, $data: String) {
+    query StartGame($playerId: String, $data: String) {
       startGame(game: { playerId: $playerId, data: $data }) {
         playerId
         opponentId
@@ -20,19 +20,26 @@ function StartGame(props: any) {
     }
   `;
 
-  const [startGame, { data, loading, error }] = useMutation<Game>(
+  const { data, loading, error } = useQuery(
     START_GAME(),
     { variables: { playerId: props.playerId, data: props.gameName } }
   );
 
-  useEffect(() => { startGame() }, [props.child, startGame]);
-
   if (loading)
     return <p>Connecting to other player...</p>;
 
-    props.child.props = { ... props.child.props, props: props.exit, turn: undefined, loading: false };
+  let game = data?.startGame;
+  console.log(game);
+  const newChild = React.cloneElement(props.child, {
+    ...props.child.props,
+    exit: props.exit,
+    playerId: props.playerId,
+    opponentId: game?.opponentId,
+    turn: (game?.data) === props.gameName ? null : JSON.parse(game?.data),
+    loading: false
+  });
 
-  return <TakeTurn gameName={props.gameName} playerId={props.playerId} opponentId={data?.opponentId} exit={props.exit} child={props.child}/>;
+  return <TakeTurn gameName={props.gameName} playerId={props.playerId} isFirst={data?.data === props.gameName} opponentId={data?.opponentId} child={newChild}/>;
 }
 
 function TakeTurn(props: any) {
@@ -46,15 +53,12 @@ function TakeTurn(props: any) {
     }
   }`;
 
-let serialized = JSON.stringify(props.child.props.turn);
-const [takeTurn, { data, loading, error }] = useMutation<Game>(
+  let serialized = JSON.stringify(props.child.props.turn);
+  const [takeTurn, { data, loading, error }] = useMutation<Game>(
     TAKE_TURN(),
     { variables: { playerId: props.playerId, opponentId: props.opponentId, data: serialized } }
   );
-  
-  props.child.props.loading = loading;
-  props.child.props.turn = data;
-  
+
   return props.child;
 }
 
@@ -62,8 +66,7 @@ export default function Relay(props: any) {
 
   const exitGame = props.exit;
   const gameName = props.name;
-  const child = props.page;
   const playerId = props.playerId;
 
-  return <StartGame gameName={gameName} playerId={playerId} exit={exitGame} child={child} />;
+  return <StartGame gameName={gameName} playerId={playerId} child={props.page} exit={exitGame} />;
 }

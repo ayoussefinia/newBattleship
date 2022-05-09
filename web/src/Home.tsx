@@ -12,7 +12,7 @@ export default function Home(props : any) {
     }
 
     function show(page : any, name: string) {
-        props.setPage(<Relay name={name} exit={exit} page={page} playerId={v4()}/>);
+        props.setPage(<Relay name={name} exit={exit} playerId={v4()} page={page}/>);
     }
     
     return (<div>

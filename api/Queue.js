@@ -13,8 +13,9 @@ const queue = (key, player1) => {
 
         const player2 = waiting[key];
         delete waiting[key];
+        
         console.log("Request recieved: " + key + " " + JSON.stringify(player1))
-        if (player2.payload.opponentId) {  // Already in game, relay data then store connection
+        if (player2.payload.opponentId) {  // Already in game, relay data to the stored connection
             console.log("Relaying data from " + player1.playerId + " to " + player2.payload.playerId + " data: " + player1.data);
             player2.payload.data = player1.data;
             player2.resolve(player2.payload);

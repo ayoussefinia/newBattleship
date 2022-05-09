@@ -3,11 +3,11 @@ const { gql } = require('apollo-server');
 const typeDefs =  gql`
   type Query { 
     ping: String
+    startGame(game: GameInput!): GameOutput
   }
 
   type Mutation {
     takeTurn(game: GameInput!): GameOutput
-    startGame(game: GameInput!): GameOutput
   }
 
   type GameOutput {

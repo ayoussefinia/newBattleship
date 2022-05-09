@@ -5,14 +5,14 @@ const { queue } = require('./Queue');
 
 const resolvers = {
     Query: {
-      ping: () => "Pong"
+      ping: () => "Pong",
+      startGame: async (parent, args, context, info) => { 
+        return await queue(args.game.data, args.game);
+      }
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
         return await queue(args.game.opponentId, args.game);
-      },
-      startGame: async (parent, args, context, info) => { 
-        return await queue(args.game.data, args.game);
       }
     }
   };
