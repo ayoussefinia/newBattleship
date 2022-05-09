@@ -8,24 +8,14 @@ const { randomUUID } = require('crypto');
 
   const resolvers = {
     Query: {
-      checkMatchStatus: game => Connections.checkMatchStatus(game),
-
+      ping: () => "Pong",
+      startGame: async (parent, args, context, info) => { 
+        return await queue(args.game.data, args.game);
+      }
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
-       //   Connections.takeTurn(args);
-          const response = new Promise((success, failure) => {
-            setTimeout(() => 
-            success({
-              playerId: randomUUID(),
-              opponentId: randomUUID(),
-              data: JSON.stringify({ row: 1, col: 1})
-            }), 5000);
-          });
-          return await response;
-      },
-      startGame: (parent, args, context, info) => { 
-        return "You are waiting in line";
+        return await queue(args.game.opponentId, args.game);
       }
     }
   };
