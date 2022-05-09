@@ -21,5 +21,3 @@ const typeDefs =  gql`
     opponentId: String
     data: String
   }`;
-
-module.exports.typeDefs = typeDefs;

@@ -1,8 +1,8 @@
 import { gql, useSubscription } from "@apollo/client";
 import { Box, Paper } from "@mui/material";
 import { Key, ReactChild, ReactFragment, ReactPortal } from "react";
-import Relay from "./common/Relay";
 import { v4 } from "uuid";
+import Relay from "./common/Relay";
 
 
 export default function Home(props : any) {
@@ -28,7 +28,7 @@ export default function Home(props : any) {
                 },
             }}
         >
-            {props.pages.map((page: { name: string; game: string; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
+            {props.pages.map((page: { name: string; game: any; thumbnail: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => 
                 <Paper key={page.name} elevation={3} onClick={() => show(page.game, page.name)}>
                     {page.thumbnail}
                 </Paper>
