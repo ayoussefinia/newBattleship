@@ -35,9 +35,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   background-color: white;
+  transition: all 0.4s ease;
 }
-
-
 
 /* animations */
 .fade-enter {
@@ -57,7 +56,17 @@ body {
   transition: opacity 500ms, transform 500ms;
 }
 
+.highlightBoard::before{
+  content: attr(display-content);
+  font-size:20px;
+  color:white;
+}
+
 /* ship selection area */
+.bottomDiv div{
+  margin-bottom:5px;
+}
+
 .defaultWrapper {
   display: flex;
   width: 100%;
@@ -77,6 +86,7 @@ body {
 .shipSelection {
   margin-right: 8px;
   padding-top: 10px;
+  position:relative;
 }
 
 .manipulateTitle {
@@ -92,6 +102,7 @@ body {
   width: 120px;
   height: 160px;
   margin-top: 10px;
+  padding-bottom: 8px;
   margin-right: 3px;
   border: 2px solid black;
   border-radius: 10px;
