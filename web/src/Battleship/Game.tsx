@@ -1,29 +1,16 @@
 import React, {useRef, useEffect, useState, MouseEvent} from 'react';
-import battleshipImage from './battleship.svg';
-import carrierImage from './carrier.svg';
-import destroyerImage from './destroyer.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import  _ from 'lodash'
-import { faArrowUp, faArrowLeft, faArrowRight, faArrowDown, faRotateLeft, faRotateRight, faCircleXmark, faShip, faBookSkull, faRocket } from '@fortawesome/free-solid-svg-icons'
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { CSSTransition } from 'react-transition-group';
-import checkConflicts from './utility/checkConflicts';
-import {moveShipUp} from './utility/moveShip';
-import {moveShipLeft} from './utility/moveShip'
-import {moveShipRight} from './utility/moveShip'
-import {moveShipDown} from './utility/moveShip'
-import rotateShip from './utility/rotateShip'
 import handleShipPlacement from './utility/handleShipPlacement';
 import placeShip from './utility/placeShip';
 import './styles/border.css'
 import './styles/game.css';
 import {styles} from './styles/JavaScriptStyles';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {ProgressBar} from 'react-bootstrap';
-import { isAbsolute } from 'path';
-import { Rocket } from '@mui/icons-material';
-
-
+import ShipControl from './Components/ShipControl';
+import MiniGrid from './Components/MiniGrid';
+import TopSection from './Components/TopSection';
+import Grid from './Components/Grid';
 
 export default  function BattleShip() {
     const [isInitialRender, setIsInitialRender] = useState(true);
@@ -91,24 +78,12 @@ export default  function BattleShip() {
             }
         }
 
-
-        // if(!localStorage.getItem("uuid")) {
-        //     const uuid = uuidv4();
-        //     localStorage.setItem("uuid", uuid)
-        // }
-
-        // const uuid = JSON.stringify(localStorage.getItem("uuid"))
-
         setGameState({...gameState, grid: gameGrid, opponentGrid: gameGrid});
-        // postGameArray({ variables: { payload: 'hello'} });
-        // postGameArray({ variables: { payload: 'hello'} });
-    //    MyComponent();
-        
 
     },[])
 
 
-
+//GLOBALS
     const numGridEdge =8;
     const gridEdgeLength= 336;
     const delta = (gridEdgeLength)/numGridEdge;
@@ -168,39 +143,8 @@ export default  function BattleShip() {
         setGameState({...gameState, manipulatingBattleShip: true});
     }
 
-
-   
-
-    async function startGame() {
-        const element = {
-            row: 0,
-            column:0,
-            hit: true,
-            firedAt: true
-        }
-        let obj2 = {data: [{}]}
-        for(var i=0; i<numGridEdge; i++) {
-            let obj1 ={data: [{}]};
-            obj1.data = gameState.grid[i]
-            obj2.data.push(obj1) ;
-        }
-        obj2.data.shift();
-
-        let postObject = {
-            grid: obj2,
-            uuid: gameState.uuid,
-            gameId: gameState.gameId
-        }
-        console.log('post object', postObject)
-        // consol.log(obj2)
-        // const arr2 =[arr1]
-        // const uuid = uuidv4();
-        // console.log('uuid:', JSON.stringify(uuid))
-        // postUUID({variables: {payload: uuid}});
-        // }
-
+    function startGame() {
         setGameState({...gameState, gameStarted: true})
-        
     }
 
     function fire(row:any, col:any) {
@@ -267,312 +211,53 @@ export default  function BattleShip() {
         
     }
 
-
-
-function clicked() {
-    console.log('gameState.gameId', gameState.gameId);
-    console.log('gameState.turn', gameState.turn)
-}
-
     return(
-
-        <div  onClick={clicked} className="noSelect gameBody">
-            <div style={gameState.gameStarted? Styles.statsSection : Styles.displayNoneStyles}>
-                <div style={Styles.vs}>Vs.</div>
-                <div style={Styles.powerLevelsContainer}>
-                    <div style={Styles.progressLeft}> <ProgressBar style={Styles.progressBarStyle} 
-                                                            striped 
-                                                            variant={gameState.energyLevel < 30? 'danger' : 'info'}
-                                                            animated 
-                                                            now={gameState.energyLevel} />
-                    </div>
-                    <div style={Styles.progressRight}> <ProgressBar style={Styles.progressBarStyle} 
-                                                             striped 
-                                                             variant={gameState.energyLevel < 30? 'danger' : 'info'}
-                                                             animated 
-                                                             now={gameState.energyLevel} />
-                    </div>
-                </div>
-                <div style={Styles.statsLeft}>
-                    <div style={Styles.playerTitle}>Player</div>
-                    <FontAwesomeIcon  
-                                icon={faShip} 
-                                className='shipStyles'
-                             
-                                size='4x'
-                                />
-                    {gameState.turn == true ? 
-                                <FontAwesomeIcon  
-                                    icon={faRocket} 
-                                    className='rocketStyles'
-                                    size='2x'
-                                /> : null}
-                    
-                </div>
-                <div style={Styles.statsRight}>
-                    <div style={Styles.opponentTitle}>Opponent</div>
-                    <FontAwesomeIcon  icon={faBookSkull} 
-                                className='skullStyles'
-                        
-                                size='4x'
-                                />
-                    {gameState.turn != true ? 
-                                <FontAwesomeIcon  
-                                    icon={faRocket} 
-                                    className='opponentRocketStyles'
-                                    size='2x'
-                                /> : null}
-                </div>
-     
-
-            </div>
+        <div  className="noSelect gameBody">
+            <TopSection
+                gameState={gameState}
+            />
             {/* {gameStaste.gameStarted ? <GameStartedMessage uuid={gameState.uuid}/> : <div/>} */}
             <div className='centerWrapper'>
-                <div
-                    className='center'
-                    >
+                <div className='center'>
                         <br/>
-                    {/* <GameStartedMessage uuid={gameState.uuid}
-                                setGameState={(gameId:any, turn:any)=> {
-                                setGameState({...gameState, turn:turn, gameId:gameId, gameStartedBackend:true})}}  />
-                        
-                    <ActiveGameMessage gameState={gameState}
-                                fire={(row:any,col:any)=>fire(row,col)}/> */}
                 </div>
             </div>
             <br/>
             <div className='centerWrapper'>
                 <div className='center'>
-                    <div className= {gameState.gameStarted? 'gameGridStyles gameGridGameStarted' : 'gameGridStyles '}>
-                        {gameState.turn == true ? 
-                            gameState.opponentGrid.map((row, rowIndex)=>{return(
-                                row.map((col, colIndex)=>{return( <div style={gameState.opponentGrid[rowIndex][colIndex].firedAt ==true?
-                                                                                (gameState.opponentGrid[rowIndex][colIndex].hit==true?
-                                                                                    Styles.hitStyles : Styles.missedStyles):Styles.gridElementStyles}
-                                                                        className= {gameState.opponentGrid[rowIndex][colIndex].firedAt ==true?
-                                                                            (gameState.opponentGrid[rowIndex][colIndex].hit==true?
-                                                                                'hitAnimation' : 'missedAnimation'): 'nothingClass'}
-                                                                        // onClick={()=>fireAtOpponent(rowIndex,colIndex)}
-                                                                        onClick={(e)=>fireOrPlace(e, rowIndex,colIndex, "fire")}
-                                                                                
-                                                                    ></div>)}) 
-                                )})
-                        :
-                        gameState.grid.map((row, rowIndex)=>{return(
-                            row.map((col, colIndex)=>{return( <div style={gameState.grid[rowIndex][colIndex].firedAt ==true?
-                                                                         (gameState.grid[rowIndex][colIndex].hit==true?
-                                                                              Styles.hitStyles :Styles.missedStyles):Styles.gridElementStyles}
-                                                                //    onClick={()=>fire(rowIndex,colIndex)}
-                                                                // onClick={(e)=>fireOrPlace(e, rowIndex,colIndex, "fire")}
-                                                                        
-                                                              ></div>)}) 
-                         )})}
-                        
-                                                                        
-                                                                        
-                        {/* {gameState.grid.map((row, rowIndex)=>{return(
-                           row.map((col, colIndex)=>{return( <div style={gameState.grid[rowIndex][colIndex].firedAt ==true?
-                                                                        (gameState.grid[rowIndex][colIndex].hit==true?
-                                                                             hitStyles : missedStyles):gridElementStyles}
-                                                                  onClick={()=>fire(rowIndex,colIndex)}
-                                                                        
-                                                             ></div>)}) 
-                        )})} */}
-                        {/* temproary because uuid issues, remove later*/}
-                        <CSSTransition in={gameState.carrierPlaced} timeout={1000} 
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                                 <div onClick={handleGridCarrierClick} style={Styles.gridCarrierStyle}> </div>
-                            </>
-                        </CSSTransition>
-                        <CSSTransition in={gameState.battleShipsPlaced} timeout={1000} 
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                            <div onClick={handleGridBattleShipClick} style={Styles.gridBattleShipStyle}> </div>
-                            </>
-                        </CSSTransition>
-                        <CSSTransition in={gameState.destroyerPlaced} timeout={1000}
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                             <div onClick={handleGridDestroyerClick} style={Styles.gridDestroyerStyle}> </div>
-                            </>
-                        </CSSTransition>
-                        {/* uncomment below out when uuid is fixed */}
-                        {/* <CSSTransition in={gameState.carrierPlaced && gameState.turn != gameState.uuid} timeout={1000} 
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                                 <div onClick={handleGridCarrierClick} style={gridCarrierStyle}> </div>
-                            </>
-                        </CSSTransition>
-                        <CSSTransition in={gameState.battleShipsPlaced && gameState.turn != gameState.uuid} timeout={1000} 
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                            <div onClick={handleGridBattleShipClick} style={gridBattleShipStyle}> </div>
-                            </>
-                        </CSSTransition>
-                        <CSSTransition in={gameState.destroyerPlaced && gameState.turn != gameState.uuid} timeout={1000}
-                        mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                            <>
-                             <div onClick={handleGridDestroyerClick} style={gridDestroyerStyle}> </div>
-                            </>
-                        </CSSTransition> */}
-
-                        
-                        
-                    </div>
-
-                   
+                    <Grid
+                        gameState={gameState}
+                        delta={delta}
+                        fireOrPlace={fireOrPlace}
+                        handleGridCarrierClick={handleGridCarrierClick}
+                        handleGridBattleShipClick={handleGridBattleShipClick}
+                        handleGridDestroyerClick={handleGridDestroyerClick}
+                    />
                 </div>
             </div>
-            <div style={gameState.gameStarted? Styles.miniGridStyles : Styles.displayNoneStyles }>
-                 {gameState.turn != true ? 
-                            gameState.opponentGrid.map((row, rowIndex)=>{return(
-                                row.map((col, colIndex)=>{return( <div style={gameState.opponentGrid[rowIndex][colIndex].firedAt ==true?
-                                                                                (gameState.opponentGrid[rowIndex][colIndex].hit==true?
-                                                                                    Styles.hitStyles : Styles.missedStyles):Styles.gridElementStyles}
-                                                                        // onClick={()=>fireAtOpponent(rowIndex,colIndex)}
-                                                                        onClick={(e)=>fireOrPlace(e, rowIndex,colIndex, "fire")}
-                                                                                
-                                                                    ></div>)}) 
-                                )})
-                        :
-                        gameState.grid.map((row, rowIndex)=>{return(
-                            row.map((col, colIndex)=>{return( <div style={gameState.grid[rowIndex][colIndex].firedAt ==true?
-                                                                         (gameState.grid[rowIndex][colIndex].hit==true?
-                                                                              Styles.hitStyles :Styles.missedStyles):Styles.gridElementStyles}
-                                                                //    onClick={()=>fire(rowIndex,colIndex)}
-                                                                // onClick={(e)=>fireOrPlace(e, rowIndex,colIndex, "fire")}
-                                                                        
-                                                              ></div>)}) 
-                         )})}
-                     
-                            <div  style={Styles.miniGridCarrierStyle}> </div>
-                            <div style={Styles.miniGridBattleShipStyle}> </div>
-                            <div style={Styles.miniGridDestroyerStyle}> </div>
-                   
-            </div>
+            <MiniGrid
+                gameState={gameState}
+                delta={delta}
+                fireOrPlace={fireOrPlace}
+            />
             <br/>
             <CSSTransition in={!gameState.gameStarted} timeout={1000}
                         mountOnEnter={true} unmountOnExit={true} classNames="fade">
                 <>
-                    <div style={{ backgroundColor: 'white', borderRadius: '20px', width: '97%', margin: '0% 1.5% 0% 1.5%' }}>
-                        <div className='centerWrapper'>
-                            <div className='center' style={{width: "80%"}}>
-                                <div className="shipSelection">
-                                <div className="centerWrapper">
-                                    <div className="center" style={{fontSize:'20px'}}>Select Ship</div>
-                                </div>
-                                <br />
-                                <div className="centerWrapper">
-                                    <div className="center">
-                                    <div
-                                        className="defaultWrapper"
-                                        onClick={handleCarrierClick}
-                                    >
-                                        <div className={`${selectCarrierStyle}`}></div>
-                                        <div className={`${selectCarrierStyle}`}></div>
-                                        <div className={`${selectCarrierStyle}`}></div>
-                                        <div className={`${selectCarrierStyle}`}></div>
-                                        <div className={`${selectCarrierStyle}`}></div>                            
-                                    </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="centerWrapper">
-                                    <div className="center">
-                                    <div
-                                        className="defaultWrapper"
-                                        onClick={handleBattleShipClick}
-                                    >
-                                        <div className={`${selectBattleshipStyle}`}></div>
-                                        <div className={`${selectBattleshipStyle}`}></div>
-                                        <div className={`${selectBattleshipStyle}`}></div>
-                                        <div className={`${selectBattleshipStyle}`}></div>
-                                    </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="centerWrapper">
-                                    <div className="center">
-                                    <div
-                                        className="defaultWrapper"
-                                        onClick={handleDestroyerClick}
-                                    >
-                                        <div className={`${selectDestroyerStyle}`}></div>
-                                        <div className={`${selectDestroyerStyle}`}></div>
-                                    </div>
-                                    </div>
-                                    
-                                </div>
-                                <br />
-                                </div>
-                    
-                            </div>
-                            <div className='center' style={{width: "40%"}}>
-                                <div className='buttonPanelContainer'> 
-                                <CSSTransition in={gameState.battleShipsPlaced || gameState.carrierPlaced || gameState.destroyerPlaced} timeout={1000} 
-                                    mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                                        <>
-                                        <div className='manipulateShipPanel'>
-                                            <div className='manipulateTitle noSelect'>Position Ship</div>
-                                            <div className='arrowUpContainer'>
-                                                <FontAwesomeIcon  icon={faArrowUp} 
-                                                                className='arrowStyles'
-                                                                onClick={()=>moveShipUp(checkConflicts,setGameState, gameState)}
-                                                                />
-                                            </div>
-                                            <div className='leftAndRightContainer'>
-                                                <div className='arrowLeftContainer'>
-                                                    <FontAwesomeIcon className='arrowStyles' 
-                                                                    icon={faArrowLeft} 
-                                                                    onClick={()=>moveShipLeft(checkConflicts,setGameState, gameState)}
-                                                                    />
-                                                </div>
-                                                <div className='arrowRightContainer'>
-                                                    <FontAwesomeIcon icon={faArrowRight}
-                                                                    className='arrowStyles' 
-                                                                    onClick={()=>moveShipRight(checkConflicts,setGameState, gameState)}
-                                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='arrowDownContainer'>
-                                                <FontAwesomeIcon icon={faArrowDown} 
-                                                                className='arrowStyles'
-                                                                onClick={()=>moveShipDown
-                                                                    (checkConflicts,setGameState, gameState)}
-                                                                />
-                                                </div>
-                                            <div className='rotateLeftAndRightContainer'>
-                                                <div className='rotateLeftContainer'>
-                                                    <FontAwesomeIcon icon={faRotateLeft} 
-                                                                    className='arrowStyles' 
-                                                                    onClick={()=>rotateShip(gameState,checkConflicts,setGameState,numGridEdge)}
-                                                                    />
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        </>
-                                    </CSSTransition>
-                                    
-                                    
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div className='centerWrapper'>
-                        <CSSTransition in={gameState.battleShipsPlaced && gameState.carrierPlaced && gameState.destroyerPlaced} 
-                                    timeout={1000}  mountOnEnter={true} unmountOnExit={true} classNames="fade">
-                                    <>
-                                        <br/>
-                                        <div className='startGameBtn' onClick={startGame}>Start Game</div>
-                                        <br/>                           
-                                    </>
-                        </CSSTransition>
-                        </div>
-                    </div>
+                    <ShipControl
+                        handleCarrierClick={handleCarrierClick}
+                        handleBattleShipClick={handleBattleShipClick}
+                        handleDestroyerClick={handleDestroyerClick}
+                        selectCarrierStyle={selectCarrierStyle}
+                        selectBattleshipStyle={selectBattleshipStyle}
+                        selectDestroyerStyle={selectDestroyerStyle}
+                        gameState={gameState}
+                        setGameState={setGameState}
+                        numGridEdge={numGridEdge}
+                        startGame={startGame}
+                    />                                                          
                 </>
             </CSSTransition>
-            
         </div>
     );
     
