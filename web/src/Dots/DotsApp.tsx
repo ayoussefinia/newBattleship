@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import Board from './components/Board/Board';
 import TopLayout from './components/TopLayout/TopLayout';
@@ -15,10 +15,6 @@ function DotsGame( props: any) {
     const [mute, setMute] = useState(false);
     const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "5", color: "#12CDD4"})
     const [c, setC] = useState(0);
-
-    // to tell board to process opponenet's turn when received from api
-    //const boardRef = useRef<Ref>(null!);
-    //const handleOpponentTurn = (): void => boardRef?.current?.makeOpponenetMove();
 
     function mutePlayer(){
         console.log("mute opponent emots");
@@ -51,9 +47,21 @@ function DotsGame( props: any) {
             width: '100vw',
             height: '100vh',
             }}>
-            <TopLayout emoji={playerEmoji} icon={playerIcon} color={playerColor} oppEmoji={opponentEmoji} oppIcon={opponentIcon} oppColor={opponentColor} muted={mute}/>
-            <Board playerId="dummy_id" color={playerColor} oppTurn={oppTurn} oppColor={opponentColor} count={c}/>
-            <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
+            <TopLayout emoji={playerEmoji} 
+                icon={playerIcon} 
+                color={playerColor} 
+                oppEmoji={opponentEmoji} 
+                oppIcon={opponentIcon} 
+                oppColor={opponentColor} 
+                muted={mute}/>
+            <Board playerId="dummy_id" 
+                color={playerColor} 
+                oppTurn={oppTurn} 
+                oppColor={opponentColor} 
+                count={c}/>
+            <BottomLayout mute={mutePlayer} 
+                sendEmot={sendEmoji} 
+                exit={props.exit}/>
             
         </Container>
     );

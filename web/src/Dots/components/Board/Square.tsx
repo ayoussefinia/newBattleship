@@ -1,3 +1,5 @@
+import Rank from '../../Rank';
+
 const Square = (props: any) => {
     const squareContainerStyle = {
         width: '100%',
@@ -8,27 +10,22 @@ const Square = (props: any) => {
     }
     
     const squareStyle = {
-        background: 'rgba(0,0,0,0)',
+        background: props.color,
         height: props.width,
         width: props.height,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: '4px'
     };
 
     return(
         <div style={squareContainerStyle}>
-            <div style={squareStyle}></div>
+            <div style={squareStyle}>
+                {props.won && props.label}
+            </div>
         </div>
     );
 }
 
 export default Square;
-
-/*
-return(
-        <div style={squareContainerStyle}>
-            <div style={squareStyle}>{props.label}</div>
-        </div>
-    );
-*/

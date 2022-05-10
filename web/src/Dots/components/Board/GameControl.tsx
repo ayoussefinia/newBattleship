@@ -64,16 +64,14 @@ export default class GameControl {
         let pt2_boxes = this.getDot(pt2).boxes;
 
         let intersection = pt1_boxes.filter((bx: string) => pt2_boxes.includes(bx));
-        //console.log(intersection);
         intersection.forEach((box: string) => {
             let b = this.getBox(box);
             if (b.owner === null && b.status === 3) {
                 b.owner = playerId;
+                b.color = color;
             }
             b.status++
         })
-
-        //return this;
     }
 
     gameComplete() {

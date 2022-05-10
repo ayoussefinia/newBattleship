@@ -1,5 +1,5 @@
 import "./PlayerDiv.css";
-import Rank from "./Rank";
+import Rank from "../../Rank";
 
 const PlayerDiv = (props: any) => {
   const playerStyle = {

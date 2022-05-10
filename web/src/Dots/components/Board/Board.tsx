@@ -36,7 +36,7 @@ const Board = ( props: any ) => {
     const [lastTurn, setLastTurn] = useState({lineNo: '-1', active: false, color: "rgba(0,0,0,0)"});
     const [gameGrid, setGameGrid] = useState( () => initializeBoard() );
     const [gameControl, setGameControl] = useState( () => initializeDataStructure() );
-    const [liveGrid, setLiveGrid] = useState( () => connectLinesToData(gameGrid) );
+    const [liveGrid, setLiveGrid] = useState( () => initializeLiveBoard(gameGrid) );
     const [counter, setCounter] = useState(0);
 
     const BoardStyle = {
@@ -53,7 +53,6 @@ const Board = ( props: any ) => {
         alignItems: "center"
     }
 
-    /************ INITIALIZE BOARD **************************************/
     function initializeBoard(){
         // create board layout
         const grid: JSX.Element[] = [];
@@ -66,13 +65,18 @@ const Board = ( props: any ) => {
                     // the 'xs' value needs to update with the given grid size: TODO
                     grid.push(
                         <Grid key={i} item xs={gridShort} >
-                            <Dot></Dot>
+                            <Dot/>
                         </Grid>
                     );
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridLong} >
-                            <Line key={lc} value={lc.toString()} width="100%" height="6px" increment={increment} makeMove={makeMove} color="rgba(0,0,0,0)"></Line>
+                            <Line key={lc} 
+                                value={lc.toString()} 
+                                width="100%" height="6px" 
+                                increment={increment} 
+                                makeMove={makeMove} 
+                                color="rgba(0,0,0,0)"/>
                         </Grid>
                     );
                     lc++;
@@ -81,14 +85,21 @@ const Board = ( props: any ) => {
                 if (i % 2 === 1) {
                     grid.push(
                         <Grid key={i} item xs={gridLong} >
-                            <Square label={boxLabel} width="60px" height="60px"></Square>
+                            <Square label={boxLabel} 
+                                width="60px" height="60px"
+                                color="rgba(0,0,0,0)"/>
                         </Grid>
                     );
                     boxLabel = nextChar(boxLabel);
                 } else { 
                     grid.push(
                         <Grid key={i} item xs={gridShort} >
-                            <Line key={lc} value={lc.toString()} width="6px" height="100%" increment={increment} makeMove={makeMove} color="rgba(0,0,0,0)"></Line>
+                            <Line key={lc} 
+                                value={lc.toString()} 
+                                width="6px" height="100%" 
+                                increment={increment} 
+                                makeMove={makeMove} 
+                                color="rgba(0,0,0,0)"/>
                         </Grid>
                     );
                     lc++;
@@ -142,9 +153,9 @@ const Board = ( props: any ) => {
                     controller.setLine(lineCounter.toString(), { endpoints: [top, top+grid_size], active: false, color: "rgba(0,0,0,0)"});
                     lineCounter++;
                 }else if(elem === 'Square'){
-                    //controller.addBox(boxLabel, { sides: [lineCounter-grid_size, lineCounter, lineCounter+grid_size,lineCounter-1], owner: null, status: 0}); // sides: [top, right, bottom, left]
+                    // sides: [top, right, bottom, left]
                     let dts = [dotTemp-grid_size, dotTemp-grid_size+1, dotTemp+1, dotTemp];
-                    controller.setBox(boxLabel, { vertices: [dts[0],dts[1],dts[2],dts[3]], owner: null, status: 0}); // clockwise dot direction
+                    controller.setBox(boxLabel, { vertices: [dts[0],dts[1],dts[2],dts[3]], owner: null, status: 0, color: "rgba(0,0,0,0)"}); // clockwise dot direction
                     boxLabel = nextChar(boxLabel);
                     dotTemp++;
                 }
@@ -162,11 +173,16 @@ const Board = ( props: any ) => {
         return controller;
     }
 
+    // connect lines components to lines map in game data structure
+    function initializeLiveBoard(grid_t: any){
+        let grid = updateBoard(grid_t);
+        return grid;
+    }
+
     // helper function - increment char to next ascii value
     function nextChar(c: string) {
         return String.fromCharCode(c.charCodeAt(0) + 1);
     }
-    /********************************************************************* */
 
     // increment and track global move counter (when limit reached, end the game)
     function increment() {
@@ -178,12 +194,10 @@ const Board = ( props: any ) => {
     function makeMove(line: string) {
         console.log(gameControl);
         console.log(liveGrid); 
-        //setLastTurn({lineNo: line, active: true})
         gameControl.update(line, props.playerId, props.color);
         setLastTurn({lineNo: line, active: true, color: props.color})
-        //update(true);
-        let t = updateBoard(liveGrid);
-        setLiveGrid(t);
+        //updateBoard(liveGrid);
+        setLiveGrid(updateBoard(liveGrid));
     }
 
     // when we get the player's move, update board and data structure. TODO
@@ -192,14 +206,6 @@ const Board = ( props: any ) => {
         console.log(props.oppTurn);
         gameControl.update(props.oppTurn.lineNo, props.oppTurn.dummy, props.oppTurn.color);
         return updateBoard(liveGrid);
-        //console.log(t);
-        //setLiveGrid(t);
-    }
-    
-    function connectLinesToData(grid_t: any){
-        let grid = updateBoard(grid_t);
-        console.log(grid);
-        return grid;
     }
 
     function updateBoard(grid_t: any) {
@@ -207,27 +213,33 @@ const Board = ( props: any ) => {
         let grid = _.cloneDeep(grid_t); // THIS WAS THE ISSUE. NEED TO DEEP COPY/CLONE
 
         for(let i = 0; i < grid.length; i++){
-            if(grid[i].props.children.type["name"] === "Line"){
-                let child = grid[i];
-                let line = gameControl.getLine(child.props.children.props.value);
+            let child = grid[i];
+            let comp = child.props.children.type["name"];
+            if(comp === "Line"){
                 grid[i] = React.cloneElement(child, {
                     children: React.cloneElement(child.props.children, {
-                        //live: line.active,
-                        //colour: line.color
                         live: gameControl.getLine(child.props.children.props.value).active,
                         color: gameControl.getLine(child.props.children.props.value).color
-                        //live: lastTurn // when a move is made, update the gameControl and set the last move to lastTurn (similar procedure for opponent's move)
+                        // when a move is made, update the gameControl and set the last move to lastTurn (similar procedure for opponent's move)
                     })
                 })
+            }else if (comp === "Square"){
+                let x = child.props.children.props.label;
+                let b = gameControl.getBox(x);
+                if(b.status === 4){
+                    console.log(x);
+                    console.log("box " + x + " is owned now");
+                    grid[i] = React.cloneElement(child, {
+                        children: React.cloneElement(child.props.children, {
+                            color: gameControl.getBox(x).color,
+                            won: true
+                        })
+                    })
+                }
             }
         }
-        
         return grid;
     }
-    
-    /*useEffect(() => {
-        console.log(props.count);
-    }, [props.count]);*/
 
     useEffect(() => {
         console.log("processing user move");
@@ -238,15 +250,11 @@ const Board = ( props: any ) => {
         gameControl.printController();
     }, [gameControl]);
 
-    useEffect(() =>{
-        //let x = liveGrid; 
-        //setLiveGrid(x);
+    useEffect(() => {
         console.log(liveGrid);
     }, [liveGrid]);
     
     useEffect(() => {
-        //let x = liveGrid; 
-        //setLiveGrid(x);
         console.log(lastTurn);
     }, [lastTurn])
 
