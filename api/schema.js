@@ -1,13 +1,13 @@
 const { gql } = require('apollo-server');
 
-module.exports.schema = gql`
-  type Query {
-    checkMatchStatus(game: GameInput!): String  
+const typeDefs =  gql`
+  type Query { 
+    ping: String
+    startGame(game: GameInput!): GameOutput
   }
 
   type Mutation {
     takeTurn(game: GameInput!): GameOutput
-    startGame(game: GameInput!): String
   }
 
   type GameOutput {
