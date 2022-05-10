@@ -24,7 +24,7 @@ let gameboard_empty = [[0,0,0,0,0,0,0],
 
 
 function Game(props:any){
-    let [turn, takeTurn] = useState(0);
+  //  let [turn, takeTurn] = useState(0);
     let [placement, setPlacement] = useState(0);
     let [gameboard, setGameboard] = useState(gameboard_empty);
     
@@ -101,6 +101,7 @@ function Game(props:any){
     }
 
     useEffect(() =>{
+        console.log("Turn coming from server: " + props.turn);
         updateBoard(props.turn);
         playable = true;
     },[props.turn])
@@ -114,13 +115,13 @@ function Game(props:any){
     };*/
     function updateBoard(location:number) {
         //props.takeTurn(turn);
-        takeTurn(location);
+        if(location)
+        props.takeTurn(location);
         let newboard = gameboard;
         newboard = dropToken(location, newboard);
         setGameboard(newboard);
-        console.log("gameboard set"); //Test to ensure the gameboard was updated.
-        
-}
+        console.log("Board updated: " + JSON.stringify(gameboard)); //Test to ensure the gameboard was updated.
+    }
     
 
 
@@ -134,11 +135,3 @@ const ConnectFour = {
 }
 
 export default ConnectFour;
-
-
-
-
-
-   
-
-
