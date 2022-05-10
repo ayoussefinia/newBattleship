@@ -1,10 +1,9 @@
 const { ApolloServer } = require('apollo-server');
 // const { Connections } = require("./Connections");
 const { schema } = require('./schema')
+const { typeDefs } = require('./schema')
+const { queue } = require('./Queue');
 
-const { randomUUID } = require('crypto');
-
-  const typeDefs = schema;
 
   const resolvers = {
     Query: {

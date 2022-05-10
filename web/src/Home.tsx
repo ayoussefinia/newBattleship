@@ -1,7 +1,6 @@
 import { gql, useSubscription } from "@apollo/client";
 import { Box, Paper } from "@mui/material";
 import { Key, ReactChild, ReactFragment, ReactPortal } from "react";
-import { v4 } from "uuid";
 import Relay from "./common/Relay";
 
 
@@ -12,7 +11,7 @@ export default function Home(props : any) {
     }
 
     function show(page : any, name: string) {
-        props.setPage(<Relay name={name} exit={exit} playerId={v4()} page={page}/>);
+        props.setPage(<Relay name={name} exit={exit} playerId={Math.random().toString()} page={page}/>);
     }
     
     return (<div>
