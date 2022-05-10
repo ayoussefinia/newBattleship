@@ -13,7 +13,7 @@ function DotsGame( props: any) {
     const [opponentIcon, setOpponentIcon] = useState(5);
     const [opponentColor, setOpponentColor] = useState("#12CDD4")
     const [mute, setMute] = useState(false);
-    const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "12"})
+    const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "5", color: "#12CDD4"})
     const [c, setC] = useState(0);
 
     // to tell board to process opponenet's turn when received from api
@@ -52,7 +52,7 @@ function DotsGame( props: any) {
             height: '100vh',
             }}>
             <TopLayout emoji={playerEmoji} icon={playerIcon} color={playerColor} oppEmoji={opponentEmoji} oppIcon={opponentIcon} oppColor={opponentColor} muted={mute}/>
-            <Board playerId="dummy_id" color={playerColor} oppTurn={oppTurn} count={c}/>
+            <Board playerId="dummy_id" color={playerColor} oppTurn={oppTurn} oppColor={opponentColor} count={c}/>
             <BottomLayout onChange={() => console.log("bottom layout change detected")} mute={mutePlayer} sendEmot={sendEmoji} exit={props.exit}/>
             
         </Container>

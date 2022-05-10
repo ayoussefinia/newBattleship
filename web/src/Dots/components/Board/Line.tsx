@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 const Line = ( props: any) => {
-    const [disableButton, setDisableButton] = useState(false);
-    const [lineColor, setLineColor] = useState('rgba(0,0,0,0)');
+    //const [disableButton, setDisableButton] = useState(false);
+    const [lineColor, setLineColor] = useState("rgba(0,0,0,0)");
     const [live, setLive] = useState(props.live);
 
     const lineStyle = {
@@ -24,14 +24,13 @@ const Line = ( props: any) => {
     }
  
     function lineClickHandler( event: any ) { 
-        console.log(props);
-        
-        if(!disableButton){
+        //console.log(props);
+        if(!live){
             //console.log(props.value);
             props.makeMove(props.value);
             console.log(props.live);
             setLive(true);
-            setDisableButton(true);
+            //setDisableButton(true);
             props.increment();
         }
     }
@@ -46,9 +45,11 @@ const Line = ( props: any) => {
 
     return(
         <div style={containerStyle} onClick={lineClickHandler}>
-            <button value={props.value} disabled={disableButton} style={lineStyle}/>
+            <button value={props.value} style={lineStyle}/>
         </div>
     );
 }
+
+//<button value={props.value} disabled={disableButton} style={lineStyle}/>
 
 export default Line;
