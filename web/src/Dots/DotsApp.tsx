@@ -66,7 +66,8 @@ function DotsGame( props: any) {
                 color={playerColor} 
                 oppTurn={oppTurn} 
                 oppColor={opponentColor} 
-                count={c}/>
+                count={c}
+                takeTurn={props.takeTurn}/>
             <BottomLayout mute={mutePlayer} 
                 sendEmot={sendEmoji} 
                 exit={props.exit}/>

@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import React from "react";
+import React, { DetailedReactHTMLElement, SetStateAction } from "react";
 import { useEffect, useState } from "react";
 
 interface Game {
@@ -28,11 +28,16 @@ function StartGame(props: any) {
   if (loading)
     return <p>Connecting to other player...</p>;
 
-  let game = data?.startGame;
+  let game = data?.startGame; // the initial game object
   console.log(game);
 
 
-  return <TakeTurn gameName={props.gameName} playerId={props.playerId} isFirst={data?.data === props.gameName} opponentId={data?.opponentId} child={props.child} game={game}/>;
+  return <TakeTurn gameName={props.gameName} 
+    playerId={props.playerId} 
+    isFirst={data?.data === props.gameName} 
+    opponentId={data?.opponentId} 
+    child={props.child} 
+    game={game}/>;
 }
 
 function TakeTurn(props: any) {
@@ -49,34 +54,59 @@ function TakeTurn(props: any) {
     takeTurn: setTurn
   }));
 
+  const [render, setRender] = useState(newChild);
+
   const TAKE_TURN = () => gql`
-  mutation TakeTurn($playerId: String, $data: String, $opponentId: String) {
-    takeTurn(game: { playerId: $playerId, data: $data, opponentId: $opponentId }) {
-      playerId
-      opponentId
-      data
+    mutation TakeTurn($playerId: String, $data: String, $opponentId: String) {
+      takeTurn(game: { playerId: $playerId, data: $data, opponentId: $opponentId }) {
+        playerId
+        opponentId
+        data
+      }
     }
-  }`;
- let serialized = null;
+  `;
+
+  let serialized = null;
   const [takeTurn, { data, loading, error }] = useMutation<Game>(
     TAKE_TURN(),
     { variables: { playerId: props.playerId, opponentId: props.opponentId, data: serialized } }
   );
 
-function Turner(props: any) {
-  useTurn(JSON.parse(props.turn));
-  return newChild;
-}
+  function Turner(props: any) {
+    console.log(props.turn);
+    useTurn(JSON.parse(props.turn)); // update turn state
+    return newChild;
+  }
+
+  function useInitGame(tturn: any){
+    useTurn(JSON.parse(tturn));
+    return newChild;
+  }
 
   function setTurn(tturn: any) {
     serialized = JSON.stringify(tturn);
     takeTurn({ variables: { playerId: props.playerId, opponentId: props.opponentId, data: serialized } });
   }
+
   if(loading)
     return newChild;
   else
     return <Turner turn={data?.data}/>;
+  
+  /*useEffect(() => {
+    let x: JSX.Element = <Turner turn={data?.data ? data?.data : "{}"} initGame={useInitGame} newChild={newChild}/>;
+    setRender(x as SetStateAction<DetailedReactHTMLElement<any,HTMLElement>>);
+  }, [data]);
+
+  return render*/
+  
 }
+
+/*function Turner(props: any) {
+  console.log(props.turn);
+  props.initGame(props.turn); // update turn state
+  return props.newChild;
+}*/
 
 export default function Relay(props: any) {
 

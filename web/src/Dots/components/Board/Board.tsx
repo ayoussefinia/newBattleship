@@ -199,6 +199,7 @@ const Board = ( props: any ) => {
         setLastTurn({lineNo: line, active: true, color: props.color})
         //updateBoard(liveGrid);
         setLiveGrid(updateBoard(liveGrid));
+        props.takeTurn(lastTurn);
     }
 
     // when we get the player's move, update board and data structure. TODO
@@ -256,8 +257,12 @@ const Board = ( props: any ) => {
     }, [liveGrid]);
     
     useEffect(() => {
-        //console.log(lastTurn);
+        console.log(lastTurn);
     }, [lastTurn])
+
+    useEffect(() => {
+        console.log(props.turn);
+    }, props.turn);
 
     return (
         <Container maxWidth="lg" sx={Style}>
