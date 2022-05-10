@@ -8,6 +8,12 @@ const newPromise = (key, game) => {
     });
 };
 
+const shutdown = () => {
+    Object.keys(waiting).forEach(key => {
+        waiting[key].resolve("Shutting down");
+    });
+};
+
 const queue = (key, player1) => {
     if (waiting[key]) { // a connection is open and awaiting data
 
@@ -25,7 +31,7 @@ const queue = (key, player1) => {
                 console.log("Player 1 chosen, sending first move " + player1.playerId);
                 player2.payload.opponentId = player1.playerId;
                 waiting[player2.payload.playerId] = player2.payload;
-                return Promise.resolve({ playerId: player1.playerId, opponentId: player2.payload.playerId, data: player1.data });
+                return Promise.resolve({ playerId: player1.playerId, opponentId: player2.payload.playerId, data: JSON.stringify({ game: player1.data }) });
             } else { // player2 chosen, queue player1's connection and respond to player2
                 console.log("Player 2 chosen, sending first move " + player2.payload.playerId);
                 player2.payload.opponentId = player1.playerId;
@@ -40,3 +46,4 @@ const queue = (key, player1) => {
 };
 
 module.exports.queue = queue;
+module.exports.shutdown = shutdown;
