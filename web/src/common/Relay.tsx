@@ -64,7 +64,11 @@ function TakeTurn(props: any) {
   );
 
 function Turner(props: any) {
-  useTurn(JSON.parse(props.turn));
+
+  if(props.turn != undefined) {
+    useTurn(JSON.parse(props.turn));
+  }
+
   return newChild;
 }
 
