@@ -1,10 +1,11 @@
-import { Rowing } from "@mui/icons-material";
+import { Rowing, WindowSharp } from "@mui/icons-material";
+import {useState, useEffect} from 'react'
 import Board from "./board";
 //import React, { useState, useEffect, useRef} from "react";
 
 const gameBoard_height = 475;
 const gameBoard_width = 550;
-const gameBoard_offset = 1/44;
+//const gameBoard_offset = 1/44;
 const gameBoard_spacing = 3/22;
 
 const GAMEBOARD_EXAMPLE = [[0,0,0,0,0,0,0], 
@@ -14,69 +15,134 @@ const GAMEBOARD_EXAMPLE = [[0,0,0,0,0,0,0],
                            [2,1,1,2,1,0,0],
                            [1,2,1,2,1,2,2]];
 
-let gameboard = [[0,0,0,0,0,0,0], 
+let gameboard_empty = [[0,0,0,0,0,0,0], 
                  [0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0],
                  [0,0,0,0,0,0,0]];
 
-const testcolumn = 2;
-const testrow = 5;
-function Game(props:any){
 
-    if(FourInARow(testcolumn, testrow)){
-        alert("Winner!");
+function Game(props:any){
+    
+    let [gameboard, setGameboard] = useState(gameboard_empty);
+    let [turn, takeTurn] = useState(0);
+    let [currentPlayer, setPlayer] = useState(1);
+
+    
+    let row = 0;
+    let playable:boolean = true;
+    
+
+    function FourInARow(row:number, column:number):boolean{
+        let count = 0;
+        let i = -1;
+        let player:number;
+
+        if(gameboard[row][column] !== 0){
+            player = gameboard[row][column];
+        }else{
+            console.log("four in a row failed");
+            return false;
+        }
+        for(let j = -1; j <= 1; j++){
+            console.log("Looking at "+ gameboard[row][column] + " at " + row + ", " + column);
+            if((NextInLine(row,column,i,j,count, player) + NextInLine(row,column,-i,-j,count,player)) >= 3){
+                return true;
+            }   
+        }
+        if((NextInLine(row,column, 0, -1, count,player) + NextInLine(row,column,0,1,count,player)) >= 3){
+            return true;
+        }
+        return false;
     }
-    return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;
+
+    function NextInLine(row:number, column:number, xIncrement:number, yIncrement:number, count:number, player:number):number{
+        let newRow = row+xIncrement;
+        let newColumn = column+yIncrement;
+        if(newRow < 0 || newColumn < 0 || newRow > 5 || newColumn > 6){
+            return count;
+        }
+        if(gameboard[newRow][newColumn] === player){
+            count = count+1;
+            return NextInLine(newRow, newColumn, xIncrement, yIncrement, count,player);
+        }else{
+            return count;
+        }
+    }
+
+    function dropToken(column: number, board:number[][]):number[][]{
+
+    // A [for-loop] which checks for the first empty index in a given column and updates it's value.
+    for (let i = 5; i >= 0 ; i--) {
+        if (!board[i][column]) {
+            board[i][column] = currentPlayer ; // in a real game this would be the player number.
+            //row = i * -1 + 6;
+            row = i;
+            break;
+        }
+    }
+    return board;
+}
+
+    function onClick(x:number, y:number){
+        //const offSet = gameBoard_width*gameBoard_offset;
+        const spacing = gameBoard_width*gameBoard_spacing;
+        const gameOffset = window.innerWidth/2 - gameBoard_width/2;
+        let column:number;
+        if(playable){
+            column = Math.trunc((x - gameOffset)/spacing);
+            //playable = false;
+            console.log(column);
+            if(column > 6){column = 6;}
+            updateBoard(column);
+            takeTurn(column);
+            if (FourInARow(row, column)) {
+                alert("Winner");
+            }
+            if(currentPlayer === 1){
+                setPlayer(2);
+                console.log("set to player 2");
+            }else{
+                setPlayer(1);
+                console.log("set to player 1");
+            }
+
+        }
+    }
+
+    useEffect(() =>{
+        console.log("Turn coming from server: " + props.turn);
+        updateBoard(props.turn);
+        playable = true;
+    },[props.turn])
+    
+    
+
+    /*props.setTurn = (data:number) =>{
+        let newboard = gameboard;
+        newboard = dropToken(data, newboard);
+        setGameboard(newboard);
+    };*/
+    function updateBoard(location:number) {
+        //props.takeTurn(turn);
+        if(location)
+        props.takeTurn(location);
+        let newboard = gameboard;
+        newboard = dropToken(location, newboard);
+        setGameboard(newboard);
+        console.log("Board updated: " + JSON.stringify(gameboard)); //Test to ensure the gameboard was updated.
+    }
+    
+
+
+    return<div><Board onClick={onClick} array={gameboard} width={gameBoard_width} height={gameBoard_height}/><button /*onClick={props.exit}*/>Leave</button></div>;    
 }
 
 const ConnectFour = {
     game: <Game />,
-    thumbnail: <div><h3>ConnectFour</h3><Board array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>,
+    thumbnail: <div><h3>ConnectFour</h3><Board onClick={() => {}} array={GAMEBOARD_EXAMPLE} width={256} height={200}/></div>,
     name: 'ConnectFour'
 }
 
 export default ConnectFour;
-
-function FourInARow(column:number, row:number ):boolean{
-    let count = 0;
-    let i = -1;
-    for(let j = -1; j <= 1; j++){
-        if((NextInLine(column,row,i,j,count) + NextInLine(column,row,-i,-j,count)) >= 3){
-            return true;
-        }   
-    }
-    if((NextInLine(column,row, 0, -1, count) + NextInLine(column,row,0,1,count)) >= 3){
-        return true;
-    }
-    return false;
-}
-/* It looks good, but the code only seems to work for rows of 4 where the index is an endpoint, 
-   rather than a midpoint. ie. If a winning piece were to be inserted  into the 3rd slot in a row, 
-   it would only maintain it's counter while cheking one direction, and reset it to '1' while chekcing 
-   the other. I might be wrong, but if not, it might make sense to insert a 'NextInLine()' with adjusted 
-   x/yIncrement values into the return 'false' 'if' and 'else' statements. This allows it to maintain the 
-   counter and continue checking for a complete row in the opposite direction, but it would need an  
-   additional condition to prevent it from repeating this process more than once.*/
-   function NextInLine(column:number, row:number, xIncrement:number, yIncrement:number, count:number):number{
-    let newColumn = column+xIncrement;
-    let newRow = row+yIncrement;
-    if(newColumn < 0 || newRow < 0 || newColumn > 5 || newRow > 6){
-        return count;
-    }
-    if(GAMEBOARD_EXAMPLE[newColumn][newRow] === GAMEBOARD_EXAMPLE[column][row]){
-        count = count+1;
-        return NextInLine(newColumn, newRow, xIncrement, yIncrement, count);
-    }else{
-        return count;
-    }
-}
-
-function onClick(x:number, y:number){
-    const offSet = gameBoard_width*gameBoard_offset;
-    const spacing = gameBoard_width*gameBoard_spacing;
-    let column:number = Math.trunc((x - offSet)/spacing);
-    if(column > 6){column = 6;}
-    alert('column = ' + column);
-}

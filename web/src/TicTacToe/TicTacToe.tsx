@@ -11,9 +11,19 @@ function Game(props: any) {
     const [board, setBoard] = useState<Array<Array<boolean | null>>>([[null,false,true],[false,null,true],[true,false,null]]);
     const [turn, takeTurn] = useState<Turn | null>(null);
     
-    useEffect(() => {
-        props.takeTurn(turn);
-    }, [turn]);
+    // useEffect(() => {
+    //     setTurn(props.turn);
+    // }, [props.turn]);
+      
+    // const clicked = (x: number, y: number) => {
+    //     const turnX = Math.floor(x/getFrameBounds());
+    //     const turnY = Math.floor(y/getFrameBounds());
+    //     const newTurn = { row: turnX, col: turnY };
+    //     if(board[newTurn.row][newTurn.col] === null) {
+    //         setTurn(newTurn);
+    //         props.turn = newTurn;
+    //     }
+    // }
 
     props.setTurn = (data: Turn) => {
         const newBoard = board;

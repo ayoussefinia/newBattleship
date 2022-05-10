@@ -1,41 +1,88 @@
-import { gql, useSubscription } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { useEffect, useState } from "react";
 
 interface Game {
-    playerId: String,
-    opponentId: String,
-    data: any
+  playerId: String,
+  opponentId: String,
+  data: any | null | undefined
 }
 
-const QUEUE_PLAYER = gql`
-  subscription Subscription($game: String!) {
-    playerConnected(game: $game) {
+function StartGame(props: any) {
+
+  const START_GAME = () => gql`
+    query StartGame($playerId: String, $data: String) {
+      startGame(game: { playerId: $playerId, data: $data }) {
+        playerId
+        opponentId
+        data
+      }
+    }
+  `;
+
+  const { data, loading, error } = useQuery(
+    START_GAME(),
+    { variables: { playerId: props.playerId, data: props.gameName } }
+  );
+
+  if (loading)
+    return <p>Connecting to other player...</p>;
+
+  let game = data?.startGame;
+  console.log(game);
+
+
+  return <TakeTurn gameName={props.gameName} playerId={props.playerId} isFirst={data?.data === props.gameName} opponentId={data?.opponentId} child={props.child} game={game}/>;
+}
+
+function TakeTurn(props: any) {
+
+  const [turn, useTurn] = useState((props.game?.data === props.gameName) ? null: JSON.parse(props.game?.data));
+
+  const [newChild, setChild] = useState(React.cloneElement(props.child, {
+    ...props.child.props,
+    exit: props.exit,
+    playerId: props.playerId,
+    opponentId: props.game?.opponentId,
+    turn: turn,
+    loading: false,
+    takeTurn: setTurn
+  }));
+
+  const TAKE_TURN = () => gql`
+  mutation TakeTurn($playerId: String, $data: String, $opponentId: String) {
+    takeTurn(game: { playerId: $playerId, data: $data, opponentId: $opponentId }) {
       playerId
       opponentId
       data
     }
-  }   
-  `;
+  }`;
+ let serialized = null;
+  const [takeTurn, { data, loading, error }] = useMutation<Game>(
+    TAKE_TURN(),
+    { variables: { playerId: props.playerId, opponentId: props.opponentId, data: serialized } }
+  );
 
-  export default function Relay(props: any) {
+function Turner(props: any) {
+  useTurn(JSON.parse(props.turn));
+  return newChild;
+}
 
-      useEffect(() => {
-        const child = React.Children.only(props.children).props;
-        
-        child.takeTurn = (data: any) => {
-            
-        };
-
-        const { data, loading } = useSubscription<Game>(
-            QUEUE_PLAYER,
-            { variables: { game: props.game } }
-        );
-        
-        useEffect(() => {
-            child.setTurn(data?.data)
-        }, [data]);
-
-      }, [props.children]);
-
+  function setTurn(tturn: any) {
+    serialized = JSON.stringify(tturn);
+    takeTurn({ variables: { playerId: props.playerId, opponentId: props.opponentId, data: serialized } });
   }
+  if(loading)
+    return newChild;
+  else
+    return <Turner turn={data?.data}/>;
+}
+
+export default function Relay(props: any) {
+
+  const exitGame = props.exit;
+  const gameName = props.name;
+  const playerId = props.playerId;
+
+  return <StartGame gameName={gameName} playerId={playerId} child={props.page} exit={exitGame} />;
+}

@@ -1,4 +1,4 @@
-﻿import Simon from "./Simon";
+import Simon from "./Simon";
 import React, { useRef} from "react";
 import logo from './simon.jpg'
 
