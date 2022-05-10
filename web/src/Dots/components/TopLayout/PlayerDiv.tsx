@@ -10,7 +10,7 @@ const PlayerDiv = (props: any) => {
 
   return (
     <div className="player-div" style={{border: bdr, borderRadius: '12px'}}>
-
+      
       <div className="player-name_wrapper">
         <label className="player-name" style={playerStyle}>
           {props.playerName}

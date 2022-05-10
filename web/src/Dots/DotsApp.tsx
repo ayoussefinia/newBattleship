@@ -7,11 +7,15 @@ import './DotsApp.css';
 
 function DotsGame( props: any) {
     const [playerEmoji, setPlayerEmoji] = useState("");
-    const [playerIcon, setPlayerIcon] = useState(1);
+    const [playerIcon, setPlayerIcon] = useState(null);
     const [playerColor, setPlayerColor] = useState("#FFFF6D");
+    const [playerName, setPlayerName] = useState("");
+    const [playerScore, setPlayerScore] = useState(0);
+    const [oppName, setOppName] = useState("");
     const [opponentEmoji, setOpponentEmoji] = useState("");
-    const [opponentIcon, setOpponentIcon] = useState(5);
-    const [opponentColor, setOpponentColor] = useState("#12CDD4")
+    const [opponentIcon, setOpponentIcon] = useState(null);
+    const [opponentColor, setOpponentColor] = useState("#12CDD4");
+    const [oppScore, setOpponentScore] = useState(0);
     const [mute, setMute] = useState(false);
     const [oppTurn, setOppTurn] = useState({dummy: "data", lineNo: "5", color: "#12CDD4"})
     const [c, setC] = useState(0);
@@ -48,11 +52,15 @@ function DotsGame( props: any) {
             height: '100vh',
             }}>
             <TopLayout emoji={playerEmoji} 
-                icon={playerIcon} 
-                color={playerColor} 
+                playerIcon={playerIcon} 
+                playerColor={playerColor} 
+                playerName={playerName}
+                playerScore={playerScore}
                 oppEmoji={opponentEmoji} 
                 oppIcon={opponentIcon} 
-                oppColor={opponentColor} 
+                oppColor={opponentColor}
+                oppName={oppName}
+                oppScore={oppScore} 
                 muted={mute}/>
             <Board playerId="dummy_id" 
                 color={playerColor} 
@@ -66,7 +74,7 @@ function DotsGame( props: any) {
         </Container>
     );
 }
-//<button onClick={() => add()} style={{height: '5rem'}}></button>
+
 const Dots = {
     game: <DotsGame />,
     thumbnail:

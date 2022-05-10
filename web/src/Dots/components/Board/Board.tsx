@@ -38,6 +38,7 @@ const Board = ( props: any ) => {
     const [gameControl, setGameControl] = useState( () => initializeDataStructure() );
     const [liveGrid, setLiveGrid] = useState( () => initializeLiveBoard(gameGrid) );
     const [counter, setCounter] = useState(0);
+    const [lock, setLock] = useState(null); // lock player from making an extra move if they aren't first on start game and if they are waiting for the opp's move
 
     const BoardStyle = {
         width: "90%", 
@@ -192,8 +193,8 @@ const Board = ( props: any ) => {
 
     // when player clicks a line, register the move
     function makeMove(line: string) {
-        console.log(gameControl);
-        console.log(liveGrid); 
+        //console.log(gameControl);
+        //console.log(liveGrid); 
         gameControl.update(line, props.playerId, props.color);
         setLastTurn({lineNo: line, active: true, color: props.color})
         //updateBoard(liveGrid);
@@ -242,7 +243,7 @@ const Board = ( props: any ) => {
     }
 
     useEffect(() => {
-        console.log("processing user move");
+        //console.log("processing user move");
         setLiveGrid(makeOppMove());
     }, [props.oppTurn]);
 
@@ -251,11 +252,11 @@ const Board = ( props: any ) => {
     }, [gameControl]);
 
     useEffect(() => {
-        console.log(liveGrid);
+        //console.log(liveGrid);
     }, [liveGrid]);
     
     useEffect(() => {
-        console.log(lastTurn);
+        //console.log(lastTurn);
     }, [lastTurn])
 
     return (

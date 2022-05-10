@@ -7,19 +7,19 @@ const TopLayout = (props:any) => {
     <div className="top-layout_container">
       <div className="top-layout">
         <PlayerDiv 
-          rank={props.icon}
-          playerColor={props.color} 
-          score={24} 
+          rank={props.playerIcon}
+          playerColor={props.playerColor} 
+          score={props.playerScore} 
           emoji={props.emoji} 
-          playerName={"Intocable"}
+          playerName={props.playerName}
         />
         <MiddleDiv />
         <PlayerDiv 
           rank={props.oppIcon}
           playerColor={props.oppColor} 
-          score={13} 
+          score={props.oppScore} 
           emoji={props.muted ? "" : props.oppEmoji} 
-          playerName={"Kyle Butler"}
+          playerName={props.oppName}
         /> 
       </div>
     </div>

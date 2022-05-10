@@ -10,13 +10,13 @@ const Square = (props: any) => {
     }
     
     const squareStyle = {
-        background: props.color,
+        color: props.color,
         height: props.width,
         width: props.height,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: '4px'
+        fontSize: '3rem'
     };
 
     return(
