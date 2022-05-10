@@ -11,6 +11,10 @@ import ShipControl from './Components/ShipControl';
 import MiniGrid from './Components/MiniGrid';
 import TopSection from './Components/TopSection';
 import Grid from './Components/Grid';
+import {ProgressBar} from 'react-bootstrap';
+import { isAbsolute } from 'path';
+import { Rocket } from '@mui/icons-material';
+import StartGameBtn from './Components/startGameBtn'
 
 export default  function BattleShip() {
     const [isInitialRender, setIsInitialRender] = useState(true);
@@ -59,13 +63,16 @@ export default  function BattleShip() {
                                     opponentEnergyLevel: 100
                                     });
     let [selectedShip, setSelectedShip] = useState("");
- 
+    let [isSmallScreen, setIsSmallScreen] = useState(false)
     // const POST_GAME_ARRAY = gql`
      useEffect(()=>{
         //  change background only when battleship is being played
         if (isInitialRender){
             setIsInitialRender(false)
             document.body.style.backgroundImage = 'linear-gradient(#74acd6, #0c3c7c)';
+            if (document.body.clientHeight <= 675 || document.body.clientWidth <= 360){
+                setIsSmallScreen(true)
+            }
         }
 
         let gameGrid = Array(numGridEdge).fill(null).map(row => new Array(numGridEdge).fill(null))
@@ -95,7 +102,7 @@ export default  function BattleShip() {
 
     function handleBattleShipClick() {
         setGameState({...gameState, placingBattleShip:true, placingCarrier:false});
-        hilightBattleship()
+        highlightBattleship()
     }
     function handleDestroyerClick () {
         setGameState({...gameState, placingDestroyer:true, placingBattleShip:false, placingCarrier:false});
@@ -111,7 +118,7 @@ export default  function BattleShip() {
     }
     function handleGridBattleShipClick () {
         setGameState({...gameState, placingBattleShip:true, placingCarrier:false, placingDestroyer:false});
-        hilightBattleship()
+        highlightBattleship()
     }
     function handleGridDestroyerClick () {
         setGameState({...gameState, placingDestroyer:true, placingCarrier:false, placingBattleShip:false});
@@ -123,18 +130,21 @@ export default  function BattleShip() {
         setSelectCarrierStyle('shipSelectedStyle')
         setSelectBattleshipStyle('shipDefaultStyle')
         setSelectDestroyerStyle('shipDefaultStyle')
+        setShipSelectShadow(false)
     }
     function highlightDestroyer(){
         setSelectedShip("destroyer")
         setSelectCarrierStyle('shipDefaultStyle')
         setSelectBattleshipStyle('shipDefaultStyle')
         setSelectDestroyerStyle('shipSelectedStyle')
+        setShipSelectShadow(false)
     }
-    function hilightBattleship(){
+    function highlightBattleship(){
         setSelectedShip("battleship")
         setSelectCarrierStyle('shipDefaultStyle')
         setSelectBattleshipStyle('shipSelectedStyle')
         setSelectDestroyerStyle('shipDefaultStyle')
+        setShipSelectShadow(false)
     }
 
     const Styles = styles(gameState,delta);
@@ -185,7 +195,7 @@ export default  function BattleShip() {
             row: row,
             column: col,
             gameId: gameState.gameId,
-            uuid: gameState.uuid
+            // uuid: gameState.uuid
         }
     }
 
@@ -210,6 +220,43 @@ export default  function BattleShip() {
         }
         
     }
+    
+    // shadow for shipSelection and board depending on if the user has selected a ship or placed a ship
+    let [shipSelectShadow, setShipSelectShadow] = useState(true)
+    const highlightArea = { boxShadow: '0 0 0 5000px rgb(0 0 0 / 60%)', zIndex: '10',
+                            borderRadius: '150px', transition: 'all 0.4s ease', paddingTop: ''}
+    const emptyHighlightArea = { boxShadow: '', zIndex: '', borderRadius: '', transition: 'all 0.4s ease', paddingTop: ''}
+    let [selectionStyle, setSelectionStyle] = useState(highlightArea)
+    let [boardStyle, setBoardStyle] = useState(emptyHighlightArea)
+    let [firstShipPlaced, setFirstShipPlaced] = useState(false)
+    let [boardText, setBoardText] = useState("")
+
+    // once ship is selected
+    useEffect(() => {
+        if (!shipSelectShadow){
+            setSelectionStyle(emptyHighlightArea)
+
+            setBoardStyle({boxShadow: '0 0 0 5000px rgb(0 0 0 / 60%)', zIndex: '10',
+            borderRadius: '', transition: 'all 0.4s ease', paddingTop: '20px'})
+            setBoardText('Place ship here')
+        }
+    }, [shipSelectShadow])
+    
+    // once ship is placed
+    useEffect(() => {
+        if (!firstShipPlaced){
+            if(gameState.battleShipsPlaced || gameState.carrierPlaced || gameState.destroyerPlaced){
+                setFirstShipPlaced(true)
+                setBoardStyle(emptyHighlightArea)
+                setBoardText('')
+            }
+        }
+    }, [gameState])
+
+function clicked() {
+    console.log('gameState.gameId', gameState.gameId);
+    console.log('gameState.turn', gameState.turn)
+}
 
     return(
         <div  className="noSelect gameBody">

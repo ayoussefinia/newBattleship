@@ -9,6 +9,7 @@ import {moveShipLeft} from '../utility/moveShip';
 import {moveShipRight} from '../utility/moveShip';
 import {moveShipDown} from '../utility/moveShip';
 import rotateShip from '../utility/rotateShip';
+import StartGameBtn from './startGameBtn'
 import { faArrowUp, faArrowLeft, faArrowRight, faArrowDown, faRotateLeft, faRotateRight, faCircleXmark, faShip, faBookSkull, faRocket } from '@fortawesome/free-solid-svg-icons'
 // import {styles} from '../styles/JavaScriptStyles';
 export default function ShipControl(props: any) {
