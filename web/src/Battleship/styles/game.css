@@ -209,6 +209,9 @@ body {
 
 /* media queries for smaller screens */
 @media screen and (max-width: 360px) {
+  .gameGridStyles {
+    margin-top:125px;
+  }
   .shipSelection {
     text-align: center;
   }
