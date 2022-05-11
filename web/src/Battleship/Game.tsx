@@ -208,7 +208,10 @@ export default  function BattleShip() {
             case 'destroyer': shipPlaced = gameState.destroyerPlaced
                 break;
         }
-        if (shipPlaced){
+        /* if game hasn't started this causes errors in ship placement. if ship 5 is placed, and ship 4 isn't, if the user selects
+        ship 4, then back to 5, then selects a place on the board, the board won't let them place ship 4 after that. 
+        */
+        if (gameState.gameStarted && shipPlaced){
             player == "fireAtOpponent" ? fireAtOpponent(rowIndex,colIndex) : fire(rowIndex,colIndex)
         } else if (gameState.gameStarted && shipPlaced) {
             player ==  "fire" ? fire(rowIndex,colIndex) : console.log();
