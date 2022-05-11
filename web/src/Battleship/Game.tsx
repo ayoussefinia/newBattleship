@@ -14,7 +14,6 @@ import Grid from './Components/Grid';
 import {ProgressBar} from 'react-bootstrap';
 import { isAbsolute } from 'path';
 import { Rocket } from '@mui/icons-material';
-import StartGameBtn from './Components/startGameBtn'
 
 export default  function BattleShip() {
     const [isInitialRender, setIsInitialRender] = useState(true);
@@ -212,7 +211,7 @@ export default  function BattleShip() {
         if (shipPlaced){
             player == "fireAtOpponent" ? fireAtOpponent(rowIndex,colIndex) : fire(rowIndex,colIndex)
         } else if (gameState.gameStarted && shipPlaced) {
-            player ==  "fire" ? fire(rowIndex,colIndex) : null;
+            player ==  "fire" ? fire(rowIndex,colIndex) : console.log();
         }
         
         else{
@@ -271,7 +270,7 @@ function clicked() {
             </div>
             <br/>
             <div className='centerWrapper'>
-                <div className='center'>
+                <div className='center highlightBoard' style={boardStyle} display-content={boardText} >
                     <Grid
                         gameState={gameState}
                         delta={delta}
@@ -302,6 +301,11 @@ function clicked() {
                         setGameState={setGameState}
                         numGridEdge={numGridEdge}
                         startGame={startGame}
+                        isSmallScreen={isSmallScreen}
+                        firstShipPlaced={firstShipPlaced}
+                        selectionStyle={selectionStyle}
+                        boardStyle={boardStyle}
+                        boardText={boardText}
                     />                                                          
                 </>
             </CSSTransition>
