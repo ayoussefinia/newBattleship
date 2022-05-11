@@ -22,7 +22,7 @@ function StartGame(props: any) {
 
   const { data, loading, error } = useQuery(
     START_GAME(),
-    { variables: { playerId: props.playerId, data: props.gameName } }
+    { variables: { playerId: props.playerId, data: JSON.stringify({ game: props.gameName }) } }
   );
 
   if (loading)
