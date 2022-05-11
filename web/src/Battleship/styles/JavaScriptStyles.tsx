@@ -204,7 +204,7 @@ import destroyerImage from '../assets/destroyer.svg'
             fontFamily: 'Orbitron',
             fontWeight: 500,
             fontSize: '1.15em',
-            color: 'rgb(55,106,161)'
+            color: '#3f3fab'
     
         } as React.CSSProperties,
         opponentTitle: {
@@ -214,7 +214,7 @@ import destroyerImage from '../assets/destroyer.svg'
             fontFamily: 'Orbitron',
             fontWeight: 500,
             fontSize: '1.15em',
-            color: 'rgb(55,106,161)'
+            color: '#b90000'
         }as React.CSSProperties,
     
          vs : {

@@ -24,7 +24,7 @@ export default function TopSection(props:any) {
         </div>
         <div style={Styles.statsLeft}>
             <div style={Styles.playerTitle}>Player</div>
-            <div style={{position:'absolute', left: '13px'}}>
+            <div style={{position:'absolute', left: '13px', color:'#3f3fab'}}>
                 <FontAwesomeIcon  
                         icon={faShip} 
                         className='shipStyles'
@@ -33,7 +33,7 @@ export default function TopSection(props:any) {
                         />
             </div>
             {props.gameState.turn == true ? 
-                    <div style={{left:'93px', position:'absolute', color:'blue'}}>
+                    <div style={{left:'93px', position:'absolute', color:'#3f3fab'}}>
                         <FontAwesomeIcon  
                             icon={faRocket} 
                             className='rocketStyles'
@@ -44,7 +44,7 @@ export default function TopSection(props:any) {
         </div>
         <div style={Styles.statsRight}>
             <div style={Styles.opponentTitle}>Opponent</div>
-            <div style={{position:'absolute', right: '13px'}}>
+            <div style={{position:'absolute', right: '13px', color: '#b90000'}}>
                 <FontAwesomeIcon  icon={faBookSkull} 
                         className='skullStyles'
                 
@@ -52,7 +52,7 @@ export default function TopSection(props:any) {
                         />
             </div>
             {props.gameState.turn != true ? 
-                <div style={{position:'absolute', right: '80px', color:'red'}}>
+                <div style={{position:'absolute', right: '80px', color:'#b90000'}}>
                         <FontAwesomeIcon  
                             icon={faRocket} 
                             className='opponentRocketStyles'
