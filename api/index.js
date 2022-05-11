@@ -1,42 +1,27 @@
 const { ApolloServer } = require('apollo-server');
 const { typeDefs } = require('./schema')
-const { queue, shutdown } = require('./Queue');
+const { queue } = require('./Queue');
 
 
   const resolvers = {
     Query: {
       ping: () => "Pong",
       startGame: async (parent, args, context, info) => { 
-
-        return await queue(args.game.data, args.game);
+        const input = JSON.parse(args.game.data);
+        return await queue.playerConnected(input.game, args.game);
       }
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
-        return await queue(args.game.opponentId, args.game);
+        console.log("Taking turn: " + JSON.stringify(args.game));
+        return await queue.takeTurn(args.game.opponentId, args.game);
       }
     }
   };
 
 
 
-  const server = new ApolloServer({ typeDefs, resolvers, 
-    plugins: [
-      {
-        async serverWillStart() {
-          return {
-            async drainServer() {
-              shutdown();
-            }
-          }
-        }
-      }
-    ],
-    formatError: (err) => {
-    
-      return err;
-    } 
-  });
+  const server = new ApolloServer({ typeDefs, resolvers });
   
   server.listen().then(({ url }) => {
     console.log(` Server ready at ${url}`);
