@@ -1,7 +1,7 @@
 import React from 'react';
-import battleshipImage from '../battleship.svg';
-import carrierImage from '../carrier.svg';
-import destroyerImage from '../destroyer.svg'
+import battleshipImage from '../assets/battleship.svg';
+import carrierImage from '../assets/carrier.svg';
+import destroyerImage from '../assets/destroyer.svg'
 
  export function styles(gameState:any, delta:any) {
 
