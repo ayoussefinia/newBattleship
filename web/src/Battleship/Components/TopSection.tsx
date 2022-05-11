@@ -24,33 +24,41 @@ export default function TopSection(props:any) {
         </div>
         <div style={Styles.statsLeft}>
             <div style={Styles.playerTitle}>Player</div>
-            <FontAwesomeIcon  
+            <div style={{position:'absolute', left: '13px'}}>
+                <FontAwesomeIcon  
                         icon={faShip} 
                         className='shipStyles'
                      
                         size='4x'
                         />
+            </div>
             {props.gameState.turn == true ? 
+                    <div style={{left:'93px', position:'absolute', color:'blue'}}>
                         <FontAwesomeIcon  
                             icon={faRocket} 
                             className='rocketStyles'
                             size='2x'
-                        /> : null}
+                        />
+                    </div> : null}
             
         </div>
         <div style={Styles.statsRight}>
             <div style={Styles.opponentTitle}>Opponent</div>
-            <FontAwesomeIcon  icon={faBookSkull} 
+            <div style={{position:'absolute', right: '13px'}}>
+                <FontAwesomeIcon  icon={faBookSkull} 
                         className='skullStyles'
                 
                         size='4x'
                         />
+            </div>
             {props.gameState.turn != true ? 
+                <div style={{position:'absolute', right: '80px', color:'red'}}>
                         <FontAwesomeIcon  
                             icon={faRocket} 
                             className='opponentRocketStyles'
                             size='2x'
-                        /> : null}
+                        />
+                </div> : null}
         </div>
 
 
