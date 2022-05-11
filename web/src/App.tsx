@@ -24,7 +24,7 @@ const pages = [
   DotsApp
 ];
 
-const home = <Home pages={pages} setPage={setPage} />;
+const home = <Home pages={pages} setPage={setPage} bs-body-text-align="center!important" />;
 
   return page || home;
 }

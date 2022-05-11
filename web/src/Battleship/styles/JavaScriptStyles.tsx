@@ -14,8 +14,8 @@ import destroyerImage from '../assets/destroyer.svg'
         },
        gridBattleShipStyle : {
             position: 'absolute',
-            top: gameState.battleShipVertical? (gameState.battleShip[0].pos.y * delta - delta) + 5 :  (gameState.battleShip[0].pos.y * delta) + 2,
-            left: gameState.battleShipVertical? (gameState.battleShip[0].pos.x*delta) + 2 : (gameState.battleShip[0].pos.x*delta) + 3,
+            top: gameState.battleShipVertical? (gameState.battleShip[0].pos.y * delta - delta) + 4 :  (gameState.battleShip[0].pos.y * delta) + 1,
+            left: gameState.battleShipVertical? (gameState.battleShip[0].pos.x*delta) + 1 : (gameState.battleShip[0].pos.x*delta) + 2,
             // width: window.innerHeight*.75 * (4/8),
             // height: window.innerHeight*.75 * (3/8) /3 ,
             width: '164px',
@@ -27,7 +27,9 @@ import destroyerImage from '../assets/destroyer.svg'
             transform: `rotate(${gameState.battleShipVertical? 90 : 0}deg) `,
             transformOrigin:'0% 100%',
             zIndex: gameState.gameStarted? (gameState.turn? -1: 0): 0,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transitionProperty: 'all',
+            transitionDuration: '0.5s'
         } as React.CSSProperties,
         miniGridBattleShipStyle : {
             position: 'absolute',
@@ -49,8 +51,8 @@ import destroyerImage from '../assets/destroyer.svg'
     
          gridCarrierStyle : {
             position: 'absolute',
-            top: gameState.carrierVertical? (gameState.carrier[0].pos.y * delta - delta) + 5:  (gameState.carrier[0].pos.y * delta) + 2,
-            left: gameState.carrierVertical? (gameState.carrier[0].pos.x*delta) + 2: (gameState.carrier[0].pos.x*delta) + 3,
+            top: gameState.carrierVertical? (gameState.carrier[0].pos.y * delta - delta) + 4:  (gameState.carrier[0].pos.y * delta) + 1,
+            left: gameState.carrierVertical? (gameState.carrier[0].pos.x*delta) + 1: (gameState.carrier[0].pos.x*delta) + 2,
             // width: window.innerHeight*.75 * (5/8),
             // height: window.innerHeight*.75 /8,
             width: '206px',
@@ -64,6 +66,8 @@ import destroyerImage from '../assets/destroyer.svg'
             transformOrigin:'0% 100%',
             zIndex: gameState.gameStarted? (gameState.turn? -1: 0) : 0,
             cursor: 'pointer',
+            transitionProperty: 'all',
+            transitionDuration: '0.5s'
         } as React.CSSProperties,
         miniGridCarrierStyle : {
             position: 'absolute',
@@ -81,13 +85,13 @@ import destroyerImage from '../assets/destroyer.svg'
             transform: `rotate(${gameState.carrierVertical? 90 : 0}deg) `,
             transformOrigin:'0% 100%',
             zIndex: gameState.gameStarted? (gameState.turn? 0: -1) : 0,
-            cursor: 'pointer',
+            cursor: 'pointer'
         } as React.CSSProperties,
     
          gridDestroyerStyle : {
             position: 'absolute',
-            top: gameState.destroyerVertical? (gameState.destroyer[0].pos.y * delta - delta) + 5 :  (gameState.destroyer[0].pos.y * delta) + 2,
-            left: gameState.destroyerVertical? (gameState.destroyer[0].pos.x*delta) + 2: (gameState.destroyer[0].pos.x*delta) + 3,
+            top: gameState.destroyerVertical? (gameState.destroyer[0].pos.y * delta - delta) + 4 :  (gameState.destroyer[0].pos.y * delta) + 1,
+            left: gameState.destroyerVertical? (gameState.destroyer[0].pos.x*delta) + 1: (gameState.destroyer[0].pos.x*delta) + 2,
             // width: window.innerHeight*.75 * (destroyerLength/numGridEdge),
             // height: window.innerHeight*.75/numGridEdge,
             width: '80px',
@@ -99,7 +103,9 @@ import destroyerImage from '../assets/destroyer.svg'
             transform: `rotate(${gameState.destroyerVertical? 90 : 0}deg) `,
             transformOrigin:'0% 100%',
             zIndex: gameState.gameStarted? (gameState.turn? -1: 0): 0,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transitionProperty: 'all',
+            transitionDuration: '0.5s'
         } as React.CSSProperties,
         miniGridDestroyerStyle : {
             position: 'absolute',
