@@ -9,12 +9,14 @@ const { queue } = require('./Queue');
     Query: {
       ping: () => "Pong",
       startGame: async (parent, args, context, info) => { 
-        return await queue(args.game.data, args.game);
+        const input = JSON.parse(args.game.data);
+        return await queue.playerConnected(input.game, args.game);
       }
     },
     Mutation: {
       takeTurn: async (parent, args, context, info) => { 
-        return await queue(args.game.opponentId, args.game);
+        console.log("Taking turn: " + JSON.stringify(args.game));
+        return await queue.takeTurn(args.game.opponentId, args.game);
       }
     }
   };
