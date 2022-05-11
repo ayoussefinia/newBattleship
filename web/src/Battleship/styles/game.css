@@ -2,11 +2,88 @@ body {
   min-height: 100vh;
 }
 
+.gameBody{
+  display: flex;
+  flex-direction: column;
+  height: 100vh ;
+}
+.progress-bar {
+  height: 100%
+}
 /* wrappers */
 .centerWrapper {
   display: flex;
   width: 100%;
-  position: relative;
+  /* position: relative; */
+}
+
+@keyframes example {
+  /* from {color: red;}
+  to {color:rgb(55,106,161);} */
+  0%    {color:rgb(55,106,161);
+        }
+
+  50%  {
+        width: 40%
+      }
+  100%  {color:rgb(55,106,161);
+     
+      };
+}
+@keyframes hit {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+    background: red;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes missed {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(.75);
+    background: blue;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hitAnimation {
+  animation-name: hit;
+  animation-duration: 2s;
+}
+.missedAnimation {
+  animation-name:missed;
+  animation-duration: 2s;
+}
+
+.rocketStyles {
+  color: rgb(55,106,161);
+  transform: rotate(45deg);
+  position: absolute;
+  right: 20%;
+  /* font-size: 40px; */
+  animation-name: example;
+  animation-duration: 2s;
+  animation-iteration-count: 100;
+  animation-timing-function: ease;
+}
+.opponentRocketStyles {
+  color: rgb(55,106,161);
+  transform: rotate(225deg);
+  position: absolute;
+  left: 20%;
+  /* font-size: 40px; */
+  animation-name: example;
+  animation-duration: 2s;
+  animation-iteration-count: 100;
 }
 
 .center {
@@ -32,11 +109,17 @@ body {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   position: relative;
+  justify-self: center;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  transition: all 0.4s ease;
 }
+
+.gameGridGameStarted {
+  top: 20vh;
+}
+
+
 
 /* animations */
 .fade-enter {
@@ -56,17 +139,7 @@ body {
   transition: opacity 500ms, transform 500ms;
 }
 
-.highlightBoard::before{
-  content: attr(display-content);
-  font-size:20px;
-  color:white;
-}
-
 /* ship selection area */
-.bottomDiv div{
-  margin-bottom:5px;
-}
-
 .defaultWrapper {
   display: flex;
   width: 100%;
@@ -86,7 +159,6 @@ body {
 .shipSelection {
   margin-right: 8px;
   padding-top: 10px;
-  position:relative;
 }
 
 .manipulateTitle {
@@ -102,7 +174,6 @@ body {
   width: 120px;
   height: 160px;
   margin-top: 10px;
-  padding-bottom: 8px;
   margin-right: 3px;
   border: 2px solid black;
   border-radius: 10px;
@@ -181,6 +252,19 @@ body {
 .arrowStyles {
   cursor: pointer;
 }
+.shipStyles {
+  color: rgb(55,106,161);
+  position: absolute;
+  left: 5%;
+  top: 25%;
+}
+.skullStyles {
+  color: rgb(55,106,161);
+  position: absolute;
+  right:5%;
+  top: 25%;
+}
+
 
 .buttonPanelContainer {
   display: flex;
@@ -214,9 +298,9 @@ body {
   }
 
   .centerWrapper {
-    display: block;
+    display: flex;
     width: 100%;
-    position: relative;
+    /* position: relative; */
   }
 
   .shipSelectedStyle:first-child,
