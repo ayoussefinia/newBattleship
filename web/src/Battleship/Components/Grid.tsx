@@ -1,11 +1,22 @@
+import { useState, useEffect } from 'react';
 import {styles} from '../styles/JavaScriptStyles';
 import '../styles/border.css';
 import '../styles/game.css';
 import { CSSTransition } from 'react-transition-group';
 export default function Grid(props:any) {
     const Styles = styles(props.gameState,props.delta);
+    let [topPadding, setTopPadding] = useState({})
+
+    useEffect(() => {
+        console.log("grid useEffect called", props.gameState.gameStarted)
+        if (props.gameState.gameStarted && window.innerWidth <= 586){
+            setTopPadding({marginTop: '125px'})
+        }
+    }, [props.gameState.gameStarted])
+
     return(
-        <div className= {props.gameState.gameStarted? 'gameGridStyles gameGridGameStarted' : 'gameGridStyles '}>
+        <div className= {props.gameState.gameStarted? 'gameGridStyles gameGridGameStarted' : 'gameGridStyles '}
+        style={topPadding}>
         {props.gameState.turn == true ? 
             props.gameState.opponentGrid.map((row:any, rowIndex:any)=>{return(
                 row.map((col:any, colIndex:any)=>{return( <div style={props.gameState.opponentGrid[rowIndex][colIndex].firedAt ==true?
